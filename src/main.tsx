@@ -6,7 +6,7 @@ import { Cart } from '@/modules/api/cart/cart-service.types.ts';
 import { LocalCartService } from '@/modules/api/cart/services/local-cart-service.ts';
 import { Product } from '@/modules/api/product/product-service.types.ts';
 import { IProductsService } from '@/modules/api/products/products-service.interface.ts';
-import { ProductsService } from '@/modules/api/products/services/products-service.ts';
+import { LocalProductsService } from '@/modules/api/products/services/local-products-service.ts';
 import { LocalWishlistService } from '@/modules/api/wishlist/services/local-wishlist.service.ts';
 import { IWishlistService } from '@/modules/api/wishlist/wishlist-service.interface.ts';
 import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
@@ -43,7 +43,7 @@ const authService: IAuthService<AuthData> = new LocalAuthService(
     ),
 );
 
-const productsService: IProductsService<Product> = new ProductsService(new ProductsBackend());
+const productsService: IProductsService<Product> = new LocalProductsService(new ProductsBackend());
 
 authService
     .registration('admin', '123', false)

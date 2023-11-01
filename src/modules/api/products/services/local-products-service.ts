@@ -4,7 +4,7 @@ import { IProductsService } from '@/modules/api/products/products-service.interf
 import { IMultiplyService } from '@vanyamate/market-place-service';
 
 
-export class ProductsService implements IProductsService<Product> {
+export class LocalProductsService implements IProductsService<Product> {
     constructor (
         private readonly _productsService: IMultiplyService<Product>,
     ) {
