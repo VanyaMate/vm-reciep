@@ -1,7 +1,7 @@
 export interface ICartService<CartType> {
-    addToCart (productId: number, amount: number): Promise<CartType>;
+    addToCart (productId: string, amount: number): Promise<CartType>;
 
-    removeFromCart (productId: number, amount: number): Promise<CartType>;
+    removeFromCart (productId: string, amount: number): Promise<CartType>;
 
     getMyCart (): Promise<CartType>;
 }

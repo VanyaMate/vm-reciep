@@ -42,7 +42,7 @@ export class LocalAuthService implements IAuthService<AuthData> {
     }
 
     public async refresh (): Promise<AuthData> {
-        const savedLogin: string = this._temporallyStorageService.get()[0] ?? this._storageService.get()[0];
+        const savedLogin: string | undefined = this._temporallyStorageService.get()[0] ?? this._storageService.get()[0];
         if (savedLogin) {
             const user: PrivateUser | null = await this._userService.read(savedLogin);
             if (user) {
