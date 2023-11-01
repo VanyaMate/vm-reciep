@@ -1,8 +1,8 @@
+import { Cart } from '@/modules/api/cart/cart-service.types.ts';
 import {
     CartBackendDataGenerator,
 } from '@/modules/local-backend/cart/cart-backend.data-generator.ts';
 import {
-    Cart,
     CreateCartDto,
     UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
@@ -19,7 +19,8 @@ export class CartBackend extends SingleService<Cart, CreateCartDto, UpdateCartDt
             new CartBackendDataGenerator(),
             {
                 options: {
-                    pk: 'userId',
+                    pk     : 'userId',
+                    timeout: 100,
                 },
             },
         );

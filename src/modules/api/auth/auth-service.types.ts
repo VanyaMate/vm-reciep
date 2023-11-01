@@ -1,8 +1,8 @@
-import { CartItem } from '@/modules/local-backend/cart/cart-backend.types.ts';
-import { PublicUser } from '@/modules/local-backend/user/user-backend.types.ts';
+import { CartItem } from '@/modules/api/cart/cart-service.types.ts';
+import { User } from '@/modules/api/user/user-service.types.ts';
 
 
 export type AuthData = {
-    user: PublicUser,
+    user: User,
     cart: CartItem[],
 }

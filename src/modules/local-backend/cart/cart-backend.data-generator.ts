@@ -1,4 +1,5 @@
-import { Cart, CreateCartDto } from '@/modules/local-backend/cart/cart-backend.types.ts';
+import { Cart } from '@/modules/api/cart/cart-service.types.ts';
+import { CreateCartDto } from '@/modules/local-backend/cart/cart-backend.types.ts';
 import { IDataGenerator } from '@vanyamate/market-place-service';
 
 

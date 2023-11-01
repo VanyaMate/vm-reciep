@@ -1,30 +1,30 @@
-import { CreateUserDto, User } from '@/modules/local-backend/user/user-backend.types.ts';
+import { CreateUserDto, PrivateUser } from '@/modules/local-backend/user/user-backend.types.ts';
 import { IDataGenerator } from '@vanyamate/market-place-service';
 
 
-export class UserBackendDataGenerator implements IDataGenerator<User, CreateUserDto> {
-    private readonly _clearData: User = {
+export class UserBackendDataGenerator implements IDataGenerator<PrivateUser, CreateUserDto> {
+    private readonly _clearData: PrivateUser = {
         avatar  : '',
         password: '',
         login   : '',
     };
 
-    public avatar (): User['avatar'] {
+    public avatar (): PrivateUser['avatar'] {
         return 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png';
     }
 
-    public byData (data: CreateUserDto): User {
+    public byData (data: CreateUserDto): PrivateUser {
         return {
             ...this._clearData,
             ...data,
         };
     }
 
-    public clear (): User {
+    public clear (): PrivateUser {
         return { ...this._clearData };
     }
 
-    public filled (data: CreateUserDto | undefined): User {
+    public filled (data: CreateUserDto | undefined): PrivateUser {
         return {
             avatar  : this.avatar(),
             login   : this.login(),
@@ -33,11 +33,11 @@ export class UserBackendDataGenerator implements IDataGenerator<User, CreateUser
         };
     }
 
-    public login (): User['login'] {
+    public login (): PrivateUser['login'] {
         return '';
     }
 
-    public password (): User['password'] {
+    public password (): PrivateUser['password'] {
         return '';
     }
 

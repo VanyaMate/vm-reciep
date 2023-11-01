@@ -1,4 +1,4 @@
-import { Product } from '@/modules/local-backend/product/product-backend.types.ts';
+import { Product } from '@/modules/api/product/product-service.types.ts';
 import { IStorageService } from '@vanyamate/market-place-service';
 
 

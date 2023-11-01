@@ -1,6 +1,6 @@
+import { Product } from '@/modules/api/product/product-service.types.ts';
 import {
     CreateProductDto,
-    Product,
 } from '@/modules/local-backend/product/product-backend.types.ts';
 import { IDataGenerator } from '@vanyamate/market-place-service';
 

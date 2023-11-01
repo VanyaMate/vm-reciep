@@ -1,3 +1,4 @@
+import { Product } from '@/modules/api/product/product-service.types.ts';
 import {
     ProductBackendDataGenerator,
 } from '@/modules/local-backend/product/product-backend.data-generator.ts';
@@ -6,7 +7,7 @@ import {
 } from '@/modules/local-backend/product/product-backend.storage-service.ts';
 import {
     CreateProductDto,
-    Product, UpdateProductDto,
+    UpdateProductDto,
 } from '@/modules/local-backend/product/product-backend.types.ts';
 import { SingleService, StorageService } from '@vanyamate/market-place-service';
 import products_1 from '@vanyamate/market-place-service/data/products/products_1.json';

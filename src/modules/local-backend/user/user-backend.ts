@@ -2,16 +2,15 @@ import {
     UserBackendDataGenerator,
 } from '@/modules/local-backend/user/user-backend.data-generator.ts';
 import {
-    CreateUserDto,
+    CreateUserDto, PrivateUser,
     UpdateUserDto,
-    User,
 } from '@/modules/local-backend/user/user-backend.types.ts';
 
 
 import { SingleService, StorageService } from '@vanyamate/market-place-service';
 
 
-export class UserBackend extends SingleService<User, CreateUserDto, UpdateUserDto> {
+export class UserBackend extends SingleService<PrivateUser, CreateUserDto, UpdateUserDto> {
     constructor () {
         super(
             new StorageService(
@@ -21,7 +20,8 @@ export class UserBackend extends SingleService<User, CreateUserDto, UpdateUserDt
             new UserBackendDataGenerator(),
             {
                 options: {
-                    pk: 'login',
+                    pk     : 'login',
+                    timeout: 100,
                 },
             },
         );

@@ -32,11 +32,15 @@ const authService: IAuthService<AuthData> = new LocalAuthService(
 );
 
 authService.registration('admin', '123', false)
-    .then((user) => console.log('loginned', user))
+    .then((user) => console.log('Вход в аккаунт:', user))
     .catch((error) => console.error('Ошибка авторизации:', error));
 
 //authService.logout();
 
 authService.login('admin', '123')
-    .then((user) => console.log('loginned', user))
+    .then((user) => console.log('Вход в аккаунт:', user))
+    .catch((error) => console.error('Ошибка авторизации:', error));
+
+authService.refresh()
+    .then((user) => console.log('Вход в аккаунт:', user))
     .catch((error) => console.error('Ошибка авторизации:', error));

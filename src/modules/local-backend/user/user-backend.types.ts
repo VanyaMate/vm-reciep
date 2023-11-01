@@ -1,10 +1,7 @@
-export type User = {
-    login: string;
-    password: string;
-    avatar: string;
-}
+import { User } from '@/modules/api/user/user-service.types.ts';
 
-export type PublicUser = Omit<User, 'password'>;
 
-export type CreateUserDto = Pick<User, 'login' | 'password'>;
-export type UpdateUserDto = Omit<User, 'login'>;
+export type PrivateUser = User & { password: string };
+
+export type CreateUserDto = Pick<PrivateUser, 'login' | 'password'>;
+export type UpdateUserDto = Omit<PrivateUser, 'login'>;

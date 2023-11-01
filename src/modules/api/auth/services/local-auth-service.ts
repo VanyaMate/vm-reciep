@@ -1,14 +1,14 @@
 import { IAuthService } from '@/modules/api/auth/auth-service.interface.ts';
 import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
+import { Cart } from '@/modules/api/cart/cart-service.types.ts';
+import { User } from '@/modules/api/user/user-service.types.ts';
 import {
-    Cart,
     CreateCartDto,
     UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
 import {
-    CreateUserDto,
-    PublicUser, UpdateUserDto,
-    User,
+    CreateUserDto, PrivateUser,
+    UpdateUserDto,
 } from '@/modules/local-backend/user/user-backend.types.ts';
 import { IMapper } from '@/modules/mapper.interface.ts';
 import { SingleService, IStorageService } from '@vanyamate/market-place-service';
@@ -16,8 +16,8 @@ import { SingleService, IStorageService } from '@vanyamate/market-place-service'
 
 export class LocalAuthService implements IAuthService<AuthData> {
     constructor (
-        private readonly _userService: SingleService<User, CreateUserDto, UpdateUserDto>,
-        private readonly _userMapper: IMapper<User, PublicUser>,
+        private readonly _userService: SingleService<PrivateUser, CreateUserDto, UpdateUserDto>,
+        private readonly _userMapper: IMapper<PrivateUser, User>,
         private readonly _cartService: SingleService<Cart, CreateCartDto, UpdateCartDto>,
         private readonly _storageService: IStorageService<string>,
         private readonly _temporallyStorageService: IStorageService<string>,
@@ -26,7 +26,7 @@ export class LocalAuthService implements IAuthService<AuthData> {
     }
 
     public async login (login: string, password: string, remember?: boolean): Promise<AuthData> {
-        const user: User | null = await this._userService.read(login);
+        const user: PrivateUser | null = await this._userService.read(login);
         if (user && user.password === password) {
             this._remember(user.login, remember);
             return this._getAuthData(user);
@@ -44,7 +44,7 @@ export class LocalAuthService implements IAuthService<AuthData> {
     public async refresh (): Promise<AuthData> {
         const savedLogin: string = this._temporallyStorageService.get()[0] ?? this._storageService.get()[0];
         if (savedLogin) {
-            const user: User | null = await this._userService.read(savedLogin);
+            const user: PrivateUser | null = await this._userService.read(savedLogin);
             if (user) {
                 return this._getAuthData(user);
             }
@@ -54,9 +54,9 @@ export class LocalAuthService implements IAuthService<AuthData> {
     }
 
     public async registration (login: string, password: string, remember?: boolean): Promise<AuthData> {
-        const createdUser: User | null = await this._userService.read(login);
+        const createdUser: PrivateUser | null = await this._userService.read(login);
         if (!createdUser) {
-            const user: User = await this._userService.create({ login, password });
+            const user: PrivateUser = await this._userService.create({ login, password });
             this._remember(user.login, remember);
             return this._getAuthData(user);
         } else {
@@ -64,7 +64,7 @@ export class LocalAuthService implements IAuthService<AuthData> {
         }
     }
 
-    private async _getAuthData (user: User): Promise<AuthData> {
+    private async _getAuthData (user: PrivateUser): Promise<AuthData> {
         const cart: Cart = await this._getCart(user.login);
 
         return {
