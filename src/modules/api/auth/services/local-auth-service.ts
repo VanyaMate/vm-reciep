@@ -3,6 +3,11 @@ import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
 import { Cart } from '@/modules/api/cart/cart-service.types.ts';
 import { User } from '@/modules/api/user/user-service.types.ts';
 import {
+    CreateWishlistDto,
+    UpdateWishlistDto,
+    Wishlist,
+} from '@/modules/api/wishlist/wishlist-service.types.ts';
+import {
     CreateCartDto,
     UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
@@ -19,6 +24,7 @@ export class LocalAuthService implements IAuthService<AuthData> {
         private readonly _userService: SingleService<PrivateUser, CreateUserDto, UpdateUserDto>,
         private readonly _userMapper: IMapper<PrivateUser, User>,
         private readonly _cartService: SingleService<Cart, CreateCartDto, UpdateCartDto>,
+        private readonly _wishlistService: SingleService<Wishlist, CreateWishlistDto, UpdateWishlistDto>,
         private readonly _storageService: IStorageService<string>,
         private readonly _temporallyStorageService: IStorageService<string>,
     ) {
@@ -65,11 +71,13 @@ export class LocalAuthService implements IAuthService<AuthData> {
     }
 
     private async _getAuthData (user: PrivateUser): Promise<AuthData> {
-        const cart: Cart = await this._getCart(user.login);
+        const cart: Cart         = await this._getCart(user.login);
+        const wishlist: Wishlist = await this._getWishlist(user.login);
 
         return {
-            user: this._userMapper.convert(user),
-            cart: cart.items,
+            user    : this._userMapper.convert(user),
+            cart    : cart.items,
+            wishlist: wishlist,
         };
     }
 
@@ -79,6 +87,14 @@ export class LocalAuthService implements IAuthService<AuthData> {
             cart = await this._cartService.create({ userId });
         }
         return cart;
+    }
+
+    private async _getWishlist (userId: string): Promise<Wishlist> {
+        let wishlist: Wishlist | null = await this._wishlistService.read(userId);
+        if (!wishlist) {
+            wishlist = await this._wishlistService.create({ userId });
+        }
+        return wishlist;
     }
 
     private _remember (login: string, state?: boolean) {
