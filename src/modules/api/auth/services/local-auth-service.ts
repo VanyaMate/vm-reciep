@@ -16,15 +16,15 @@ import {
     UpdateUserDto,
 } from '@/modules/local-backend/user/user-backend.types.ts';
 import { IMapper } from '@/modules/mapper.interface.ts';
-import { SingleService, IStorageService } from '@vanyamate/market-place-service';
+import { ISingleService, IStorageService } from '@vanyamate/market-place-service';
 
 
 export class LocalAuthService implements IAuthService<AuthData> {
     constructor (
-        private readonly _userService: SingleService<PrivateUser, CreateUserDto, UpdateUserDto>,
+        private readonly _userService: ISingleService<PrivateUser, CreateUserDto, UpdateUserDto>,
         private readonly _userMapper: IMapper<PrivateUser, User>,
-        private readonly _cartService: SingleService<Cart, CreateCartDto, UpdateCartDto>,
-        private readonly _wishlistService: SingleService<Wishlist, CreateWishlistDto, UpdateWishlistDto>,
+        private readonly _cartService: ISingleService<Cart, CreateCartDto, UpdateCartDto>,
+        private readonly _wishlistService: ISingleService<Wishlist, CreateWishlistDto, UpdateWishlistDto>,
         private readonly _storageService: IStorageService<string>,
         private readonly _temporallyStorageService: IStorageService<string>,
     ) {

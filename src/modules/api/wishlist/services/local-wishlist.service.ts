@@ -1,16 +1,18 @@
-import { IWishlistService } from '@/modules/api/wishlist/wishlist-service.interface.ts';
+import {
+    IWishlistService,
+} from '@/modules/api/wishlist/wishlist-service.interface.ts';
 import {
     CreateWishlistDto,
     UpdateWishlistDto,
     Wishlist,
 } from '@/modules/api/wishlist/wishlist-service.types.ts';
-import { SingleService } from '@vanyamate/market-place-service';
+import { ISingleService } from '@vanyamate/market-place-service';
 
 
 export class LocalWishlistService implements IWishlistService<Wishlist> {
     constructor (
         private readonly _userId: string,
-        private readonly _wishlistService: SingleService<Wishlist, CreateWishlistDto, UpdateWishlistDto>,
+        private readonly _wishlistService: ISingleService<Wishlist, CreateWishlistDto, UpdateWishlistDto>,
     ) {
     }
 
