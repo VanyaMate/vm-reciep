@@ -84,7 +84,8 @@ const App = () => {
             }
             <Header
                 categories={ <Categories categories={ categories }/> }
-                user={ <UserHeader user={ user }/> }
+                user={ <UserHeader user={ user }
+                                   logout={ () => authService.logout().then(() => setUser(null)) }/> }
             />
             <div style={ {
                 display        : 'gap',

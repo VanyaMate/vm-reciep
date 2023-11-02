@@ -25,9 +25,11 @@ const AuthForm: React.FC<AuthFormProps> = (props) => {
         <div className={ css.container }>
             <div className={ css.control }>
                 <div
+                    onClick={ () => setType('login') }
                     className={ cn(css.item, (type === 'login') && css.active) }>login
                 </div>
                 <div
+                    onClick={ () => setType('registration') }
                     className={ cn(css.item, (type === 'registration') && css.active) }>registration
                 </div>
             </div>
@@ -43,15 +45,8 @@ const AuthForm: React.FC<AuthFormProps> = (props) => {
                         isSubmitting,
                     }) => (
                         <form onSubmit={ handleSubmit }>
-                            <input
-                                onChange={ handleChange }
-                                value={ values.login }
-                            />
-                            <input
-                                type={ 'password' }
-                                onChange={ handleChange }
-                                value={ values.password }
-                            />
+                            <Field name={ 'login' }/>
+                            <Field name={ 'password' } type={ 'password' }/>
                             <label>
                                 <Field type={ 'checkbox' } name={ 'remember' }/>
                                 remember

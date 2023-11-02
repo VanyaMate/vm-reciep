@@ -45,14 +45,14 @@ const authService: IAuthService<AuthData> = new LocalAuthService(
 
 const productsService: IProductsService<Product> = new LocalProductsService(new ProductsBackend());
 
-authService
+/*authService
     .registration('admin', '123', false)
     .then((data) => console.log('Вход в аккаунт:', data))
-    .catch((error) => console.error('Ошибка авторизации:', error));
+    .catch((error) => console.error('Ошибка авторизации:', error));*/
 
 //authService.logout();
 
-authService
+/*authService
     .login('admin', '123')
     .then((data) => console.log('Вход в аккаунт:', data))
     .catch((error) => console.error('Ошибка авторизации:', error));
@@ -89,4 +89,4 @@ productsService
     .then((response) => {
         console.log('Количество продуктов:', response.count);
         console.log('Список продуктов:', response.list);
-    });
+    });*/

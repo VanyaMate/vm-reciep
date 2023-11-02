@@ -4,10 +4,11 @@ import { User } from '@/modules/api/user/user-service.types.ts';
 
 export type UserHeaderProps = {
     user: User | null,
+    logout: () => Promise<any>;
 }
 
 const UserHeader: React.FC<UserHeaderProps> = (props) => {
-    const { user } = props;
+    const { user, logout } = props;
 
     if (!user) {
         return (
@@ -19,7 +20,7 @@ const UserHeader: React.FC<UserHeaderProps> = (props) => {
 
     return (
         <div>
-            Welcome, { user.login }
+            Welcome, { user.login } <span onClick={ logout }>[logout]</span>
         </div>
     );
 };
