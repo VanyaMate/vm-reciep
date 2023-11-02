@@ -35,8 +35,6 @@ import {
     WishlistBackend,
 } from '@/modules/local-backend/wishlist/wishlist-backend.ts';
 import { StorageService } from '@vanyamate/market-place-service';
-import { Simulate } from 'react-dom/test-utils';
-import reset = Simulate.reset;
 import Categories from '@/components/Categoties/Categories.tsx';
 import UserHeader from '@/components/UserHeader/UserHeader.tsx';
 import ProductCard from '@/components/ProductCard/ProductCard.tsx';
@@ -79,7 +77,7 @@ const App = () => {
             {
                 user?.login || <AuthForm
                     onLogin={ (login, password, remember) => authService.login(login, password, remember).then((data) => setUser(data.user)) }
-                    onRegistration={ (login, password, remember) => authService.login(login, password, remember).then((data) => setUser(data.user)) }
+                    onRegistration={ (login, password, remember) => authService.registration(login, password, remember).then((data) => setUser(data.user)) }
                 />
             }
             <Header
