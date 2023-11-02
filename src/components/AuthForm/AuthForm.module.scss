@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .control {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+
+            &:hover {
+                background: #aaa;
+            }
+
+            &.active {
+                border: 1px solid #333;
+            }
+        }
+    }
+}

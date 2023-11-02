@@ -1,69 +1,107 @@
-import { Product } from '@/modules/api/product/product-service.types.ts';
+import Header from '@/components/header/Header.tsx';
 import {
     IProductsService,
 } from '@/modules/api/products/products-service.interface.ts';
+import { Product } from '@/modules/api/product/product-service.types.ts';
+import { useEffect, useMemo, useState } from 'react';
 import {
     LocalProductsService,
 } from '@/modules/api/products/services/local-products-service.ts';
 import {
     ProductsBackend,
 } from '@/modules/local-backend/products/products-backend.ts';
-import { useEffect, useMemo, useState } from 'react';
-import { Category } from '@/modules/api/category/category-service.types.ts';
 import {
     ICategoriesService,
 } from '@/modules/api/categories/categories-service.interface.ts';
-import { LocalCategoryService } from '@/modules/api/category/services/local-category-service.ts';
+import { Category } from '@/modules/api/category/category-service.types.ts';
 import {
     LocalCategoriesService,
 } from '@/modules/api/categories/services/local-categories-service.ts';
 import {
     CategoriesBackend,
 } from '@/modules/local-backend/categories/categories-backend.ts';
+import { User } from '@/modules/api/user/user-service.types.ts';
+import { IAuthService } from '@/modules/api/auth/auth-service.interface.ts';
+import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
+import {
+    LocalAuthService,
+} from '@/modules/api/auth/services/local-auth-service.ts';
+import { UserBackend } from '@/modules/local-backend/user/user-backend.ts';
+import {
+    UserBackendMapper,
+} from '@/modules/local-backend/user/user-backend.mapper.ts';
+import { CartBackend } from '@/modules/local-backend/cart/cart-backend.ts';
+import {
+    WishlistBackend,
+} from '@/modules/local-backend/wishlist/wishlist-backend.ts';
+import { StorageService } from '@vanyamate/market-place-service';
+import { Simulate } from 'react-dom/test-utils';
+import reset = Simulate.reset;
+import Categories from '@/components/Categoties/Categories.tsx';
+import UserHeader from '@/components/UserHeader/UserHeader.tsx';
+import ProductCard from '@/components/ProductCard/ProductCard.tsx';
+import AuthForm from '@/components/AuthForm/AuthForm.tsx';
 
 
 const App = () => {
-    const [ products, setProducts ]                     = useState<Product[]>([]);
-    const [ categories, setCategories ]                 = useState<Category[]>([]);
-    const productsService: IProductsService<Product>    = useMemo(() => new LocalProductsService(new ProductsBackend()), []);
-    const categoryService: ICategoriesService<Category> = useMemo(() => new LocalCategoriesService(new CategoriesBackend()), []);
+    const productsService: IProductsService<Product>      = useMemo(() => new LocalProductsService(new ProductsBackend()), []);
+    const categoriesService: ICategoriesService<Category> = useMemo(() => new LocalCategoriesService(new CategoriesBackend()), []);
+    const authService: IAuthService<AuthData>             = useMemo(() => new LocalAuthService(
+        new UserBackend(),
+        new UserBackendMapper(),
+        new CartBackend(),
+        new WishlistBackend(),
+        new StorageService(localStorage, 'auth'),
+        new StorageService(sessionStorage, 'auth'),
+    ), []);
+
+
+    const [ products, setProducts ]     = useState<Product[]>([]);
+    const [ categories, setCategories ] = useState<Category[]>([]);
+    const [ user, setUser ]             = useState<User | null>(null);
+
     useEffect(() => {
         productsService
-            .findMany((product) => product.calories > 900, {
-                limit: 20,
-                sort : [ 'calories', 'asc' ],
-            })
-            .then((response) => {
-                setProducts(response.list);
-            });
+            .findMany({}, { limit: 30 })
+            .then((response) => setProducts(response.list));
 
-        categoryService
+        categoriesService
             .findMany({}, { limit: 100 })
             .then((response) => setCategories(response.list));
+
+        authService
+            .refresh()
+            .then((user) => setUser(user.user));
     }, []);
 
     return (
         <div>
-            <h2>[categories]</h2>
             {
-                categories.map((category) => (
-                    <div key={ category.title }>
-                        category: <b>{ category.title }</b>
-                    </div>
-                ))
+                user?.login || <AuthForm
+                    onLogin={ (login, password, remember) => authService.login(login, password, remember).then((data) => setUser(data.user)) }
+                    onRegistration={ (login, password, remember) => authService.login(login, password, remember).then((data) => setUser(data.user)) }
+                />
             }
-            <hr/>
-            <h2>[products]</h2>
-            {
-                products.map((product) => (
-                    <div key={ product.barcode }>
-                        <p>{ product.product_name }</p>
-                        <p>id: { product.barcode }</p>
-                        <p>category: <b>{ product.category }</b></p>
-                        <hr/>
-                    </div>
-                ))
-            }
+            <Header
+                categories={ <Categories categories={ categories }/> }
+                user={ <UserHeader user={ user }/> }
+            />
+            <div style={ {
+                display        : 'gap',
+                gridAutoColumns: '1fr 1fr 1fr',
+                gap            : 10,
+            } }>
+                {
+                    products.map((product) =>
+                        <ProductCard
+                            key={ product.barcode }
+                            product={ product }
+                            addToCartButton={ <button>{ user?.login ? 'добавить'
+                                                                    : 'войти' }</button> }
+                        />,
+                    )
+                }
+            </div>
         </div>
     );
 };
