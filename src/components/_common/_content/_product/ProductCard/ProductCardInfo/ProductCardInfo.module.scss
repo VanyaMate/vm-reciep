@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .title {
+        font-size: 16px;
+        color: var(--text-color-main);
+        font-weight: bold;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .description {
+        font-size: 14px;
+        color: var(--text-color-second);
+        height: 50px;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .price {
+        font-size: 20px;
+        color: var(--text-color-error);
+    }
+}

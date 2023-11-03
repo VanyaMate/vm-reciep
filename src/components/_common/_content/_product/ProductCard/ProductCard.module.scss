@@ -1,0 +1,12 @@
+@import "src/styles/sizes";
+
+.container {
+    background: var(--background-second);
+    display: flex;
+    flex-direction: column;
+    gap: $padding_big;
+
+    .top {
+
+    }
+}

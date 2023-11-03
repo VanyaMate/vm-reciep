@@ -1,0 +1,13 @@
+:root body.white {
+    background: var(--background-main);
+
+    --background-main: #fff;
+    --background-second: #eee;
+    --background-item: #f8f8f8;
+    --text-color-main: #111;
+    --text-color-second: #666;
+    --text-color-error: #f88;
+    --text-color-success: #8f8;
+    --text-color-link: #88f;
+    --box-shadow: 0 4px 0 -2px rgba(0, 0, 0, .2);
+}

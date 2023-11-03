@@ -1,0 +1,8 @@
+@import "src/styles/sizes";
+
+.container {
+    width: 100%;
+    border-radius: $padding_big;
+    padding: $padding_big;
+    box-shadow: var(--box-shadow);
+}

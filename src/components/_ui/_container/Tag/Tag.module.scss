@@ -1,0 +1,12 @@
+@import "src/styles/sizes";
+
+$padding: $padding_small;
+
+.container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    padding: $padding;
+    border-radius: $padding;
+}
