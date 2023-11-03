@@ -1,14 +1,14 @@
 import React from 'react';
-import css from './HeaderCategories.module.scss';
+import css from './HeaderSearch.module.scss';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
 
 
-const HeaderCategories = () => {
+const HeaderSearch = () => {
     return (
         <Box className={ css.container }>
-            HeaderCategories
+            Categories | Search | Filters
         </Box>
     );
 };
 
-export default HeaderCategories;
+export default HeaderSearch;
