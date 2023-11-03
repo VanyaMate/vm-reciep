@@ -1,6 +1,4 @@
-@import "src/styles/sizes";
-
-$padding: $padding_medium;
+$padding: var(--offset-medium);
 
 .container {
     max-width: 1280px;

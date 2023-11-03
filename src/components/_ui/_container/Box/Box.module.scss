@@ -1,8 +1,8 @@
-@import "src/styles/sizes";
+$padding: var(--offset-large);
 
 .container {
     width: 100%;
-    border-radius: $padding_big;
-    padding: $padding_big;
+    border-radius: $padding;
+    padding: $padding;
     box-shadow: var(--box-shadow);
 }

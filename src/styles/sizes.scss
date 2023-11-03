@@ -1,3 +1,5 @@
-$padding_small: 5px;
-$padding_medium: 10px;
-$padding_big: 20px;
+:root body.medium {
+    --offset-small: 5px;
+    --offset-medium: 10px;
+    --offset-large: 20px;
+}

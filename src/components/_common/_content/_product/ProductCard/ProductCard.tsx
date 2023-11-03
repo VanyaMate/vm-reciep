@@ -6,6 +6,7 @@ import ProductCardHeader
 import ProductCardInfo
     from '@/components/_common/_content/_product/ProductCard/ProductCardInfo/ProductCardInfo.tsx';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
+import Button from '@/components/_ui/_button/Button/Button.tsx';
 
 
 export type ProductCardProps = {
@@ -30,6 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                 discount={ 0 }
                 currency={ 'Руб' }
             />
+            <Button primary>Добавить в корзину</Button>
         </Box>
     );
 };

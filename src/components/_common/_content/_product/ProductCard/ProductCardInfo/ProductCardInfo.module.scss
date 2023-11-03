@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--offset-medium);
 
     .title {
         font-size: 16px;
@@ -17,10 +17,10 @@
     .description {
         font-size: 14px;
         color: var(--text-color-second);
-        height: 50px;
+        height: 35px;
         width: 100%;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;

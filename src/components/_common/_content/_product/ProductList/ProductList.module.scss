@@ -4,5 +4,5 @@
     box-shadow: none;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: $padding_big;
+    gap: var(--offset-large);
 }

@@ -19,8 +19,11 @@ const ProductListContainer = () => {
 
     useEffect(() => {
         productsService
-            .findMany({}, { limit: 30 })
-            .then((response) => setProducts(response.list));
+            .findMany({ available: true }, { limit: 30 })
+            .then((response) => {
+                console.log(response);
+                setProducts(response.list);
+            });
     }, []);
 
     return (

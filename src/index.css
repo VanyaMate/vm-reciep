@@ -1,9 +1,10 @@
 @import "styles/palette.scss";
+@import "styles/sizes.scss";
+@import "styles/transitions.scss";
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
     font-family: "Roboto", serif;
 }

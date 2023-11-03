@@ -1,6 +1,4 @@
-@import "src/styles/sizes";
-
-$padding: $padding_small;
+$padding: var(--offset-small);
 
 .container {
     display: inline-flex;
@@ -9,4 +7,5 @@ $padding: $padding_small;
     font-size: 12px;
     padding: $padding;
     border-radius: $padding;
+    box-shadow: var(--box-shadow);
 }

@@ -1,0 +1,34 @@
+$padding: var(--offset-medium);
+
+.container {
+    width: 100%;
+    border-radius: $padding;
+    padding: $padding;
+    box-shadow: var(--box-shadow-small);
+    border: 2px solid var(--background-item);
+    background: var(--background-item);
+    color: var(--text-color-main);
+    transition: var(--transition-fast);
+
+    &.primary {
+        border: 2px solid var(--button-primary-background);
+        background: var(--button-primary-background);
+        color: var(--button-primary-color);
+
+        &:hover {
+            border: 2px solid var(--button-primary-background-hover);
+            background: var(--button-primary-background-hover);
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.01);
+        box-shadow: var(--box-shadow);
+    }
+
+    &:active {
+        transform: scale(1);
+        box-shadow: var(--box-shadow-none);
+    }
+}
