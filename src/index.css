@@ -1,6 +1,7 @@
 @import "styles/palette.scss";
 @import "styles/sizes.scss";
 @import "styles/transitions.scss";
+@import "styles/animations.scss";
 
 * {
     margin: 0;

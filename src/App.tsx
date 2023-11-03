@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Pages from '@/pages/pages.tsx';
+import { useAuth } from '@/hooks/useAuth.ts';
 
 
-const App = () => {
+let refreshData: boolean = false;
+const App                = () => {
+    const { refresh } = useAuth();
+
+    useEffect(() => {
+        !refreshData && refresh();
+        refreshData = true;
+    }, []);
+
     return (
         <Pages/>
     );
 };
 
-export default App;
+export default React.memo(App);

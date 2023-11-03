@@ -7,19 +7,19 @@ import { User } from '@/modules/api/user/user-service.types.ts';
 
 
 export type HeaderProps = {
-    user: User | null;
+    left: React.ReactNode;
+    right: React.ReactNode;
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
-    const { user } = props;
-
+    const { left, right } = props;
     return (
         <Box className={ css.container }>
             <div>
-                <HeaderLogo/>
+                { left }
             </div>
             <div>
-                <HeaderUser user={ user }/>
+                { right }
             </div>
         </Box>
     );
