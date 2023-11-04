@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from '@/modules/api/user/user-service.types.ts';
-import { Cart } from '@/modules/api/cart/cart-service.types.ts';
+import { Cart, CartItem } from '@/modules/api/cart/cart-service.types.ts';
 import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
 import HeaderUserCart
     from '@/components/_common/_header/HeaderUser/HeaderUserCart/HeaderUserCart.tsx';
@@ -15,7 +15,7 @@ import Button from '@/components/_ui/_button/Button/Button.tsx';
 
 export type HeaderUserProps = {
     user: User | null;
-    cart: Cart | null;
+    cart: CartItem[] | null;
     wishlist: Wishlist | null;
     process?: boolean;
 }

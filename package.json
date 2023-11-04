@@ -10,7 +10,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@vanyamate/lgc": "^0.0.3",
+        "@vanyamate/lgc": "^0.0.4",
         "@vanyamate/market-place-service": "^0.2.12",
         "antd": "^5.10.3",
         "formik": "^2.4.5",

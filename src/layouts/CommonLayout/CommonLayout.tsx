@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import PageContent from '@/components/_common/PageContent/PageContent.tsx';
 import Header
@@ -12,11 +12,60 @@ import { AuthContext } from '@/contexts/AuthContext.ts';
 import HeaderLogo from '@/components/_common/_header/HeaderLogo/HeaderLogo.tsx';
 import HeaderUser from '@/components/_common/_header/HeaderUser/HeaderUser.tsx';
 import { useAuth } from '@/hooks/useAuth.ts';
+import { User } from '@/modules/api/user/user-service.types.ts';
+import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
+import { Cart, CartItem } from '@/modules/api/cart/cart-service.types.ts';
+import { EntitiesContext } from '@/contexts/EntitiesContext.ts';
+import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
 
+
+/***
+ * Как будто какая то дичь. Ну да ладно. Пойду спать. хехе.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 
 const CommonLayout = () => {
-    const user        = useContext(AuthContext);
-    const { process } = useAuth();
+    const [ process, setProcess ]   = useState<boolean>(false);
+    const [ user, setUser ]         = useState<User | null>(null);
+    const [ cart, setCart ]         = useState<CartItem[] | null>(null);
+    const [ wishlist, setWishlist ] = useState<Wishlist | null>(null);
+
+    const entities = useContext(EntitiesContext);
+
+    useEffect(() => {
+        const setAuthHandler     = function (authData: AuthData | null) {
+            entities.user.set(authData?.user ?? null);
+            entities.cart.set(authData?.cart ?? null);
+            entities.wishlist.set(authData?.wishlist ?? null);
+        };
+        const authProcessHandler = function (status: boolean) {
+            setProcess(status);
+        };
+        const setUserHandler     = function (user: User | null) {
+            setUser(user);
+        };
+        const setCartHandler     = function (cart: CartItem[] | null) {
+            setCart(cart);
+        };
+        const setWishlistHandler = function (wishlist: Wishlist | null) {
+            setWishlist(wishlist);
+        };
+
+        entities.auth.subscribe('auth', setAuthHandler);
+        entities.auth.subscribe('process', authProcessHandler);
+        entities.user.subscribe('set', setUserHandler);
+        entities.cart.subscribe('set', setCartHandler);
+        entities.wishlist.subscribe('set', setWishlistHandler);
+
+        return () => {
+            entities.auth.unsubscribe('auth', setAuthHandler);
+            entities.auth.unsubscribe('process', authProcessHandler);
+            entities.user.unsubscribe('set', setUserHandler);
+            entities.cart.unsubscribe('set', setCartHandler);
+            entities.wishlist.unsubscribe('set', setWishlist);
+        };
+    }, []);
 
     return (
         <PageContent
@@ -25,12 +74,9 @@ const CommonLayout = () => {
                     <Header
                         left={ <HeaderLogo/> }
                         right={ <HeaderUser process={ process }
-                                            user={ user?.user ?? null }
-                                            cart={ { items: [], userId: '' } }
-                                            wishlist={ {
-                                                items : [ 'st', 'ring' ],
-                                                userId: '',
-                                            } }
+                                            user={ user }
+                                            cart={ cart }
+                                            wishlist={ wishlist }
                         /> }
                     />
                     <HeaderBanner

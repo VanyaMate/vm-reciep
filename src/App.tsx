@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Pages from '@/pages/pages.tsx';
-import { useAuth } from '@/hooks/useAuth.ts';
+import { useAuthEntity } from '@/hooks/services/useAuthService.ts';
 
 
 let refreshData: boolean = false;
 const App                = () => {
-    const { refresh } = useAuth();
+    const { refresh } = useAuthEntity();
 
     useEffect(() => {
         !refreshData && refresh();
