@@ -1,7 +1,22 @@
 .container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: var(--offset-medium);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--offset-medium);
+    box-shadow: var(--box-shadow-small);
+    padding: var(--offset-medium);
+    min-width: 200px;
+    transition: var(--transition-medium);
+    position: relative;
+    z-index: 100;
+
+    .info {
+        display: flex;
+        align-items: center;
+        gap: var(--offset-medium);
+    }
 
     &.skeleton {
         .avatar {
@@ -16,8 +31,8 @@
     }
 
     .avatar {
-        width: 40px;
-        height: 40px;
+        width: 20px;
+        height: 20px;
         border-radius: var(--offset-medium);
         overflow: hidden;
 
@@ -29,6 +44,22 @@
     }
 
     .name {
+        color: var(--text-color-second);
+        font-size: 14px;
+        font-weight: 600;
+    }
 
+    &.opened {
+        .arrow {
+            transform: rotate(180deg);
+        }
+    }
+
+    .arrow {
+        transition: var(--transition-medium);
+
+        svg {
+            color: var(--text-color-second);
+        }
     }
 }

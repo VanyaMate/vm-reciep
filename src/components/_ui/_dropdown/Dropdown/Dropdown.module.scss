@@ -1,0 +1,26 @@
+.container {
+    position: absolute;
+    z-index: 100;
+    background: var(--background-second);
+
+    &.opened {
+
+    }
+
+    &.top_left {
+
+    }
+
+    &.top_right {
+
+    }
+
+    &.bottom_left {
+        left: 0;
+        top: calc(100% + 5px);
+    }
+
+    &.bottom_right {
+
+    }
+}

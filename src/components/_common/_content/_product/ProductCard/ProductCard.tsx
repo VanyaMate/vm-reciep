@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
     return (
         <Box className={ css.container }>
             <ProductCardHeader
-                images={ [ product.image_url] }
+                images={ [ product.image_url ] }
                 stock={ { title: 'sale', id: 'sale', color: 'red' } }
                 onAddToWishlist={ async () => {
                 } }
@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                 discount={ 0 }
                 currency={ 'Руб' }
             />
-            <Button primary>Добавить в корзину</Button>
+            <Button styleType={ 'primary' }>Добавить в корзину</Button>
         </Box>
     );
 };

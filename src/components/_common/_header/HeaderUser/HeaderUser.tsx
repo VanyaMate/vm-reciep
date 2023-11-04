@@ -10,6 +10,7 @@ import HeaderUserProfile
     from '@/components/_common/_header/HeaderUser/HeaderUserProfile/HeaderUserProfile.tsx';
 import HeaderUserWishlist
     from '@/components/_common/_header/HeaderUser/HeaderUserWishlist/HeaderUserWishlist.tsx';
+import Button from '@/components/_ui/_button/Button/Button.tsx';
 
 
 export type HeaderUserProps = {
@@ -25,8 +26,8 @@ const HeaderUser: React.FC<HeaderUserProps> = (props: HeaderUserProps) => {
     if (process) {
         return (
             <div className={ css.container }>
-                <BadgeButton amount={ 0 } icon={ '' } skeleton/>
-                <BadgeButton amount={ 0 } icon={ '' } skeleton/>
+                <Button skeleton square/>
+                <Button skeleton square/>
                 <HeaderUserProfile user={ user } skeleton/>
             </div>
         );
