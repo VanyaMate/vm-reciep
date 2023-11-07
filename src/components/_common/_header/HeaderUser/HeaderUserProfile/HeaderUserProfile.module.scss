@@ -1,3 +1,10 @@
+.dropdownContainer {
+    position: relative;
+    z-index: 100;
+    min-width: 200px;
+    width: 200px;
+}
+
 .container {
     display: flex;
     justify-content: space-between;
@@ -12,9 +19,17 @@
     position: relative;
     z-index: 100;
 
+    .button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--offset-medium);
+    }
+
     .info {
         display: flex;
         align-items: center;
+        width: 100%;
         gap: var(--offset-medium);
     }
 
@@ -50,6 +65,9 @@
     }
 
     &.opened {
+        transform: scale(1) !important;
+        box-shadow: var(--box-shadow-none);
+
         .arrow {
             transform: rotate(180deg);
         }

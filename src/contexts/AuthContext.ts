@@ -1,12 +1,13 @@
-import { User } from '@/modules/api/user/user-service.types.ts';
 import { createContext } from 'react';
 
 
-export type UserContextType = {
-    user: User | null;
-    setUser: (user: User | null) => void;
+export type AuthContextType = {
     process: boolean;
-    setProcess: (status: boolean) => void;
+    setProcess: (process: boolean) => void;
 }
 
-export const AuthContext = createContext<UserContextType | null>(null);
+export const AuthContext = createContext<AuthContextType>({
+    process   : false,
+    setProcess: () => {
+    },
+});

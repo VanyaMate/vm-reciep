@@ -1,6 +1,9 @@
 import React, { useContext, useMemo } from 'react';
 import { ServicesContext } from '@/contexts/ServicesContext.tsx';
-import { AuthContext, UserContextType } from '@/contexts/AuthContext.ts';
+import {
+    UserAuthContext,
+    UserAuthContextType,
+} from '@/contexts/UserAuthContext.ts';
 import { User } from '@/modules/api/user/user-service.types.ts';
 import { ICartService } from '@/modules/api/cart/cart-service.interface.ts';
 import { Cart } from '@/modules/api/cart/cart-service.types.ts';
@@ -47,6 +50,7 @@ import {
 import {
     CreateCartDto, UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
+import { UserContext, UserContextType } from '@/contexts/UserContext.ts';
 
 
 export type ServicesProviderProps = {
@@ -54,20 +58,25 @@ export type ServicesProviderProps = {
 }
 
 const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
-    const userContext: UserContextType | null                                             = useContext(AuthContext);
-    const user: User | null                                                               = useMemo(() => userContext?.user ?? null, [ userContext ]);
+    const userContext: UserContextType = useContext(UserContext);
+    const user: User | null            = useMemo(() => userContext.user, [ userContext ]);
+
     const cartBackend: ISingleService<Cart, CreateCartDto, UpdateCartDto>                 = useMemo(() => new CartBackend(), []);
     const wishlistBackend: ISingleService<Wishlist, CreateWishlistDto, UpdateWishlistDto> = useMemo(() => new WishlistBackend(), []);
-    const cartService: ICartService<Cart>                                                 = useMemo(() => {
+
+    const cartService: ICartService<Cart> = useMemo(() => {
         return new LocalCartService(user?.login ?? '', cartBackend);
     }, [ user ]);
-    const wishlistService: IWishlistService<Wishlist>                                     = useMemo(() => {
+
+    const wishlistService: IWishlistService<Wishlist> = useMemo(() => {
         return new LocalWishlistService(user?.login ?? '', wishlistBackend);
     }, [ user ]);
-    const productsService: IProductsService<Product>                                      = useMemo(() => {
+
+    const productsService: IProductsService<Product> = useMemo(() => {
         return new LocalProductsService(new ProductsBackend());
     }, []);
-    const authService: IAuthService<AuthData>                                             = useMemo(() => {
+
+    const authService: IAuthService<AuthData> = useMemo(() => {
         return new LocalAuthService(
             new UserBackend(),
             new UserBackendMapper(),

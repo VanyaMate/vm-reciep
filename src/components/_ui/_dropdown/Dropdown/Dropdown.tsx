@@ -24,6 +24,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
         <Box className={ cn(
             css.container,
             position === 'bottom-left' && css.bottom_left,
+            opened && css.opened,
         ) }>
             { children }
         </Box>

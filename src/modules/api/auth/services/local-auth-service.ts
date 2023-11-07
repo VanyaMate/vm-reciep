@@ -76,7 +76,7 @@ export class LocalAuthService implements IAuthService<AuthData> {
 
         return {
             user    : this._userMapper.convert(user),
-            cart    : cart.items,
+            cart    : cart,
             wishlist: wishlist,
         };
     }

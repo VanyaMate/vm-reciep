@@ -8,7 +8,7 @@ import HeaderBanner
     from '@/components/_common/_header/HeaderBanner/HeaderBanner.tsx';
 import HeaderSearch
     from '@/components/_common/_header/HeaderSearch/HeaderSearch.tsx';
-import { AuthContext } from '@/contexts/AuthContext.ts';
+import { UserAuthContext } from '@/contexts/UserAuthContext.ts';
 import HeaderLogo from '@/components/_common/_header/HeaderLogo/HeaderLogo.tsx';
 import HeaderUser from '@/components/_common/_header/HeaderUser/HeaderUser.tsx';
 import { useAuth } from '@/hooks/useAuth.ts';
@@ -17,55 +17,19 @@ import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
 import { Cart, CartItem } from '@/modules/api/cart/cart-service.types.ts';
 import { EntitiesContext } from '@/contexts/EntitiesContext.ts';
 import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
+import { AuthContext } from '@/contexts/AuthContext.ts';
+import { UserContext } from '@/contexts/UserContext.ts';
+import { CartContext } from '@/contexts/CartContext.ts';
+import { WishlistContext } from '@/contexts/WishlistContext.ts';
 
-
-/***
- * Как будто какая то дичь. Ну да ладно. Пойду спать. хехе.
- * @returns {JSX.Element}
- * @constructor
- */
 
 const CommonLayout = () => {
-    const [ process, setProcess ]   = useState<boolean>(false);
-    const [ user, setUser ]         = useState<User | null>(null);
-    const [ cart, setCart ]         = useState<CartItem[] | null>(null);
-    const [ wishlist, setWishlist ] = useState<Wishlist | null>(null);
+    const auth     = useContext(AuthContext);
+    const user     = useContext(UserContext);
+    const cart     = useContext(CartContext);
+    const wishlist = useContext(WishlistContext);
 
-    const entities = useContext(EntitiesContext);
-
-    useEffect(() => {
-        const setAuthHandler     = function (authData: AuthData | null) {
-            entities.user.set(authData?.user ?? null);
-            entities.cart.set(authData?.cart ?? null);
-            entities.wishlist.set(authData?.wishlist ?? null);
-        };
-        const authProcessHandler = function (status: boolean) {
-            setProcess(status);
-        };
-        const setUserHandler     = function (user: User | null) {
-            setUser(user);
-        };
-        const setCartHandler     = function (cart: CartItem[] | null) {
-            setCart(cart);
-        };
-        const setWishlistHandler = function (wishlist: Wishlist | null) {
-            setWishlist(wishlist);
-        };
-
-        entities.auth.subscribe('auth', setAuthHandler);
-        entities.auth.subscribe('process', authProcessHandler);
-        entities.user.subscribe('set', setUserHandler);
-        entities.cart.subscribe('set', setCartHandler);
-        entities.wishlist.subscribe('set', setWishlistHandler);
-
-        return () => {
-            entities.auth.unsubscribe('auth', setAuthHandler);
-            entities.auth.unsubscribe('process', authProcessHandler);
-            entities.user.unsubscribe('set', setUserHandler);
-            entities.cart.unsubscribe('set', setCartHandler);
-            entities.wishlist.unsubscribe('set', setWishlist);
-        };
-    }, []);
+    console.log(auth.process);
 
     return (
         <PageContent
@@ -73,11 +37,13 @@ const CommonLayout = () => {
                 <>
                     <Header
                         left={ <HeaderLogo/> }
-                        right={ <HeaderUser process={ process }
-                                            user={ user }
-                                            cart={ cart }
-                                            wishlist={ wishlist }
-                        /> }
+                        right={
+                            <HeaderUser process={ auth.process }
+                                        user={ user.user }
+                                        cart={ cart.cart }
+                                        wishlist={ wishlist.wishlist }
+                            />
+                        }
                     />
                     <HeaderBanner
                         background={ 'https://images.unsplash.com/photo-1576562331281-d09e46af9854?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1hcmtldHxlbnwwfHwwfHx8MA%3D%3D' }
