@@ -3,6 +3,11 @@ import {
     CreateProductDto,
 } from '@/modules/local-backend/product/product-backend.types.ts';
 import { IDataGenerator } from '@vanyamate/market-place-service';
+import { getRandomInt, getRandomWords } from '@/helpers/random.ts';
+import {
+    productImagesLib,
+    productWordsLib,
+} from '@/helpers/libs/product-words.lib.ts';
 
 
 export class ProductBackendDataGenerator implements IDataGenerator<Product, CreateProductDto> {
@@ -42,7 +47,7 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
     };
 
     public allergens (): Product['allergens'] {
-        return '';
+        return getRandomWords(productWordsLib, 2);
     }
 
     public available (): Product['available'] {
@@ -50,15 +55,15 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
     }
 
     public barcode (): Product['barcode'] {
-        return 0;
+        return getRandomInt(9999999, 9999999999);
     }
 
     public brand (): Product['brand'] {
-        return '';
+        return getRandomWords(productWordsLib, 1);
     }
 
     public brand_name (): Product['brand_name'] {
-        return '';
+        return getRandomWords(productWordsLib, 1);
     }
 
     public byData (data: CreateProductDto): Product {
@@ -69,19 +74,19 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
     }
 
     public calcium (): Product['calcium'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public calories (): Product['calories'] {
-        return 0;
+        return getRandomInt(100, 740);
     }
 
     public carbohydrates (): Product['carbohydrates'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public category (): Product['category'] {
-        return ''; // TODO: Поменять категорию
+        return getRandomWords(productWordsLib, 1);
     }
 
     public clear (): Product {
@@ -89,11 +94,11 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
     }
 
     public country_of_origin (): Product['country_of_origin'] {
-        return '';
+        return getRandomWords(productWordsLib, 1);
     }
 
     public description (): Product['description'] {
-        return '';
+        return getRandomWords(productWordsLib, 35);
     }
 
     public expiration_date (): Product['expiration_date'] {
@@ -101,11 +106,11 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
     }
 
     public fat (): Product['fat'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public fiber (): Product['fiber'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public filled (data: CreateProductDto | undefined): Product {
@@ -142,80 +147,80 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
             vitamin_a        : this.vitamin_a(),
             vitamin_c        : this.vitamin_c(),
             weight           : this.weight(),
-            ...data,
+            ...(data ?? {}),
         };
     }
 
     public image_url (): Product['image_url'] {
-        return '';
+        return getRandomWords(productImagesLib, 1);
     }
 
     public images (): Product['images'] {
-        return [];
+        return getRandomWords(productImagesLib, 3).split(' ');
     }
 
     public ingredients (): Product['ingredients'] {
-        return '';
+        return getRandomWords(productWordsLib, 5);
     }
 
     public iron (): Product['iron'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public manufacturer (): Product['manufacturer'] {
-        return '';
+        return getRandomWords(productWordsLib, 5);
     }
 
     public net_weight (): Product['net_weight'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public nutritional_facts (): Product['nutritional_facts'] {
-        return '';
+        return getRandomWords(productWordsLib, 5);
     }
 
     public price (): Product['price'] {
-        return 0;
+        return getRandomInt(200, 99990);
     }
 
     public product_name (): Product['product_name'] {
-        return '';
+        return getRandomWords(productWordsLib, 5);
     }
 
     public protein (): Product['protein'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public quantity (): Product['quantity'] {
-        return 0;
+        return getRandomInt(0, 1000);
     }
 
     public rating (): Product['rating'] {
-        return 0;
+        return getRandomInt(0, 5);
     }
 
     public reviews (): Product['reviews'] {
-        return 0;
+        return getRandomInt(0, 999);
     }
 
     public serving_size (): Product['serving_size'] {
-        return 0;
+        return getRandomInt(0, 5);
     }
 
     public sugar (): Product['sugar'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public vitamin_a (): Product['vitamin_a'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public vitamin_c (): Product['vitamin_c'] {
-        return 0;
+        return getRandomInt(20, 320);
     }
 
     public weight (): Product['weight'] {
-        return 0;
+        return getRandomInt(20, 3200);
     }
 
 }
