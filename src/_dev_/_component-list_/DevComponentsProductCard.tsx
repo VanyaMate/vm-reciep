@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import DevComponentsItem from '@/_dev_/DevComponentsItem/DevComponentsItem.tsx';
 import {
     ProductBackendDataGenerator,
@@ -25,12 +25,22 @@ const DevComponentsProductCard = () => {
         return list;
     }, []);
 
+    const onAddAny = useCallback(async () => {
+        return new Promise<void>((resolve) => {
+            setTimeout(() => {
+                resolve();
+            }, 1000);
+        });
+    }, []);
+
     return (
         <DevComponentsItem
             label={ 'Product Card' }
             type={ 'row' }
         >
-            <ProductList products={ products }/>
+            <ProductList products={ products }
+                         onAddToCart={ onAddAny }
+                         onAddToWishlist={ onAddAny }/>
         </DevComponentsItem>
     );
 };

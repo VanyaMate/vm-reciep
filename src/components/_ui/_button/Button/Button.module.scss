@@ -2,10 +2,9 @@ $padding: var(--offset-medium);
 
 .container {
     height: 40px;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
     border-radius: $padding;
     padding: $padding;
     box-shadow: var(--box-shadow-small);
@@ -53,7 +52,6 @@ $padding: var(--offset-medium);
 
         &:hover {
             border: 1px solid var(--button-danger-background-hover);
-            color: var(--button-danger-background-hover);
         }
     }
 
@@ -67,6 +65,24 @@ $padding: var(--offset-medium);
         background: var(--gradient);
         animation: var(--gradient-animation);
         background-size: var(--gradient-size);
+        color: transparent;
+
+        &:hover {
+            color: transparent;
+            transform: scale(1);
+            cursor: default;
+            box-shadow: var(--box-shadow-none);
+        }
+    }
+
+    &.loading {
+        animation: var(--loading-animtion);
+
+        &:hover {
+            transform: scale(1);
+            cursor: default;
+            box-shadow: var(--box-shadow-none);
+        }
     }
 
     &:hover {

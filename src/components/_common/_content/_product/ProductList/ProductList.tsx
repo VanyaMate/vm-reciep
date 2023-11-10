@@ -8,16 +8,22 @@ import ProductCard
 
 export type ProductListProps = {
     products: Product[];
+    onAddToCart?: (productId: string) => Promise<any>;
+    onAddToWishlist?: (productId: string) => Promise<any>;
 }
 
 const ProductList: React.FC<ProductListProps> = (props) => {
-    const { products } = props;
+    const { products, onAddToCart, onAddToWishlist } = props;
 
     return (
         <Box className={ css.container }>
             {
                 products.map((product) => (
-                    <ProductCard product={ product } key={ product.barcode }/>
+                    <ProductCard product={ product }
+                                 key={ product.barcode }
+                                 onAddToCart={ onAddToCart }
+                                 onAddToWishlist={ onAddToWishlist }
+                    />
                 ))
             }
         </Box>

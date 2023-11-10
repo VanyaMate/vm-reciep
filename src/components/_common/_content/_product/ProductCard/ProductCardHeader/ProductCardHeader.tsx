@@ -10,7 +10,7 @@ import WishlistButton
 export type ProductCardHeaderProps = {
     images: string[];
     stock: Stock;
-    onAddToWishlist: () => Promise<any>;
+    onAddToWishlist?: () => Promise<any>;
 }
 
 const ProductCardHeader: React.FC<ProductCardHeaderProps> = (props) => {
@@ -22,7 +22,10 @@ const ProductCardHeader: React.FC<ProductCardHeaderProps> = (props) => {
             <Tag backgroundColor={ stock.color } textColor={ '#fff' }>
                 sale
             </Tag>
-            <WishlistButton/>
+            {
+                onAddToWishlist &&
+                <WishlistButton onAddToWishlist={ onAddToWishlist }/>
+            }
         </Box>
     );
 };

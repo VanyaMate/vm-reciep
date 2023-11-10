@@ -42,10 +42,11 @@ const Button: React.FC<ButtonProps> = (props) => {
                    styleType === 'main' && css.main,
                    styleType === 'danger' && css.danger,
                    skeleton && css.skeleton,
+                   loading && css.loading,
                    square && css.square,
                ) }
         />
     );
 };
 
-export default Button;
+export default React.memo(Button);
