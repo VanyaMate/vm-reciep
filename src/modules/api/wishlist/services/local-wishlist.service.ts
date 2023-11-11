@@ -19,7 +19,7 @@ export class LocalWishlistService implements IWishlistService<Wishlist> {
     public async addToWishlist (id: string): Promise<Wishlist> {
         const wishlist: Wishlist | null = await this._wishlistService.read(this._userId);
         if (wishlist) {
-            wishlist.items = [ ...new Set(...wishlist.items).add(id) ];
+            wishlist.items = [ ...new Set(wishlist.items).add(id) ];
             return await this._wishlistService.update(this._userId, wishlist);
         }
 
