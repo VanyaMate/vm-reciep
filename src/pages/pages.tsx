@@ -25,4 +25,4 @@ const Pages = () => {
     );
 };
 
-export default Pages;
+export default React.memo(Pages);

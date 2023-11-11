@@ -7,16 +7,23 @@ import { cn } from '@/helpers/classname.react.ts';
 export type WishlistButtonProps = {
     showText?: boolean;
     onAddToWishlist: () => Promise<any>;
+    onRemoveFromWishlist: () => Promise<any>;
     inWishlist?: boolean;
 }
 
 const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
-    const { onAddToWishlist, showText, inWishlist } = props;
-    const [ loading, setLoading ]                   = useState<boolean>(false);
+    const {
+              onAddToWishlist,
+              onRemoveFromWishlist,
+              showText,
+              inWishlist,
+          }                       = props;
+    const [ loading, setLoading ] = useState<boolean>(false);
 
     const onClick = useCallback(() => {
         setLoading(true);
-        onAddToWishlist().finally(() => setLoading(false));
+        (inWishlist ? onRemoveFromWishlist() : onAddToWishlist())
+            .finally(() => setLoading(false));
     }, [ onAddToWishlist ]);
 
     return (
@@ -27,7 +34,8 @@ const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
         ) }
              onClick={ onClick }
         >
-            <HeartTwoTone className={ css.icon } twoToneColor={ inWishlist ? '#f55' : '#99b' }/>
+            <HeartTwoTone className={ css.icon }
+                          twoToneColor={ inWishlist ? '#f55' : '#99b' }/>
             <span className={ css.text }>
                 В избранное
             </span>

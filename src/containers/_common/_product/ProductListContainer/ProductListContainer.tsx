@@ -16,10 +16,14 @@ import { WishlistContext } from '@/contexts/WishlistContext.ts';
 import { Cart, CartItem } from '@/modules/api/cart/cart-service.types.ts';
 import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
 import { MultiplyResponse } from '@/modules/api.types.ts';
+import ProductCardSkeleton
+    from '@/components/_common/_content/_product/ProductCard/ProductCardSkeleton/ProductCardSkeleton.tsx';
 
 
 const ProductListContainer = () => {
+    const [ limit, setLimit ]       = useState<number>(30);
     const [ products, setProducts ] = useState<Product[]>([]);
+    const [ loading, setLoading ]   = useState<boolean>(true);
     const services                  = useContext(ServicesContext);
     const cart                      = useContext(CartContext);
     const wishlist                  = useContext(WishlistContext);
@@ -27,14 +31,21 @@ const ProductListContainer = () => {
     useEffect(() => {
         services
             .products
-            .findMany({ available: true }, { limit: 30 })
-            .then((response: MultiplyResponse<Product>) => setProducts(response.list));
+            .findMany({ available: true }, { limit })
+            .then((response: MultiplyResponse<Product>) => setProducts(response.list))
+            .finally(() => setLoading(false));
     }, []);
 
-    const addToWishlistCallback = useCallback((productId: string) => {
+    const addToWishlistCallback      = useCallback((productId: string) => {
         return services
             .wishlist
             .addToWishlist(productId)
+            .then((newWishlist: Wishlist) => wishlist.setWishlist(newWishlist));
+    }, [ services.wishlist, wishlist ]);
+    const removeFromWishlistCallback = useCallback((productId: string) => {
+        return services
+            .wishlist
+            .removeFromWishlist(productId)
             .then((newWishlist: Wishlist) => wishlist.setWishlist(newWishlist));
     }, [ services.wishlist, wishlist ]);
 
@@ -55,16 +66,19 @@ const ProductListContainer = () => {
     return (
         <ProductList>
             {
-                products.map((product) => (
-                    <ProductCard
-                        product={ product }
-                        key={ product.barcode }
-                        onAddToWishlist={ addToWishlistCallback }
-                        onAddToCart={ addToCartCallback }
-                        inWishlist={ inWishlist(product.barcode) }
-                        inCart={ inCart(product.barcode) }
-                    />
-                ))
+                loading ? new Array(limit).fill(0).map((_, index) =>
+                            <ProductCardSkeleton key={ index }/>)
+                        : products.map((product) => (
+                            <ProductCard
+                                product={ product }
+                                key={ product.barcode }
+                                onAddToWishlist={ addToWishlistCallback }
+                                onAddToCart={ addToCartCallback }
+                                onRemoveFromWishlist={ removeFromWishlistCallback }
+                                inWishlist={ inWishlist(product.barcode) }
+                                inCart={ inCart(product.barcode) }
+                            />
+                        ))
             }
         </ProductList>
     );

@@ -15,25 +15,38 @@ import AddToCartButton
 
 
 export type AddToCartCallback = (productId: string) => Promise<any>;
-export type AddToWishlistCallback = (productId: string) => Promise<any>;
+export type WishlistCallback = (productId: string) => Promise<any>;
 
 export type ProductCardProps = {
     product: Product;
     inWishlist?: boolean;
     inCart?: number;
     onAddToCart?: AddToCartCallback;
-    onAddToWishlist?: AddToWishlistCallback;
+    onAddToWishlist?: WishlistCallback;
+    onRemoveFromWishlist?: WishlistCallback;
 }
 
 const ProductCard: React.FC<ProductCardProps> = (props) => {
-    const { product, onAddToWishlist, onAddToCart, inWishlist, inCart } = props;
+    const {
+              product,
+              onAddToWishlist,
+              onAddToCart,
+              onRemoveFromWishlist,
+              inWishlist,
+              inCart,
+          } = props;
 
-    const onAddToWishlistHandler = useCallback(async () => {
+    const onAddToWishlistHandler      = useCallback(async () => {
         if (onAddToWishlist) {
             return onAddToWishlist(product.barcode.toString());
         }
     }, [ onAddToWishlist, product ]);
-    const onAddToCartHandler     = useCallback(async () => {
+    const onRemoveFromWishlistHandler = useCallback(async () => {
+        if (onRemoveFromWishlist) {
+            return onRemoveFromWishlist(product.barcode.toString());
+        }
+    }, [ onAddToWishlist, product ]);
+    const onAddToCartHandler          = useCallback(async () => {
         if (onAddToCart) {
             return onAddToCart(product.barcode.toString());
         }
@@ -56,6 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                             onAddToWishlist &&
                             <WishlistButton
                                 onAddToWishlist={ onAddToWishlistHandler }
+                                onRemoveFromWishlist={ onRemoveFromWishlistHandler }
                                 inWishlist={ inWishlist }/>
                         }
                     </>

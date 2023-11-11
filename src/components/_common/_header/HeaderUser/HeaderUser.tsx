@@ -27,8 +27,8 @@ const HeaderUser: React.FC<HeaderUserProps> = (props: HeaderUserProps) => {
     if (process) {
         return (
             <div className={ css.container }>
-                <Button skeleton square/>
-                <Button skeleton square/>
+                <Button skeleton square> </Button>
+                <Button skeleton square> </Button>
                 <HeaderUserProfileSkeleton/>
             </div>
         );
