@@ -7,11 +7,12 @@ import { cn } from '@/helpers/classname.react.ts';
 export type WishlistButtonProps = {
     showText?: boolean;
     onAddToWishlist: () => Promise<any>;
+    inWishlist?: boolean;
 }
 
 const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
-    const { onAddToWishlist, showText } = props;
-    const [ loading, setLoading ]       = useState<boolean>(false);
+    const { onAddToWishlist, showText, inWishlist } = props;
+    const [ loading, setLoading ]                   = useState<boolean>(false);
 
     const onClick = useCallback(() => {
         setLoading(true);
@@ -26,7 +27,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
         ) }
              onClick={ onClick }
         >
-            <HeartTwoTone className={ css.icon } twoToneColor={ '#f55' }/>
+            <HeartTwoTone className={ css.icon } twoToneColor={ inWishlist ? '#f55' : '#99b' }/>
             <span className={ css.text }>
                 В избранное
             </span>

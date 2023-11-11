@@ -10,6 +10,9 @@ import {
 } from '@/modules/local-backend/product/product-backend.types.ts';
 import ProductList
     from '@/components/_common/_content/_product/ProductList/ProductList.tsx';
+import ProductCard
+    from '@/components/_common/_content/_product/ProductCard/ProductCard.tsx';
+import { getRandomInt } from '@/helpers/random.ts';
 
 
 const DevComponentsProductCard = () => {
@@ -38,9 +41,22 @@ const DevComponentsProductCard = () => {
             label={ 'Product Card' }
             type={ 'row' }
         >
-            <ProductList products={ products }
-                         onAddToCart={ onAddAny }
-                         onAddToWishlist={ onAddAny }/>
+            <ProductList>
+                {
+                    products.map((product) => {
+                        return (
+                            <ProductCard
+                                key={ product.barcode }
+                                product={ product }
+                                onAddToCart={ onAddAny }
+                                onAddToWishlist={ onAddAny }
+                                inWishlist={!!getRandomInt(0, 2)}
+                                inCart={getRandomInt(0, 2) * getRandomInt(0, 2) * getRandomInt(1, 10)}
+                            />
+                        );
+                    })
+                }
+            </ProductList>
         </DevComponentsItem>
     );
 };

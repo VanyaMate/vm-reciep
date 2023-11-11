@@ -9,23 +9,18 @@ import WishlistButton
 
 export type ProductCardHeaderProps = {
     images: string[];
-    stock: Stock;
-    onAddToWishlist?: () => Promise<any>;
+    top: React.ReactNode;
 }
 
 const ProductCardHeader: React.FC<ProductCardHeaderProps> = (props) => {
-    const { images, stock, onAddToWishlist } = props;
+    const { images, top } = props;
 
     return (
-        <Box style={ { backgroundImage: `url("${ images[0] }")` } }
-             className={ css.container }>
-            <Tag backgroundColor={ stock.color } textColor={ '#fff' }>
-                sale
-            </Tag>
-            {
-                onAddToWishlist &&
-                <WishlistButton onAddToWishlist={ onAddToWishlist }/>
-            }
+        <Box
+            style={ { backgroundImage: `url("${ images[0] }")` } }
+            className={ css.container }
+        >
+            { top }
         </Box>
     );
 };
