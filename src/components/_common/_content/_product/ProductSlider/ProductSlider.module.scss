@@ -1,0 +1,39 @@
+.container {
+    width: 600px;
+    height: 500px;
+    display: flex;
+    justify-content: space-between;
+
+    .main {
+        width: 500px;
+        height: 500px;
+        margin: 0;
+        cursor: grab;
+        border-radius: var(--offset-large);
+    }
+
+    .second {
+        width: 95px;
+        height: 500px;
+        margin: 0;
+        cursor: pointer;
+
+        :global {
+            .swiper-slide-thumb-active {
+                opacity: 1 !important;
+            }
+        }
+
+        .second_slide {
+            height: 95px;
+            opacity: .4;
+            transition: .1s;
+            border-radius: var(--offset-medium);
+            overflow: hidden;
+
+            &:hover {
+                opacity: .8;
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+.container {
+    box-shadow: var(--box-shadow-none);
+    display: flex;
+    flex-direction: column;
+    gap: var(--offset-medium);
+    min-width: 1100px;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--offset-medium);
+
+        .left {
+            width: 50%;
+            min-width: 600px;
+
+            .slider {
+
+            }
+        }
+
+        .right {
+            width: 50%;
+        }
+    }
+}
