@@ -1,11 +1,11 @@
 import { IAuthService } from '@/modules/api/auth/auth-service.interface.ts';
 import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
 import { useCallback, useContext, useMemo } from 'react';
-import { ServicesContext } from '@/contexts/ServicesContext.tsx';
-import { AuthContext } from '@/contexts/AuthContext.ts';
-import { UserContext } from '@/contexts/UserContext.ts';
-import { CartContext } from '@/contexts/CartContext.ts';
-import { WishlistContext } from '@/contexts/WishlistContext.ts';
+import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
+import { AuthContext } from '@/contexts/data/AuthContext.ts';
+import { UserContext } from '@/contexts/data/UserContext.ts';
+import { CartContext } from '@/contexts/data/CartContext.ts';
+import { WishlistContext } from '@/contexts/data/WishlistContext.ts';
 
 
 export const useAuth = function (): IAuthService<AuthData> & {

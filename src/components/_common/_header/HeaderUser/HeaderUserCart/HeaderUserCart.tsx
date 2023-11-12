@@ -5,14 +5,14 @@ import Button from '@/components/_ui/_button/Button/Button.tsx';
 
 
 export type HeaderUserCartProps = {
-    cart: Cart | null;
+    cart: Cart;
 }
 
 const HeaderUserCart: React.FC<HeaderUserCartProps> = (props) => {
     const { cart } = props;
 
     return (
-        cart && <Button
+        <Button
             amount={ cart.items.length }
             styleType={ cart.items.length ? 'primary' : 'default' }
             square

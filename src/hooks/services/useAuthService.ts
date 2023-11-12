@@ -1,8 +1,8 @@
 import { IAuthService } from '@/modules/api/auth/auth-service.interface.ts';
 import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
 import { useCallback, useContext, useMemo } from 'react';
-import { ServicesContext } from '@/contexts/ServicesContext.tsx';
-import { EntitiesContext } from '@/contexts/EntitiesContext.ts';
+import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
+import { EntitiesContext } from '@/contexts/data/EntitiesContext.ts';
 
 
 export const useAuthEntity = function (): IAuthService<AuthData> {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthContext } from '@/contexts/AuthContext.ts';
+import { AuthContext } from '@/contexts/data/AuthContext.ts';
 
 
 const AuthProvider: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {

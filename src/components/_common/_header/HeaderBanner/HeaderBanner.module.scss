@@ -6,6 +6,11 @@
     height: 300px;
     display: flex;
     align-items: end;
+    transition: var(--transition-slow);
+
+    &.small {
+        height: 100px;
+    }
 
     .footer {
 

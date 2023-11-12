@@ -6,14 +6,14 @@ import Button from '@/components/_ui/_button/Button/Button.tsx';
 
 
 export type HeaderUserWishlistProps = {
-    wishlist: Wishlist | null;
+    wishlist: Wishlist;
 }
 
 const HeaderUserWishlist: React.FC<HeaderUserWishlistProps> = (props) => {
     const { wishlist } = props;
 
     return (
-        wishlist && <Button
+        <Button
             amount={ wishlist.items.length }
             styleType={ wishlist.items.length ? 'primary' : 'default' }
             square

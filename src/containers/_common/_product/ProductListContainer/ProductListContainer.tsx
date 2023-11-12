@@ -8,11 +8,11 @@ import React, {
 import { Product } from '@/modules/api/product/product-service.types.ts';
 import ProductList
     from '@/components/_common/_content/_product/ProductList/ProductList.tsx';
-import { ServicesContext } from '@/contexts/ServicesContext.tsx';
+import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import ProductCard
     from '@/components/_common/_content/_product/ProductCard/ProductCard.tsx';
-import { CartContext } from '@/contexts/CartContext.ts';
-import { WishlistContext } from '@/contexts/WishlistContext.ts';
+import { CartContext } from '@/contexts/data/CartContext.ts';
+import { WishlistContext } from '@/contexts/data/WishlistContext.ts';
 import { Cart, CartItem } from '@/modules/api/cart/cart-service.types.ts';
 import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
 import { MultiplyResponse } from '@/modules/api.types.ts';

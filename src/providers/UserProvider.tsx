@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserContext } from '@/contexts/UserContext.ts';
+import { UserContext } from '@/contexts/data/UserContext.ts';
 import { User } from '@/modules/api/user/user-service.types.ts';
 
 

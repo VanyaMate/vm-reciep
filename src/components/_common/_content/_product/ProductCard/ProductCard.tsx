@@ -76,6 +76,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                 }
             />
             <ProductCardInfo
+                productId={ product.barcode.toString() }
                 title={ product.product_name }
                 description={ product.description }
                 price={ product.price }

@@ -1,9 +1,9 @@
 import React, { useContext, useMemo } from 'react';
-import { ServicesContext } from '@/contexts/ServicesContext.tsx';
+import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import {
     UserAuthContext,
     UserAuthContextType,
-} from '@/contexts/UserAuthContext.ts';
+} from '@/contexts/data/UserAuthContext.ts';
 import { User } from '@/modules/api/user/user-service.types.ts';
 import { ICartService } from '@/modules/api/cart/cart-service.interface.ts';
 import { Cart } from '@/modules/api/cart/cart-service.types.ts';
@@ -50,7 +50,7 @@ import {
 import {
     CreateCartDto, UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
-import { UserContext, UserContextType } from '@/contexts/UserContext.ts';
+import { UserContext, UserContextType } from '@/contexts/data/UserContext.ts';
 
 
 export type ServicesProviderProps = {

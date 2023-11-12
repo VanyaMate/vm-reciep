@@ -1,6 +1,6 @@
 .container {
     padding: var(--offset-medium) var(--offset-large) !important;
-    background: var(--background-second);
+    background: var(--background-second) !important;
     height: 60px;
     display: flex;
     align-items: center;

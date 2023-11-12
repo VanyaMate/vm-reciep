@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { WishlistContext } from '@/contexts/WishlistContext.ts';
+import { WishlistContext } from '@/contexts/data/WishlistContext.ts';
 import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
 
 

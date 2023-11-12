@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Cart } from '@/modules/api/cart/cart-service.types.ts';
-import { CartContext } from '@/contexts/CartContext.ts';
+import { CartContext } from '@/contexts/data/CartContext.ts';
 
 
 const CartProvider: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
