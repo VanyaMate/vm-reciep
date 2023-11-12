@@ -20,6 +20,9 @@
         }
 
         .right {
+            display: flex;
+            flex-direction: column;
+            gap: var(--offset-medium);
             width: 50%;
         }
     }
