@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import css from './Button.module.scss';
 import { cn } from '@/helpers/classname.react.ts';
 import { Badge } from 'antd';
@@ -18,7 +18,8 @@ export type ButtonProps = {
     skeleton?: boolean;
     square?: boolean;
     block?: boolean;
-} & React.HTMLAttributes<HTMLButtonElement>;
+    disabled?: boolean;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: React.FC<ButtonProps> = (props) => {
     const {
@@ -28,6 +29,7 @@ const Button: React.FC<ButtonProps> = (props) => {
               loading,
               skeleton,
               square,
+              disabled,
               block,
               ...other
           } = props;
@@ -47,6 +49,7 @@ const Button: React.FC<ButtonProps> = (props) => {
                    loading && css.loading,
                    square && css.square,
                    block && css.block,
+                   disabled && css.disabled,
                ) }
         />
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input as InputAntd } from 'antd';
 
 
 export type InputProps = {
@@ -7,9 +8,7 @@ export type InputProps = {
 
 const Input = () => {
     return (
-        <div>
-
-        </div>
+        <InputAntd/>
     );
 };
 

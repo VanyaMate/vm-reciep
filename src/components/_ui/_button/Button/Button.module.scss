@@ -90,6 +90,15 @@ $padding: var(--offset-medium);
         }
     }
 
+    &.disabled {
+        transform: scale(1);
+        box-shadow: var(--box-shadow-none);
+        opacity: .8;
+        user-select: none;
+        pointer-events: none;
+        cursor: default;
+    }
+
     &:hover {
         cursor: pointer;
         transform: scale(1.01);

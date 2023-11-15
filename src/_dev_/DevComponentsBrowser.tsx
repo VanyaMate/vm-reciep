@@ -6,11 +6,13 @@ import DevComponentsButton
     from '@/_dev_/_component-list_/DevComponentsButton.tsx';
 import DevComponentsDropdown
     from '@/_dev_/_component-list_/DevComponentsDropdown.tsx';
+import DevComponentsForm from '@/_dev_/_component-list_/DevComponentsForm.tsx';
 
 
 const DevComponentsBrowser = () => {
     return (
         <DevComponentsList>
+            <DevComponentsForm/>
             <DevComponentsDropdown/>
             <DevComponentsButton/>
             <DevComponentsProductCard/>

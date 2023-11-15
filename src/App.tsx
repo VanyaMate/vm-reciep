@@ -14,9 +14,9 @@ const App                = () => {
         refreshData = true;
     }, []);
 
-/*    return (
+    return (
         <DevComponentsBrowser/>
-    );*/
+    );
 
     return (
         <Pages/>

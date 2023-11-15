@@ -24,12 +24,21 @@ export type HeaderUserProps = {
 const HeaderUser: React.FC<HeaderUserProps> = (props: HeaderUserProps) => {
     const { user, cart, wishlist, process } = props;
 
-    if (process) {
+
+    if (process && !user) {
         return (
             <div className={ css.container }>
                 <Button skeleton square> </Button>
                 <Button skeleton square> </Button>
                 <HeaderUserProfileSkeleton/>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return (
+            <div className={ css.container }>
+                login
             </div>
         );
     }

@@ -41,10 +41,11 @@ const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
                     <Header
                         left={ <HeaderLogo/> }
                         right={
-                            <HeaderUser process={ process }
-                                        user={ user }
-                                        cart={ cart }
-                                        wishlist={ wishlist }
+                            <HeaderUser
+                                process={ process }
+                                user={ user }
+                                cart={ cart }
+                                wishlist={ wishlist }
                             />
                         }
                     />
