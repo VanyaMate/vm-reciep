@@ -16,6 +16,7 @@ const ProductCardSkeleton = () => {
                 top={ <></> }
             />
             <ProductCardInfo
+                productId={ '' }
                 title={ 'default' }
                 description={ 'default' }
                 price={ 0 }

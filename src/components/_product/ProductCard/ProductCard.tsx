@@ -6,7 +6,6 @@ import ProductCardHeader
 import ProductCardInfo
     from '@/components/_product/ProductCard/ProductCardInfo/ProductCardInfo.tsx';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
-import Button from '@/components/_ui/_button/Button/Button.tsx';
 import WishlistButton
     from '@/components/_product/WishlistButton/WishlistButton.tsx';
 import Tag from '@/components/_ui/_container/Tag/Tag.tsx';

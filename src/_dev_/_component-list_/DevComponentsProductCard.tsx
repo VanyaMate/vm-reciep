@@ -28,14 +28,6 @@ const DevComponentsProductCard = () => {
         return list;
     }, []);
 
-    const onAddAny = useCallback(async () => {
-        return new Promise<void>((resolve) => {
-            setTimeout(() => {
-                resolve();
-            }, 1000);
-        });
-    }, []);
-
     return (
         <DevComponentsItem
             label={ 'Product Card' }
@@ -48,10 +40,16 @@ const DevComponentsProductCard = () => {
                             <ProductCard
                                 key={ product.barcode }
                                 product={ product }
-                                onAddToCart={ onAddAny }
-                                onAddToWishlist={ onAddAny }
-                                inWishlist={!!getRandomInt(0, 2)}
-                                inCart={getRandomInt(0, 2) * getRandomInt(0, 2) * getRandomInt(1, 10)}
+                                cartController={{
+                                    addToCart: async (p, a) => {},
+                                    removeFromCart: async (p, a) => {},
+                                    inCart: (p) => 10
+                                }}
+                                wishlistController={{
+                                    addToWishlist: async (p) => {},
+                                    removeFromWishlist: async (p) => {},
+                                    inWishlist: (p) => true
+                                }}
                             />
                         );
                     })
