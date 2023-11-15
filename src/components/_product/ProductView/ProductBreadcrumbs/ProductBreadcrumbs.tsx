@@ -26,7 +26,7 @@ const ProductBreadcrumbs: React.FC<ProductBreadcrumbsProps> = (props) => {
                       key={ i + 'label' }>{ item.label }</Link>,
             );
             breadcrumbs.push(
-                <div className={ css.divider }>/</div>,
+                <div className={ css.divider } key={ i + 'div' }>/</div>,
             );
         }
 

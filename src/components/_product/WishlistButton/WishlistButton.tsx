@@ -1,30 +1,27 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { HeartTwoTone } from '@ant-design/icons';
 import css from './WishlistButton.module.scss';
 import { cn } from '@/helpers/classname.react.ts';
+import { IWishlistController } from '@/hooks/useWishlist.ts';
+import { useWishlistButton } from '@/hooks/components/useWishlistButton.ts';
 
 
 export type WishlistButtonProps = {
     showText?: boolean;
-    onAddToWishlist: () => Promise<any>;
-    onRemoveFromWishlist: () => Promise<any>;
-    inWishlist?: boolean;
+    productId: string;
+    wishlistController: IWishlistController
 }
 
 const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
     const {
-              onAddToWishlist,
-              onRemoveFromWishlist,
+              wishlistController,
+              productId,
               showText,
-              inWishlist,
-          }                       = props;
-    const [ loading, setLoading ] = useState<boolean>(false);
-
-    const onClick = useCallback(() => {
-        setLoading(true);
-        (inWishlist ? onRemoveFromWishlist() : onAddToWishlist())
-            .finally(() => setLoading(false));
-    }, [ onAddToWishlist ]);
+          }                                = props;
+    const { loading, inWishlist, onClick } = useWishlistButton({
+        productId,
+        wishlistController,
+    });
 
     return (
         <div className={ cn(

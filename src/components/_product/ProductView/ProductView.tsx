@@ -105,9 +105,8 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                     <ProductRatingWidget rating={ product.rating }
                                          reviews={ product.reviews }/>
                     <WishlistButton showText
-                                    onAddToWishlist={ () => wishlistController.addToWishlist(product.barcode.toString()) }
-                                    onRemoveFromWishlist={ () => wishlistController.removeFromWishlist(product.barcode.toString()) }
-                                    inWishlist={ wishlistController.inWishlist(product.barcode.toString()) }
+                                    productId={ product.barcode.toString() }
+                                    wishlistController={ wishlistController }
                     />
                 </> }
                 right={ <>
