@@ -18,6 +18,8 @@ import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
 import { MultiplyResponse } from '@/modules/api.types.ts';
 import ProductCardSkeleton
     from '@/components/_product/ProductCard/ProductCardSkeleton/ProductCardSkeleton.tsx';
+import { useCart } from '@/hooks/useCart.ts';
+import { useWishlist } from '@/hooks/useWishlist.ts';
 
 
 const ProductListContainer = () => {
@@ -25,8 +27,8 @@ const ProductListContainer = () => {
     const [ products, setProducts ] = useState<Product[]>([]);
     const [ loading, setLoading ]   = useState<boolean>(true);
     const services                  = useContext(ServicesContext);
-    const cart                      = useContext(CartContext);
-    const wishlist                  = useContext(WishlistContext);
+    const cartController            = useCart();
+    const wishlistController        = useWishlist();
 
     useEffect(() => {
         services
@@ -35,33 +37,6 @@ const ProductListContainer = () => {
             .then((response: MultiplyResponse<Product>) => setProducts(response.list))
             .finally(() => setLoading(false));
     }, []);
-
-    const addToWishlistCallback      = useCallback((productId: string) => {
-        return services
-            .wishlist
-            .addToWishlist(productId)
-            .then((newWishlist: Wishlist) => wishlist.setWishlist(newWishlist));
-    }, [ services.wishlist, wishlist ]);
-    const removeFromWishlistCallback = useCallback((productId: string) => {
-        return services
-            .wishlist
-            .removeFromWishlist(productId)
-            .then((newWishlist: Wishlist) => wishlist.setWishlist(newWishlist));
-    }, [ services.wishlist, wishlist ]);
-
-    const addToCartCallback = useCallback((productId: string) => {
-        return services
-            .cart
-            .addToCart(productId, 1)
-            .then((newCart: Cart) => cart.setCart(newCart));
-    }, [ services.cart, cart ]);
-
-    const inWishlist = useCallback((productId: number) => {
-        return wishlist.wishlist?.items.some((item: string) => item === productId.toString());
-    }, [ wishlist.wishlist ]);
-    const inCart     = useCallback((productId: number) => {
-        return cart.cart?.items.find((cartItem: CartItem) => cartItem.productId === productId.toString())?.amount ?? 0;
-    }, [ cart.cart ]);
 
     return (
         <ProductList>
@@ -72,11 +47,8 @@ const ProductListContainer = () => {
                             <ProductCard
                                 product={ product }
                                 key={ product.barcode }
-                                onAddToWishlist={ addToWishlistCallback }
-                                onAddToCart={ addToCartCallback }
-                                onRemoveFromWishlist={ removeFromWishlistCallback }
-                                inWishlist={ inWishlist(product.barcode) }
-                                inCart={ inCart(product.barcode) }
+                                cartController={ cartController }
+                                wishlistController={ wishlistController }
                             />
                         ))
             }

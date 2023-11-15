@@ -147,8 +147,8 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                         {
                             cartController &&
                             <AddToCartButton
-                                onAddToCart={ () => cartController.addToCart(product.barcode.toString(), 1) }
-                                amount={ cartController.inCart(product.barcode.toString()) }
+                                productId={ product.barcode.toString() }
+                                cartController={ cartController }
                                 block
                             />
                         }

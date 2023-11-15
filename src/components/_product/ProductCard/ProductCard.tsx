@@ -12,6 +12,8 @@ import WishlistButton
 import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
 import AddToCartButton
     from '@/components/_product/AddToCartButton/AddToCartButton.tsx';
+import { ICartController } from '@/hooks/useCart.ts';
+import { IWishlistController } from '@/hooks/useWishlist.ts';
 
 
 export type AddToCartCallback = (productId: string) => Promise<any>;
@@ -19,38 +21,16 @@ export type WishlistCallback = (productId: string) => Promise<any>;
 
 export type ProductCardProps = {
     product: Product;
-    inWishlist?: boolean;
-    inCart?: number;
-    onAddToCart?: AddToCartCallback;
-    onAddToWishlist?: WishlistCallback;
-    onRemoveFromWishlist?: WishlistCallback;
+    cartController: ICartController;
+    wishlistController: IWishlistController;
 }
 
 const ProductCard: React.FC<ProductCardProps> = (props) => {
     const {
               product,
-              onAddToWishlist,
-              onAddToCart,
-              onRemoveFromWishlist,
-              inWishlist,
-              inCart,
+              wishlistController,
+              cartController,
           } = props;
-
-    const onAddToWishlistHandler      = useCallback(async () => {
-        if (onAddToWishlist) {
-            return onAddToWishlist(product.barcode.toString());
-        }
-    }, [ onAddToWishlist, product ]);
-    const onRemoveFromWishlistHandler = useCallback(async () => {
-        if (onRemoveFromWishlist) {
-            return onRemoveFromWishlist(product.barcode.toString());
-        }
-    }, [ onAddToWishlist, product ]);
-    const onAddToCartHandler          = useCallback(async () => {
-        if (onAddToCart) {
-            return onAddToCart(product.barcode.toString());
-        }
-    }, [ onAddToCart, product ]);
 
     return (
         <Box className={ css.container }>
@@ -66,11 +46,11 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                             </Tag>
                         }
                         {
-                            onAddToWishlist &&
+                            wishlistController &&
                             <WishlistButton
-                                onAddToWishlist={ onAddToWishlistHandler }
-                                onRemoveFromWishlist={ onRemoveFromWishlistHandler }
-                                inWishlist={ inWishlist }/>
+                                productId={ product.barcode.toString() }
+                                wishlistController={ wishlistController }
+                            />
                         }
                     </>
                 }
@@ -84,10 +64,10 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                 currency={ 'Руб' }
             />
             {
-                onAddToCart &&
+                cartController &&
                 <AddToCartButton
-                    onAddToCart={ onAddToCartHandler }
-                    amount={ inCart ?? 0 }
+                    productId={ product.barcode.toString() }
+                    cartController={ cartController }
                 />
             }
         </Box>
