@@ -17,6 +17,7 @@ export type ButtonProps = {
     loading?: boolean;
     skeleton?: boolean;
     square?: boolean;
+    block?: boolean;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -27,6 +28,7 @@ const Button: React.FC<ButtonProps> = (props) => {
               loading,
               skeleton,
               square,
+              block,
               ...other
           } = props;
 
@@ -44,6 +46,7 @@ const Button: React.FC<ButtonProps> = (props) => {
                    skeleton && css.skeleton,
                    loading && css.loading,
                    square && css.square,
+                   block && css.block,
                ) }
         />
     );

@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--offset-medium);
+
+    .left {
+        display: flex;
+        gap: var(--offset-medium);
+    }
+
+    .right {
+
+    }
+}

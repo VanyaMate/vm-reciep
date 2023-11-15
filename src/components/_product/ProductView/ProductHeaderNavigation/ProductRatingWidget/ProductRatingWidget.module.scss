@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    gap: var(--offset-medium);
+    color: var(--text-color-link);
+    align-items: center;
+    font-size: 14px;
+
+    & li {
+        margin-inline-end: var(--offset-extra-small) !important;
+    }
+}

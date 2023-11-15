@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import ProductPageContainer
-    from '@/containers/_common/_product/ProductPageContainer/ProductPageContainer.tsx';
+    from '@/containers/_product/ProductPageContainer/ProductPageContainer.tsx';
 
 
 const ProductPage = () => {

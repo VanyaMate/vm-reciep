@@ -9,9 +9,9 @@ import {
     CreateProductDto,
 } from '@/modules/local-backend/product/product-backend.types.ts';
 import ProductList
-    from '@/components/_common/_content/_product/ProductList/ProductList.tsx';
+    from '@/components/_product/ProductList/ProductList.tsx';
 import ProductCard
-    from '@/components/_common/_content/_product/ProductCard/ProductCard.tsx';
+    from '@/components/_product/ProductCard/ProductCard.tsx';
 import { getRandomInt } from '@/helpers/random.ts';
 
 

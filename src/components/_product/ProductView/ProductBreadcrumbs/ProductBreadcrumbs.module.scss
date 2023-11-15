@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    gap: var(--offset-medium);
+
+    .link {
+        text-decoration: none;
+        color: var(--text-color-link);
+
+        &:last-child {
+            font-weight: bold;
+        }
+    }
+
+    .divider {
+        color: var(--text-color-second);
+    }
+}

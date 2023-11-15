@@ -1,15 +1,17 @@
 import React, { useCallback, useState } from 'react';
-import Button from '@/components/_ui/_button/Button/Button.tsx';
+import Button, {
+    ButtonProps,
+} from '@/components/_ui/_button/Button/Button.tsx';
 
 
 export type AddToCartButtonProps = {
     onAddToCart: () => Promise<any>;
     amount?: number;
-}
+} & ButtonProps;
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = (props) => {
-    const { onAddToCart, amount } = props;
-    const [ loading, setLoading ] = useState<boolean>(false);
+    const { onAddToCart, styleType, ...other } = props;
+    const [ loading, setLoading ]              = useState<boolean>(false);
 
     const onAddToCartHandler = useCallback(() => {
         setLoading(true);
@@ -19,9 +21,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (props) => {
     return (
         <Button
             styleType={ 'primary' }
-            amount={ amount }
             onClick={ onAddToCartHandler }
-            loading={ loading }
+            { ...other }
         >
             Добавить в корзину
         </Button>

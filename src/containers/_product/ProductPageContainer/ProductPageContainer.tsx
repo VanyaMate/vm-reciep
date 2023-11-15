@@ -8,8 +8,10 @@ import React, {
 import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import { Product } from '@/modules/api/product/product-service.types.ts';
 import ProductView
-    from '@/components/_common/_content/_product/ProductView/ProductView.tsx';
+    from '@/components/_product/ProductView/ProductView.tsx';
 import { CartContext } from '@/contexts/data/CartContext.ts';
+import { useCart } from '@/hooks/useCart.ts';
+import { useWishlist } from '@/hooks/useWishlist.ts';
 
 
 export type ProductPageContainerProps = {
@@ -17,22 +19,12 @@ export type ProductPageContainerProps = {
 }
 
 const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
-    const { productId }             = props;
-    const { products, cart }        = useContext(ServicesContext);
-    const { cart: myCart, setCart } = useContext(CartContext);
-    const [ product, setProduct ]   = useState<Product | null>(null);
-    const [ loading, setLoading ]   = useState<boolean>(false);
-
-    // TODO: Вынести всё это в хуки.
-    const addToCartHandler = useCallback((productId: string) => {
-        return cart
-            .addToCart(productId, 1)
-            .then((cart) => setCart(cart));
-    }, [ cart ]);
-
-    const cartAmount = useMemo(() => {
-        return myCart?.items.find((item) => item.productId === productId)?.amount ?? 0;
-    }, [ productId, myCart ]);
+    const { productId }           = props;
+    const { products }            = useContext(ServicesContext);
+    const [ product, setProduct ] = useState<Product | null>(null);
+    const [ loading, setLoading ] = useState<boolean>(false);
+    const cartController          = useCart();
+    const wishlistController      = useWishlist();
 
 
     useEffect(() => {
@@ -54,8 +46,8 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     return (
         <ProductView
             product={ product }
-            onAddToCart={ addToCartHandler }
-            inCart={ cartAmount }
+            cartController={ cartController }
+            wishlistController={ wishlistController }
         />
     );
 };

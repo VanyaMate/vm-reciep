@@ -4,7 +4,7 @@ import Box from '@/components/_ui/_container/Box/Box.tsx';
 import css from './ProductCardHeader.module.scss';
 import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
 import WishlistButton
-    from '@/components/_common/_content/_product/WishlistButton/WishlistButton.tsx';
+    from '@/components/_product/WishlistButton/WishlistButton.tsx';
 
 
 export type ProductCardHeaderProps = {
