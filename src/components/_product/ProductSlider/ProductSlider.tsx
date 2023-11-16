@@ -24,70 +24,76 @@ const ProductBigSlider: React.FC<ProductSliderProps> = (props) => {
     const [ src, setSrc ]               = useState<string>('');
 
     return (
-        <div className={ css.container }>
-            <Swiper
-                direction={ 'vertical' }
-                slidesPerView={ 1 }
-                spaceBetween={ 10 }
-                pagination={ {
-                    clickable: true,
-                } }
-                thumbs={ {
-                    swiper: mainSwiper && !mainSwiper.destroyed ? mainSwiper
-                                                                : null,
-                } }
-                modules={ [ Mousewheel, Thumbs ] }
-                className={ css.main }
-                mousewheel={ true }
-            >
-                {
-                    images.map((slide, index) => {
-                        return <SwiperSlide
-                            key={ index }
-                            className={ css.slide }
-                            onClick={ () => {
-                                setSrc(slide);
-                                setVisible(true);
-                            } }
-                        >
-                            <AnimatedImageBox
-                                src={ slide }
-                                w={ 500 }
-                                h={ 500 }
-                                seconds={ 10 }
-                            />
-                        </SwiperSlide>;
-                    })
-                }
-            </Swiper>
-            <Swiper
-                onSwiper={ setMainSwiper }
-                direction={ 'vertical' }
-                slidesPerView={ 'auto' }
-                spaceBetween={ 5 }
-                pagination={ {
-                    clickable: true,
-                } }
-                grabCursor={ true }
-                watchSlidesProgress={ true }
-                modules={ [ Mousewheel, Pagination, Thumbs ] }
-                className={ css.second }
-                mousewheel={ true }
-            >
-                {
-                    images.map((slide, index) => {
-                        return <SwiperSlide key={ index }
-                                            className={ css.second_slide }>
-                            <AnimatedImageBox
-                                src={ slide }
-                                w={ 95 }
-                                h={ 95 }
-                                seconds={ 10 }
-                            />
-                        </SwiperSlide>;
-                    })
-                }
-            </Swiper>
+        <>
+            <div className={ css.container }>
+                <Swiper
+                    direction={ 'vertical' }
+                    slidesPerView={ 1 }
+                    spaceBetween={ 10 }
+                    pagination={ {
+                        clickable: true,
+                    } }
+                    thumbs={ {
+                        swiper: mainSwiper && !mainSwiper.destroyed ? mainSwiper
+                                                                    : null,
+                    } }
+                    modules={ [ Mousewheel, Thumbs ] }
+                    className={ css.main }
+                    mousewheel={ true }
+                >
+                    {
+                        images.map((slide, index) => {
+                            return <SwiperSlide
+                                key={ index }
+                                className={ css.slide }
+                                onClick={ () => {
+                                    setSrc(slide);
+                                    setVisible(true);
+                                } }
+                            >
+                                <AnimatedImageBox
+                                    src={ slide }
+                                    w={ 500 }
+                                    h={ 500 }
+                                    seconds={ 10 }
+                                />
+                            </SwiperSlide>;
+                        })
+                    }
+                </Swiper>
+                <Swiper
+                    onSwiper={ setMainSwiper }
+                    direction={ 'vertical' }
+                    slidesPerView={ 'auto' }
+                    spaceBetween={ 5 }
+                    pagination={ {
+                        clickable: true,
+                    } }
+                    grabCursor={ true }
+                    watchSlidesProgress={ true }
+                    modules={ [ Mousewheel, Pagination, Thumbs ] }
+                    className={ css.second }
+                    mousewheel={ true }
+                >
+                    {
+                        images.map((slide, index) => {
+                            return (
+                                <SwiperSlide
+                                    key={ index }
+                                    className={ css.second_slide }
+                                >
+                                    <AnimatedImageBox
+                                        src={ slide }
+                                        w={ 95 }
+                                        h={ 95 }
+                                        seconds={ 10 }
+                                    />
+                                </SwiperSlide>
+                            );
+                        })
+                    }
+                </Swiper>
+            </div>
             <Image
                 src={ src }
                 style={ { display: 'none' } }
@@ -96,7 +102,7 @@ const ProductBigSlider: React.FC<ProductSliderProps> = (props) => {
                     onVisibleChange: (value) => setVisible(value),
                 } }
             />
-        </div>
+        </>
     );
 };
 

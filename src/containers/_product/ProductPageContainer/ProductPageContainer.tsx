@@ -12,6 +12,8 @@ import ProductView
 import { CartContext } from '@/contexts/data/CartContext.ts';
 import { useCart } from '@/hooks/useCart.ts';
 import { useWishlist } from '@/hooks/useWishlist.ts';
+import ProductViewSkeleton
+    from '@/components/_product/ProductView/ProductViewSkeleton.tsx';
 
 
 export type ProductPageContainerProps = {
@@ -35,7 +37,7 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     }, [ productId ]);
 
     if (loading) {
-        return 'skeleton';
+        return <ProductViewSkeleton/>;
     }
 
     if (!product) {

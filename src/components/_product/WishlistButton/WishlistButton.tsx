@@ -9,7 +9,8 @@ import { useWishlistButton } from '@/hooks/components/useWishlistButton.ts';
 export type WishlistButtonProps = {
     showText?: boolean;
     productId: string;
-    wishlistController: IWishlistController
+    className?: string;
+    wishlistController: IWishlistController;
 }
 
 const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
@@ -17,6 +18,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
               wishlistController,
               productId,
               showText,
+              className,
           }                                = props;
     const { loading, inWishlist, onClick } = useWishlistButton({
         productId,
@@ -28,13 +30,14 @@ const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
             css.container,
             showText && css.show_text,
             loading && css.loading,
+            className,
         ) }
              onClick={ onClick }
         >
             <HeartTwoTone className={ css.icon }
                           twoToneColor={ inWishlist ? '#f55' : '#99b' }/>
             <span className={ css.text }>
-                В избранное
+                { inWishlist ? 'В избранном' : 'В избранное' }
             </span>
         </div>
     );

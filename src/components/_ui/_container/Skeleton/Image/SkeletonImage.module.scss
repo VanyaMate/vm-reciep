@@ -1,0 +1,14 @@
+.container {
+    color: transparent !important;
+    user-select: none !important;
+    border-radius: var(--offset-medium) !important;
+    background: var(--gradient) !important;
+    background-size: var(--gradient-size) !important;
+    animation: var(--gradient-animation) !important;
+
+    &.fixed {
+        background: url('https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg') !important;
+        background-size: contain !important;
+        animation: none !important;
+    }
+}

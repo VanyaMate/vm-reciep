@@ -1,14 +1,20 @@
+$font_size: 14px;
+
 .container {
     display: flex;
     justify-content: space-between;
     gap: var(--offset-medium);
+    font-size: $font_size;
+    height: 30px;
 
     .left {
         display: flex;
         gap: var(--offset-medium);
+        color: var(--text-color-link);
     }
 
-    .right {
-
+    .right,
+    .right * {
+        color: var(--text-color-second);
     }
 }

@@ -27,9 +27,31 @@
         .left {
             width: 50%;
             min-width: 600px;
+            position: relative;
+
+            .tags {
+                display: flex;
+                flex-direction: column;
+                gap: var(--offset-medium);
+                position: absolute;
+                z-index: 2;
+                top: var(--offset-large);
+                left: var(--offset-large);
+            }
 
             .slider {
+                border-radius: var(--offset-large) !important;
 
+                &.skeleton {
+                    width: 500px;
+                    height: 500px;
+                }
+
+                .slider_item {
+                    border-radius: var(--offset-medium) !important;
+                    width: 95px;
+                    height: 95px;
+                }
             }
         }
 

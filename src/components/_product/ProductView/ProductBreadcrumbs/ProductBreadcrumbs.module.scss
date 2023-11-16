@@ -1,6 +1,7 @@
 .container {
     display: flex;
     gap: var(--offset-medium);
+    font-size: 14px;
 
     .link {
         text-decoration: none;
@@ -12,6 +13,6 @@
     }
 
     .divider {
-        color: var(--text-color-second);
+        color: var(--text-color-invisible);
     }
 }
