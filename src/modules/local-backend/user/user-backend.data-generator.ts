@@ -4,7 +4,7 @@ import { IDataGenerator } from '@vanyamate/market-place-service';
 
 export class UserBackendDataGenerator implements IDataGenerator<PrivateUser, CreateUserDto> {
     private readonly _clearData: PrivateUser = {
-        avatar  : '',
+        avatar  : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png',
         password: '',
         login   : '',
     };

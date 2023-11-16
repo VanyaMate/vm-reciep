@@ -80,7 +80,10 @@ const ProductBigSlider: React.FC<ProductSliderProps> = (props) => {
                                             className={ css.second_slide }>
                             <AnimatedImageBox
                                 src={ slide }
-                                w={ 95 } h={ 95 } seconds={ 10 }/>
+                                w={ 95 }
+                                h={ 95 }
+                                seconds={ 10 }
+                            />
                         </SwiperSlide>;
                     })
                 }

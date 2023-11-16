@@ -1,7 +1,4 @@
 import React, { useMemo } from 'react';
-import {
-    ProductCardProps,
-} from '@/components/_product/ProductCard/ProductCard.tsx';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
 import css from './ProductView.module.scss';
 import ProductSlider
@@ -132,8 +129,8 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                 </div>
                 <div className={ css.right }>
                     <div className={ css.product }>
-                        <h2>{ product.product_name }</h2>
-                        <Rate value={ product.rating }/>
+                        <h2>{ product.brand_name }</h2>
+                        <p>Оригинальный товар</p>
                         <Typography.Paragraph
                             ellipsis={ {
                                 rows      : 3,
