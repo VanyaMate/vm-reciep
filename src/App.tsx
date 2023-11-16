@@ -13,10 +13,10 @@ const App                = () => {
         !refreshData && refresh();
         refreshData = true;
     }, []);
-
+/*
     return (
         <DevComponentsBrowser/>
-    );
+    );*/
 
     return (
         <Pages/>

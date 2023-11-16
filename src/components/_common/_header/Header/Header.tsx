@@ -2,7 +2,7 @@ import React from 'react';
 import css from './Header.module.scss';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
 import HeaderLogo from '@/components/_common/_header/HeaderLogo/HeaderLogo.tsx';
-import HeaderUser from '@/components/_common/_header/HeaderUser/HeaderUser.tsx';
+import HeaderUserContainer from '@/containers/_header/HeaderUserContainer/HeaderUserContainer.tsx';
 import { User } from '@/modules/api/user/user-service.types.ts';
 
 

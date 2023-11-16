@@ -13,24 +13,11 @@ import HeaderUserProfileDropdown
 
 export type HeaderUserProfileProps = {
     user: User;
+    menuItems: DropdownListItem[];
 }
 
 const HeaderUserProfile: React.FC<HeaderUserProfileProps> = (props) => {
-    const { user }                      = props;
-    const menuItems: DropdownListItem[] = useMemo(() => {
-        return [
-            {
-                label: 'Профиль',
-            },
-            {
-                label: 'Настройки',
-            },
-            {
-                label: 'Выйти',
-                type : 'danger',
-            },
-        ];
-    }, []);
+    const { user, menuItems } = props;
 
     return (
         <Dropdown

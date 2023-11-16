@@ -1,5 +1,5 @@
 import { AuthData } from '@/modules/api/auth/auth-service.types.ts';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IAuthService } from '@/modules/api/auth/auth-service.interface.ts';
 
 
@@ -13,10 +13,11 @@ export type UseRegistrationForm = {
 
 export type UseRegistrationFormProps = {
     authService: IAuthService<AuthData>;
+    onFinish?: () => void;
 }
 
 export const useRegistrationForm = function (props: UseRegistrationFormProps): UseRegistrationForm {
-    const { authService }                = props;
+    const { authService, onFinish }      = props;
     const [ process, setProcess ]        = useState<boolean>(false);
     const [ error, setError ]            = useState<string>('');
     const onSubmit: RegistrationCallback = useCallback((login, password, remember) => {
@@ -24,9 +25,10 @@ export const useRegistrationForm = function (props: UseRegistrationFormProps): U
         setError('');
         return authService
             .registration(login, password, remember)
+            .then(() => onFinish && onFinish())
             .catch((error) => setError(error))
             .finally(() => setProcess(false));
-    }, []);
+    }, [ authService, process, error ]);
 
     return { process, error, onSubmit };
 };

@@ -3,25 +3,26 @@ import { Alert, Checkbox, Form, Input } from 'antd';
 import Button from '@/components/_ui/_button/Button/Button.tsx';
 import { UseRegistrationForm } from '@/hooks/components/useRegistrationForm.ts';
 import css from '../Form.module.scss';
+import { UseLoginForm } from '@/hooks/components/useLoginForm.ts';
 
 
 type LayoutType = Parameters<typeof Form>[0]['layout'];
 
-export type RegistrationFormProps = {
-    registrationFormController: UseRegistrationForm;
+export type LoginFormProps = {
+    loginFormController: UseLoginForm;
 }
 
-export type RegistrationData = {
+export type LoginData = {
     login: string;
     password: string;
     remember: boolean;
 }
 
-const RegistrationForm: React.FC<RegistrationFormProps> = (props) => {
-    const { registrationFormController } = props;
-    const [ form ]                       = Form.useForm<RegistrationData>();
-    const values                         = Form.useWatch([], form);
-    const [ valid, setValid ]            = useState<boolean>(false);
+const LoginForm: React.FC<LoginFormProps> = (props) => {
+    const { loginFormController } = props;
+    const [ form ]                = Form.useForm<LoginData>();
+    const values                  = Form.useWatch([], form);
+    const [ valid, setValid ]     = useState<boolean>(false);
 
     useEffect(() => {
         form.validateFields({ validateOnly: true })
@@ -34,26 +35,26 @@ const RegistrationForm: React.FC<RegistrationFormProps> = (props) => {
     return (
         <div className={ css.container }>
             {
-                !registrationFormController.process && registrationFormController.error &&
+                !loginFormController.process && loginFormController.error &&
                 <Alert
-                    message={ 'Ошибка регистрации' }
-                    description={ registrationFormController.error }
+                    message={ 'Ошибка входа' }
+                    description={ loginFormController.error }
                     type={ 'error' }
                     closable
                 />
             }
-            <Form<RegistrationData>
+            <Form<LoginData>
                 layout={ 'vertical' }
                 form={ form }
-                disabled={ registrationFormController.process }
-                onFinish={ (data) => registrationFormController.onSubmit(data.login, data.password, data.remember) }
+                disabled={ loginFormController.process }
+                onFinish={ (data) => loginFormController.onSubmit(data.login, data.password, data.remember) }
             >
                 <Form.Item
                     label={ 'Логин' }
                     name={ 'login' }
                     rules={ [ { required: true, min: 6, max: 24 } ] }
                 >
-                    <Input placeholder={ 'Введите логин для регистрации' }/>
+                    <Input placeholder={ 'Введите логин для входа' }/>
                 </Form.Item>
                 <Form.Item
                     label={ 'Пароль' }
@@ -61,7 +62,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = (props) => {
                     rules={ [ { required: true, min: 6, max: 24 } ] }
                 >
                     <Input.Password placeholder={ 'Введите пароль для' +
-                        ' регистрации' }/>
+                        ' входа' }/>
                 </Form.Item>
                 <Form.Item name={ 'remember' } valuePropName={ 'checked' }>
                     <Checkbox>Запомнить меня</Checkbox>
@@ -70,14 +71,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = (props) => {
                     <Button type={ 'submit' }
                             styleType={ 'second' }
                             disabled={ !valid }
-                            loading={ registrationFormController.process }
+                            loading={ loginFormController.process }
                             onClick={ () => form.submit() }
                             block
-                    >Регистрация</Button>
+                    >Войти</Button>
                 </Form.Item>
             </Form>
         </div>
     );
 };
 
-export default RegistrationForm;
+export default LoginForm;

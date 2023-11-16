@@ -13,7 +13,8 @@ const DevComponentsForm = () => {
     return (
         <DevComponentsItem label={ 'Forms' } type={ 'col' }>
             <RegistrationForm
-                registrationFromController={ registrationFormController }/>
+                registrationFormController={ registrationFormController }
+            />
         </DevComponentsItem>
     );
 };

@@ -10,7 +10,8 @@ import HeaderSearch
     from '@/components/_common/_header/HeaderSearch/HeaderSearch.tsx';
 import { UserAuthContext } from '@/contexts/data/UserAuthContext.ts';
 import HeaderLogo from '@/components/_common/_header/HeaderLogo/HeaderLogo.tsx';
-import HeaderUser from '@/components/_common/_header/HeaderUser/HeaderUser.tsx';
+import HeaderUserContainer
+    from '@/containers/_header/HeaderUserContainer/HeaderUserContainer.tsx';
 import { useAuth } from '@/hooks/useAuth.ts';
 import { User } from '@/modules/api/user/user-service.types.ts';
 import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
@@ -21,6 +22,8 @@ import { AuthContext } from '@/contexts/data/AuthContext.ts';
 import { UserContext } from '@/contexts/data/UserContext.ts';
 import { CartContext } from '@/contexts/data/CartContext.ts';
 import { WishlistContext } from '@/contexts/data/WishlistContext.ts';
+import AuthFormModalContainer
+    from '@/containers/AuthFormModal/AuthFormModalContainer.tsx';
 
 
 export type CommonLayoutProps = {
@@ -29,10 +32,6 @@ export type CommonLayoutProps = {
 
 const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
     const { smallBanner } = props;
-    const { process }     = useContext(AuthContext);
-    const { user }        = useContext(UserContext);
-    const { cart }        = useContext(CartContext);
-    const { wishlist }    = useContext(WishlistContext);
 
     return (
         <PageContent
@@ -41,12 +40,10 @@ const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
                     <Header
                         left={ <HeaderLogo/> }
                         right={
-                            <HeaderUser
-                                process={ process }
-                                user={ user }
-                                cart={ cart }
-                                wishlist={ wishlist }
-                            />
+                            <>
+                                <AuthFormModalContainer/>
+                                <HeaderUserContainer/>
+                            </>
                         }
                     />
                     <HeaderBanner
