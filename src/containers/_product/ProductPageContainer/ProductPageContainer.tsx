@@ -22,10 +22,9 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     const { productId }           = props;
     const { products }            = useContext(ServicesContext);
     const [ product, setProduct ] = useState<Product | null>(null);
-    const [ loading, setLoading ] = useState<boolean>(false);
+    const [ loading, setLoading ] = useState<boolean>(true);
     const cartController          = useCart();
     const wishlistController      = useWishlist();
-
 
     useEffect(() => {
         setLoading(true);
@@ -40,7 +39,7 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     }
 
     if (!product) {
-        return 404;
+        return 'товар не найден';
     }
 
     return (
