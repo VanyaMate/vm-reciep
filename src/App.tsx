@@ -1,22 +1,26 @@
 import React, { useEffect } from 'react';
 import Pages from '@/pages/pages.tsx';
-import { useAuthEntity } from '@/hooks/services/useAuthService.ts';
 import { useAuth } from '@/hooks/useAuth.ts';
-import DevComponentsBrowser from '@/_dev_/DevComponentsBrowser.tsx';
+import { useLocation } from 'react-router-dom';
 
 
 let refreshData: boolean = false;
 const App                = () => {
-    const { refresh } = useAuth();
+    const { refresh }  = useAuth();
+    const { pathname } = useLocation();
 
     useEffect(() => {
         !refreshData && refresh();
         refreshData = true;
     }, []);
-/*
-    return (
-        <DevComponentsBrowser/>
-    );*/
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [ pathname ]);
+    /*
+     return (
+     <DevComponentsBrowser/>
+     );*/
 
     return (
         <Pages/>

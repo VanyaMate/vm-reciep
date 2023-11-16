@@ -19,7 +19,7 @@ const Pages = () => {
                 </Route>
                 <Route path={ 'product/:id' } element={ <ProductPage/> }/>
             </Route>
-            <Route path={'*'} element={ <CommonLayout/> }>
+            <Route path={ '*' } element={ <CommonLayout/> }>
                 <Route path={ '/*' } element={ <HomePage/> }/>
                 <Route path={ '*' } element={ '404' }/>
             </Route>
