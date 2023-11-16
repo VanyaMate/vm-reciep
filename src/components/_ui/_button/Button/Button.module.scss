@@ -71,6 +71,7 @@ $padding: var(--offset-medium);
         animation: var(--gradient-animation);
         background-size: var(--gradient-size);
         color: transparent;
+        user-select: none;
 
         &:hover {
             color: transparent;

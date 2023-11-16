@@ -15,13 +15,10 @@ import { ICartController } from '@/hooks/useCart.ts';
 import { IWishlistController } from '@/hooks/useWishlist.ts';
 
 
-export type AddToCartCallback = (productId: string) => Promise<any>;
-export type WishlistCallback = (productId: string) => Promise<any>;
-
 export type ProductCardProps = {
     product: Product;
-    cartController: ICartController;
-    wishlistController: IWishlistController;
+    cartController?: ICartController;
+    wishlistController?: IWishlistController;
 }
 
 const ProductCard: React.FC<ProductCardProps> = (props) => {

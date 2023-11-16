@@ -14,6 +14,12 @@ import { useCart } from '@/hooks/useCart.ts';
 import { useWishlist } from '@/hooks/useWishlist.ts';
 import ProductViewSkeleton
     from '@/components/_product/ProductView/ProductViewSkeleton.tsx';
+import ProductsCarousel
+    from '@/components/_product/ProductsCarousel/ProductsCarousel.tsx';
+import { useFetchProduct } from '@/hooks/products/useFetchProduct.ts';
+import {
+    useFetchProductRecommendations,
+} from '@/hooks/products/useFetchProductRecommendations.ts';
 
 
 export type ProductPageContainerProps = {
@@ -21,20 +27,15 @@ export type ProductPageContainerProps = {
 }
 
 const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
-    const { productId }           = props;
-    const { products }            = useContext(ServicesContext);
-    const [ product, setProduct ] = useState<Product | null>(null);
-    const [ loading, setLoading ] = useState<boolean>(true);
-    const cartController          = useCart();
-    const wishlistController      = useWishlist();
+    const { productId }        = props;
+    const cartController       = useCart();
+    const wishlistController   = useWishlist();
+    const {
+              loading: recoLoading,
+              products,
+          }                    = useFetchProductRecommendations(productId);
+    const { loading, product } = useFetchProduct(productId);
 
-    useEffect(() => {
-        setLoading(true);
-        products
-            .findOne(productId)
-            .then((product) => setProduct(product))
-            .finally(() => setLoading(false));
-    }, [ productId ]);
 
     if (loading) {
         return <ProductViewSkeleton/>;
@@ -45,11 +46,17 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     }
 
     return (
-        <ProductView
-            product={ product }
-            cartController={ cartController }
-            wishlistController={ wishlistController }
-        />
+        <>
+            <ProductView
+                product={ product }
+                cartController={ cartController }
+                wishlistController={ wishlistController }
+            />
+            <ProductsCarousel
+                products={ products }
+                loading={ recoLoading }
+            />
+        </>
     );
 };
 
