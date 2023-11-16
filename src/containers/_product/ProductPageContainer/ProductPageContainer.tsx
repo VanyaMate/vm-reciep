@@ -51,4 +51,4 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     );
 };
 
-export default ProductPageContainer;
+export default React.memo(ProductPageContainer);
