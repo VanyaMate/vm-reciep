@@ -7,7 +7,7 @@
     .top {
         display: flex;
         justify-content: space-between;
-        gap: var(--offset-medium);
+        gap: var(--offset-large);
 
         @media screen and (max-width: 980px) {
             flex-direction: column;
@@ -57,7 +57,7 @@
 
         .right {
             display: flex;
-            gap: var(--offset-medium);
+            gap: var(--offset-large);
             width: 50%;
             align-items: flex-start;
 
@@ -87,5 +87,11 @@
                 height: auto;
             }
         }
+    }
+
+    .bottom {
+        display: flex;
+        flex-direction: column;
+        gap: var(--offset-large);
     }
 }

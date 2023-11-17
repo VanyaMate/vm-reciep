@@ -2,6 +2,11 @@ import React from 'react';
 import css from './ProductCardInfo.module.scss';
 import { cn } from '@/helpers/classname.react.ts';
 import { Link } from 'react-router-dom';
+import ProductPrice
+    from '@/components/_product/ProductView/ProductPrice/ProductPrice.tsx';
+import {
+    ProductPriceData, useProductPriceCalculator,
+} from '@/hooks/components/useProductPriceCalculator.ts';
 
 
 export type ProductCardInfoProps = {
@@ -23,14 +28,20 @@ const ProductCardInfo: React.FC<ProductCardInfoProps> = (props) => {
               currency,
               productId,
               skeleton,
-          } = props;
+          }                           = props;
+    const priceData: ProductPriceData = useProductPriceCalculator({
+        price       : price,
+        discount,
+        discountType: 'percent',
+        currency    : '₽',
+    });
 
     return (
         <div className={ cn(css.container, skeleton && css.skeleton) }>
             <Link to={ '/product/' + productId }
                   className={ css.title }>{ title }</Link>
             <p className={ css.description }>{ description }</p>
-            <p className={ css.price }>{ price } { currency }</p>
+            <ProductPrice priceData={ priceData } small/>
         </div>
     );
 };

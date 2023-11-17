@@ -13,6 +13,7 @@ import AddToCartButton
     from '@/components/_product/AddToCartButton/AddToCartButton.tsx';
 import { ICartController } from '@/hooks/useCart.ts';
 import { IWishlistController } from '@/hooks/useWishlist.ts';
+import { getRandomInt } from '@/helpers/random.ts';
 
 
 export type ProductCardProps = {
@@ -56,8 +57,8 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                 title={ product.product_name }
                 description={ product.description }
                 price={ product.price }
-                discount={ 0 }
-                currency={ 'Руб' }
+                discount={ getRandomInt(0, 2) }
+                currency={ '₽' }
             />
             {
                 cartController &&

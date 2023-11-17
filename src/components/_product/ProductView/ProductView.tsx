@@ -46,7 +46,7 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
         price       : product.price,
         discount    : 0,
         discountType: 'fixed',
-        currency    : 'Руб',
+        currency    : '₽',
     });
     const shortDescriptionItems: DescriptionsProps['items'] = useMemo(() => {
         return [
@@ -228,62 +228,67 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                 </> }
             />
             <Divider dashed style={ { marginTop: 4, marginBottom: 4 } }/>
-            <div className={ css.top }>
-                <div className={ css.left }>
-                    <div className={ css.tags }>
-                        <Tag backgroundColor={ '#fff' } textColor={ '#111' }>
-                            { product.brand_name }
-                        </Tag>
-                        <Tag backgroundColor={ '#f55' } textColor={ '#fff' }>
-                            - 23 %
-                        </Tag>
+            <div className={ css.bottom }>
+                <div className={ css.top }>
+                    <div className={ css.left }>
+                        <div className={ css.tags }>
+                            <Tag backgroundColor={ '#fff' }
+                                 textColor={ '#111' }>
+                                { product.brand_name }
+                            </Tag>
+                            <Tag backgroundColor={ '#f55' }
+                                 textColor={ '#fff' }>
+                                - 23 %
+                            </Tag>
+                        </div>
+                        <ProductSlider
+                            images={ [
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                ...product.images,
+                            ] }
+                        />
                     </div>
-                    <ProductSlider
-                        images={ [
-                            product.image_url,
-                            product.image_url,
-                            product.image_url,
-                            product.image_url,
-                            product.image_url,
-                            product.image_url,
-                            product.image_url,
-                            product.image_url,
-                            product.image_url,
-                            ...product.images,
-                        ] }
+                    <div className={ css.right }>
+                        <div className={ css.product }>
+                            <ProductBrand
+                                url={ '' }
+                                icon={ product.brand }
+                                title={ product.brand_name }
+                                original
+                            />
+                            <ProductShortInfo
+                                items={ shortDescriptionItems }
+                            />
+                            <Typography.Paragraph
+                                ellipsis={ {
+                                    rows      : 3,
+                                    expandable: true,
+                                } }
+                            >
+                                { product.description }
+                            </Typography.Paragraph>
+                        </div>
+                        <ProductPurchaseBlock
+                            productId={ product.barcode.toString() }
+                            cartController={ cartController }
+                            price={ priceData }
+                            className={ css.purchase }
+                        />
+                    </div>
+                </div>
+                <div>
+                    <ProductFullDescriptionList
+                        items={ descriptionItems }
                     />
                 </div>
-                <div className={ css.right }>
-                    <div className={ css.product }>
-                        <ProductBrand
-                            url={ '' }
-                            icon={ product.brand }
-                            title={ product.brand_name }
-                            original
-                        />
-                        <ProductShortInfo
-                            items={ shortDescriptionItems }
-                        />
-                        <Typography.Paragraph
-                            ellipsis={ {
-                                rows      : 3,
-                                expandable: true,
-                            } }
-                        >
-                            { product.description }
-                        </Typography.Paragraph>
-                    </div>
-                    <ProductPurchaseBlock
-                        productId={ product.barcode.toString() }
-                        cartController={ cartController }
-                        price={ priceData }
-                    />
-                </div>
-            </div>
-            <div>
-                <ProductFullDescriptionList
-                    items={ descriptionItems }
-                />
             </div>
         </Box>
     );

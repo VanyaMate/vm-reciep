@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--offset-medium);
+    align-items: start;
+
+    &.small {
+        .bottom {
+            display: none;
+        }
+
+        .price {
+            font-size: 22px;
+            background: var(--background-main);
+
+            &:not(.withDiscount) {
+                color: var(--text-color-main);
+            }
+
+            &:after {
+                font-size: 12px;
+            }
+        }
+
+        .original {
+            font-size: 14px;
+        }
+
+        .discount {
+            font-size: 16px;
+        }
+    }
+
+    .top,
+    .bottom {
+        display: flex;
+        gap: var(--offset-medium);
+        align-items: center;
+    }
+
+    .price {
+        display: inline-flex;
+        padding: var(--offset-small) var(--offset-medium);
+        border-radius: var(--offset-medium);
+        font-size: 32px;
+        font-weight: bold;
+        background: var(--background-main);
+        color: var(--text-color-main);
+        position: relative;
+
+        &:after {
+            content: 'за 1 шт.';
+            white-space: nowrap;
+            font-size: 16px;
+            font-weight: normal;
+            position: absolute;
+            left: calc(100% + var(--offset-medium));
+            bottom: 50%;
+            transform: translateY(50%);
+            color: var(--text-color-invisible);
+        }
+
+        &.withDiscount {
+            background: var(--background-red);
+            color: var(--text-color-invert);
+        }
+    }
+
+    .original {
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: line-through;
+        color: var(--text-color-invisible)
+    }
+
+    .discount {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--background-red);
+    }
+}

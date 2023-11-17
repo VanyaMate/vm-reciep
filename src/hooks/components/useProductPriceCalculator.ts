@@ -21,24 +21,25 @@ export type UseProductPriceCalculatorProps = {
 
 export const useProductPriceCalculator = function (props: UseProductPriceCalculatorProps): ProductPriceData {
     const { price, discount, discountType, currency } = props;
+    const newPrice: number                            = useMemo(() => Math.floor(price) * 10, [ price ]);
     const [ discountPercent, setDiscountPercent ]     = useState<number>(0);
     const [ discountFixed, setDiscountFixed ]         = useState<number>(0);
     const priceWithDiscount: number                   = useMemo(() => {
         if (discountType === 'percent') {
             setDiscountPercent(discount);
-            const discountFixed: number = Math.floor(price / 100 * discount);
+            const discountFixed: number = Math.floor(newPrice / 100 * discount);
             setDiscountFixed(discountFixed);
-            return price - discountFixed;
+            return Math.floor(newPrice - discountFixed);
         } else {
             setDiscountFixed(discount);
-            const discountPercent: number = Math.floor(100 / price * discount);
+            const discountPercent: number = Math.floor(100 / newPrice * discount);
             setDiscountPercent(discountPercent);
-            return price - discount;
+            return Math.floor(newPrice - discount);
         }
-    }, [ price, discount, discountType ]);
+    }, [ newPrice, discount, discountType ]);
 
     return {
-        price,
+        price: newPrice,
         currency,
         discount,
         discountFixed,

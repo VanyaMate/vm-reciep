@@ -34,7 +34,7 @@ export const useWishlist = function (): IWishlistController {
         } else {
             authModal.open();
         }
-    }, [ wishlistContext, wishlistService ]);
+    }, [ wishlistContext, wishlistService, authModal ]);
     const removeFromWishlistCallback: WishlistCallback = useCallback(async (productId: string) => {
         if (userContext.user) {
             return wishlistService
@@ -43,7 +43,7 @@ export const useWishlist = function (): IWishlistController {
         } else {
             authModal.open();
         }
-    }, [ wishlistContext, wishlistService ]);
+    }, [ wishlistContext, wishlistService, authModal ]);
     const inWishlistCallback: InWishlistCallback       = useCallback((productId: string) => {
         return (!!wishlistContext.wishlist?.items.find((item) => item === productId)) ?? false;
     }, [ wishlistContext ]);
