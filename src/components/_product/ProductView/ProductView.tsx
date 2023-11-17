@@ -27,6 +27,11 @@ import ProductShortInfo
 import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
 import ProductFullDescriptionList
     from '@/components/_product/ProductView/ProductFullDescriptionList/ProductFullDescriptionList.tsx';
+import ProductPurchaseBlock
+    from '@/components/_product/ProductView/ProductPurchaseBlock/ProductPurchaseBlock.tsx';
+import {
+    ProductPriceData, useProductPriceCalculator,
+} from '@/hooks/components/useProductPriceCalculator.ts';
 
 
 export type ProductViewProps = {
@@ -37,6 +42,12 @@ export type ProductViewProps = {
 
 const ProductView: React.FC<ProductViewProps> = (props) => {
     const { product, wishlistController, cartController }   = props;
+    const priceData: ProductPriceData                       = useProductPriceCalculator({
+        price       : product.price,
+        discount    : 0,
+        discountType: 'fixed',
+        currency    : 'Руб',
+    });
     const shortDescriptionItems: DescriptionsProps['items'] = useMemo(() => {
         return [
             {
@@ -262,16 +273,11 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                             { product.description }
                         </Typography.Paragraph>
                     </div>
-                    <Box className={ css.purchase }>
-                        {
-                            cartController &&
-                            <AddToCartButton
-                                productId={ product.barcode.toString() }
-                                cartController={ cartController }
-                                block
-                            />
-                        }
-                    </Box>
+                    <ProductPurchaseBlock
+                        productId={ product.barcode.toString() }
+                        cartController={ cartController }
+                        price={ priceData }
+                    />
                 </div>
             </div>
             <div>

@@ -36,8 +36,7 @@ const ProductViewSkeleton = () => {
             <Divider dashed style={ { marginTop: 4, marginBottom: 4 } }/>
             <div className={ css.top }>
                 <div className={ css.left }>
-                    <SkeletonImage className={ cn(css.slider, css.skeleton) }
-                                   fixed/>
+                    <SkeletonImage className={ cn(css.slider, css.skeleton) }/>
                 </div>
             </div>
         </Box>

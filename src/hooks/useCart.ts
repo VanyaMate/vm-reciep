@@ -1,6 +1,10 @@
 import { CartContext, CartContextType } from '@/contexts/data/CartContext.ts';
 import { useCallback, useContext } from 'react';
 import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
+import {
+    AuthFormModalContext,
+} from '@/contexts/components/AuthFormModalContext.tsx';
+import { UserContext } from '@/contexts/data/UserContext.ts';
 
 
 export type CartCallback = (productId: string, amount: number) => Promise<any>;
@@ -15,13 +19,19 @@ export interface ICartController {
 export const useCart = function (): ICartController {
     const cartContext: CartContextType = useContext(CartContext);
     const { cart: cartService }        = useContext(ServicesContext);
+    const authModal                    = useContext(AuthFormModalContext);
+    const userContext                  = useContext(UserContext);
 
-    const addToCartCallback: CartCallback      = useCallback((productId, amount) => {
-        return cartService
-            .addToCart(productId, amount)
-            .then((cart) => cartContext.setCart(cart));
+    const addToCartCallback: CartCallback      = useCallback(async (productId, amount) => {
+        if (userContext.user) {
+            return cartService
+                .addToCart(productId, amount)
+                .then((cart) => cartContext.setCart(cart));
+        } else {
+            authModal.open();
+        }
     }, [ cartContext, cartService ]);
-    const removeFromCartCallback: CartCallback = useCallback((productId, amount) => {
+    const removeFromCartCallback: CartCallback = useCallback(async (productId, amount) => {
         return cartService
             .removeFromCart(productId, amount)
             .then((cart) => cartContext.setCart(cart));
