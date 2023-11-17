@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 import css from './Button.module.scss';
 import { cn } from '@/helpers/classname.react.ts';
 import { Badge } from 'antd';
