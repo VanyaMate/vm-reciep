@@ -37,4 +37,4 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = (props) => {
     );
 };
 
-export default AddToCartButton;
+export default React.memo(AddToCartButton);

@@ -7,6 +7,7 @@ import ProductPrice
 import {
     ProductPriceData, useProductPriceCalculator,
 } from '@/hooks/components/useProductPriceCalculator.ts';
+import { getProductPageUrl } from '@/pages/getPage.ts';
 
 
 export type ProductCardInfoProps = {
@@ -38,7 +39,7 @@ const ProductCardInfo: React.FC<ProductCardInfoProps> = (props) => {
 
     return (
         <div className={ cn(css.container, skeleton && css.skeleton) }>
-            <Link to={ '/product/' + productId }
+            <Link to={ getProductPageUrl(productId) }
                   className={ css.title }>{ title }</Link>
             <p className={ css.description }>{ description }</p>
             <ProductPrice priceData={ priceData } small/>

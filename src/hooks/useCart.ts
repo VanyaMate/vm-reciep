@@ -1,5 +1,5 @@
 import { CartContext, CartContextType } from '@/contexts/data/CartContext.ts';
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import {
     AuthFormModalContext,
@@ -40,9 +40,9 @@ export const useCart = function (): ICartController {
         return cartContext.cart?.items.find((item) => item.productId === productId)?.amount ?? 0;
     }, [ cartContext, cartService ]);
 
-    return {
+    return useMemo(() => ({
         addToCart     : addToCartCallback,
         removeFromCart: removeFromCartCallback,
         inCart        : inCartCallback,
-    };
+    }), [ addToCartCallback, removeFromCartCallback, inCartCallback ]);
 };

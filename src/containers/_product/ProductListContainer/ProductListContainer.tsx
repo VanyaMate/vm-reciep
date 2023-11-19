@@ -1,8 +1,6 @@
 import React, {
-    useCallback,
     useContext,
     useEffect,
-    useMemo,
     useState,
 } from 'react';
 import { Product } from '@/modules/api/product/product-service.types.ts';
@@ -11,15 +9,18 @@ import ProductList
 import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import ProductCard
     from '@/components/_product/ProductCard/ProductCard.tsx';
-import { CartContext } from '@/contexts/data/CartContext.ts';
-import { WishlistContext } from '@/contexts/data/WishlistContext.ts';
-import { Cart, CartItem } from '@/modules/api/cart/cart-service.types.ts';
-import { Wishlist } from '@/modules/api/wishlist/wishlist-service.types.ts';
 import { MultiplyResponse } from '@/modules/api.types.ts';
 import ProductCardSkeleton
     from '@/components/_product/ProductCard/ProductCardSkeleton/ProductCardSkeleton.tsx';
 import { useCart } from '@/hooks/useCart.ts';
 import { useWishlist } from '@/hooks/useWishlist.ts';
+import AddToCartButton
+    from '@/components/_product/AddToCartButton/AddToCartButton.tsx';
+import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
+import WishlistButton
+    from '@/components/_product/WishlistButton/WishlistButton.tsx';
+import { getProductPageUrl } from '@/pages/getPage.ts';
+import { useProductSearchParams } from '@/hooks/useProductSearchParams.ts';
 
 
 const ProductListContainer = () => {
@@ -29,11 +30,18 @@ const ProductListContainer = () => {
     const services                  = useContext(ServicesContext);
     const cartController            = useCart();
     const wishlistController        = useWishlist();
+    const [ query, params ]         = useProductSearchParams();
 
     useEffect(() => {
         services
             .products
-            .findMany({ available: true }, { limit })
+            .findMany((product) => {
+                let approved = true;
+                if (query && !product.product_name.match(new RegExp(query, 'gi'))) {
+                    approved = false;
+                }
+                return approved && product.available;
+            }, { limit, ...params })
             .then((response: MultiplyResponse<Product>) => setProducts(response.list))
             .finally(() => setLoading(false));
     }, []);
@@ -47,8 +55,28 @@ const ProductListContainer = () => {
                             <ProductCard
                                 product={ product }
                                 key={ product.barcode }
-                                cartController={ cartController }
-                                wishlistController={ wishlistController }
+                                url={ getProductPageUrl(product.barcode.toString()) }
+                                top={
+                                    <>
+                                        <Tag
+                                            backgroundColor={ '#fff' }
+                                            textColor={ '#333' }
+                                        >
+                                            { product.brand_name }
+                                        </Tag>
+                                        <WishlistButton
+                                            productId={ product.barcode.toString() }
+                                            wishlistController={ wishlistController }
+                                        />
+                                    </>
+                                }
+                                footer={
+                                    <AddToCartButton
+                                        productId={ product.barcode.toString() }
+                                        cartController={ cartController }
+                                        block
+                                    />
+                                }
                             />
                         ))
             }

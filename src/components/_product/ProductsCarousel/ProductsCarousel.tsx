@@ -72,7 +72,9 @@ const ProductsCarousel: React.FC<ProductCarouselProps> = (props) => {
                     ) : products.map((product) =>
                         <SwiperSlide className={ css.slide }
                                      key={ product.barcode }>
-                            <ProductCard product={ product }/>
+                            <ProductCard
+                                product={ product }
+                            />
                         </SwiperSlide>,
                     )
                 }

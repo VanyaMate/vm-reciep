@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import {
     WishlistContext,
     WishlistContextType,
@@ -34,7 +34,7 @@ export const useWishlist = function (): IWishlistController {
         } else {
             authModal.open();
         }
-    }, [ wishlistContext, wishlistService, authModal ]);
+    }, [ wishlistContext, wishlistService ]);
     const removeFromWishlistCallback: WishlistCallback = useCallback(async (productId: string) => {
         if (userContext.user) {
             return wishlistService
@@ -48,9 +48,9 @@ export const useWishlist = function (): IWishlistController {
         return (!!wishlistContext.wishlist?.items.find((item) => item === productId)) ?? false;
     }, [ wishlistContext ]);
 
-    return {
+    return useMemo(() => ({
         addToWishlist     : addToWishlistCallback,
         removeFromWishlist: removeFromWishlistCallback,
         inWishlist        : inWishlistCallback,
-    };
+    }), [ addToWishlistCallback, removeFromWishlistCallback, inWishlistCallback ]);
 };

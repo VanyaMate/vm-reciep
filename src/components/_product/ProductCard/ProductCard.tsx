@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import css from './ProductCard.module.scss';
 import { Product } from '@/modules/api/product/product-service.types.ts';
 import ProductCardHeader
@@ -6,69 +6,57 @@ import ProductCardHeader
 import ProductCardInfo
     from '@/components/_product/ProductCard/ProductCardInfo/ProductCardInfo.tsx';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
-import WishlistButton
-    from '@/components/_product/WishlistButton/WishlistButton.tsx';
-import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
-import AddToCartButton
-    from '@/components/_product/AddToCartButton/AddToCartButton.tsx';
-import { ICartController } from '@/hooks/useCart.ts';
-import { IWishlistController } from '@/hooks/useWishlist.ts';
 import { getRandomInt } from '@/helpers/random.ts';
+import { Link } from 'react-router-dom';
+import { cn } from '@/helpers/classname.react.ts';
+import { getProductPageUrl } from '@/pages/getPage.ts';
+import ProductPrice
+    from '@/components/_product/ProductView/ProductPrice/ProductPrice.tsx';
+import {
+    ProductPriceData,
+    useProductPriceCalculator,
+} from '@/hooks/components/useProductPriceCalculator.ts';
 
 
 export type ProductCardProps = {
     product: Product;
-    cartController?: ICartController;
-    wishlistController?: IWishlistController;
+    url: string;
+    skeleton?: boolean;
+    top?: React.ReactNode;
+    footer?: React.ReactNode;
 }
 
 const ProductCard: React.FC<ProductCardProps> = (props) => {
     const {
               product,
-              wishlistController,
-              cartController,
+              url,
+              skeleton,
+              top,
+              footer,
           } = props;
+
+    const priceData: ProductPriceData = useProductPriceCalculator({
+        price       : product.price,
+        discount    : 0,
+        discountType: 'percent',
+        currency    : '₽',
+    });
 
     return (
         <Box className={ css.container }>
             <ProductCardHeader
                 images={ [ product.image_url ] }
-                top={
-                    <>
-                        {
-                            product.brand_name &&
-                            <Tag backgroundColor={ '#f55' }
-                                 textColor={ '#fff' }>
-                                { product.brand_name }
-                            </Tag>
-                        }
-                        {
-                            wishlistController &&
-                            <WishlistButton
-                                productId={ product.barcode.toString() }
-                                wishlistController={ wishlistController }
-                            />
-                        }
-                    </>
-                }
+                top={ top }
             />
-            <ProductCardInfo
-                productId={ product.barcode.toString() }
-                title={ product.product_name }
-                description={ product.description }
-                price={ product.price }
-                discount={ getRandomInt(0, 2) }
-                currency={ '₽' }
-            />
-            {
-                cartController &&
-                <AddToCartButton
-                    productId={ product.barcode.toString() }
-                    cartController={ cartController }
-                />
-            }
+            <div className={ cn(css.bottom, skeleton && css.skeleton) }>
+                <Link to={ url }
+                      className={ css.title }>{ product.product_name }</Link>
+                <p className={ css.description }>{ product.description }</p>
+                <ProductPrice priceData={ priceData } small/>
+            </div>
+            { footer }
         </Box>
     );
 };
 
-export default ProductCard;
+export default React.memo(ProductCard);

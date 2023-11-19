@@ -43,4 +43,4 @@ const WishlistButton: React.FC<WishlistButtonProps> = (props) => {
     );
 };
 
-export default WishlistButton;
+export default React.memo(WishlistButton);

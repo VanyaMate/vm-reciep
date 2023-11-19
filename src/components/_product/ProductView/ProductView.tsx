@@ -3,10 +3,8 @@ import Box from '@/components/_ui/_container/Box/Box.tsx';
 import css from './ProductView.module.scss';
 import ProductSlider
     from '@/components/_product/ProductSlider/ProductSlider.tsx';
-import { Descriptions, Divider, Rate, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
 import type { DescriptionsProps } from 'antd';
-import AddToCartButton
-    from '@/components/_product/AddToCartButton/AddToCartButton.tsx';
 import ProductBreadcrumbs
     from '@/components/_product/ProductView/ProductBreadcrumbs/ProductBreadcrumbs.tsx';
 import ProductTitle
@@ -32,6 +30,7 @@ import ProductPurchaseBlock
 import {
     ProductPriceData, useProductPriceCalculator,
 } from '@/hooks/components/useProductPriceCalculator.ts';
+import { getCategoryPageUrl, getHomePageUrl } from '@/pages/getPage.ts';
 
 
 export type ProductViewProps = {
@@ -198,18 +197,15 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
         },
     ], [ product ]);
 
-    /**
-     * TODO: /category/ заменить на константу
-     */
     return (
         <Box className={ css.container }>
             <ProductBreadcrumbs items={ [
                 {
-                    url  : '/',
+                    url  : getHomePageUrl(),
                     label: 'Главная',
                 },
                 {
-                    url  : `/category/${ product.category }`,
+                    url  : getCategoryPageUrl(product.category),
                     label: product.category,
                 },
             ] }/>
