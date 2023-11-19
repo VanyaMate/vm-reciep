@@ -20,6 +20,7 @@ import { useFetchProduct } from '@/hooks/products/useFetchProduct.ts';
 import {
     useFetchProductRecommendations,
 } from '@/hooks/products/useFetchProductRecommendations.ts';
+import { getProductPageUrl } from '@/pages/getPage.ts';
 
 
 export type ProductPageContainerProps = {
@@ -55,6 +56,7 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
             <ProductsCarousel
                 products={ products }
                 loading={ recoLoading }
+                urlGenerator={ getProductPageUrl }
             />
         </>
     );

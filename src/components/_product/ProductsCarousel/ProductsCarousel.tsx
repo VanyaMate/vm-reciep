@@ -21,11 +21,12 @@ import Box from '@/components/_ui/_container/Box/Box.tsx';
 
 export type ProductCarouselProps = {
     loading?: boolean;
+    urlGenerator: (id: string) => string;
     products: Product[];
 }
 
 const ProductsCarousel: React.FC<ProductCarouselProps> = (props) => {
-    const { loading, products } = props;
+    const { loading, products, urlGenerator } = props;
 
     if (!loading && !products.length) {
         return '';
@@ -74,6 +75,7 @@ const ProductsCarousel: React.FC<ProductCarouselProps> = (props) => {
                                      key={ product.barcode }>
                             <ProductCard
                                 product={ product }
+                                url={ urlGenerator(product.barcode.toString()) }
                             />
                         </SwiperSlide>,
                     )
