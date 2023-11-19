@@ -6,15 +6,22 @@ import { Options } from '@/modules/api.types.ts';
 
 export type ProductSearchParams = { [Key in keyof PageSearchOptions]: string };
 
+export enum SearchParam {
+    SEARCH = 'q',
+    LIMIT  = 'l',
+    OFFSET = 'p',
+    SORT   = 's',
+}
+
 export const useProductSearchParams = function (): [ string, Options<Product> ] {
     const [ urlParams, setUrlParams ]    = useSearchParams();
     const searchParams: Options<Product> = {};
     let search: string                   = '';
 
-    const searchQuery: string | null = urlParams.get('q');
-    const limitQuery: string | null  = urlParams.get('l');
-    const offsetQuery: string | null = urlParams.get('p');
-    const sortQuery: string | null   = urlParams.get('s');
+    const searchQuery: string | null = urlParams.get(SearchParam.SEARCH);
+    const limitQuery: string | null  = urlParams.get(SearchParam.LIMIT);
+    const offsetQuery: string | null = urlParams.get(SearchParam.OFFSET);
+    const sortQuery: string | null   = urlParams.get(SearchParam.SORT);
 
     if (searchQuery) {
         search = searchQuery;

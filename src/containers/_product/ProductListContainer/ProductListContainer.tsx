@@ -44,7 +44,7 @@ const ProductListContainer = () => {
             }, { limit, ...params })
             .then((response: MultiplyResponse<Product>) => setProducts(response.list))
             .finally(() => setLoading(false));
-    }, []);
+    }, [ query, params ]);
 
     return (
         <ProductList>
