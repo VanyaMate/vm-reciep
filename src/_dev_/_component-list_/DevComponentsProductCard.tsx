@@ -13,6 +13,7 @@ import ProductList
 import ProductCard
     from '@/components/_product/ProductCard/ProductCard.tsx';
 import { getRandomInt } from '@/helpers/random.ts';
+import { getProductPageUrl } from '@/pages/getPage.ts';
 
 
 const DevComponentsProductCard = () => {
@@ -38,18 +39,11 @@ const DevComponentsProductCard = () => {
                     products.map((product) => {
                         return (
                             <ProductCard
+                                url={ getProductPageUrl(product.barcode.toString()) }
                                 key={ product.barcode }
                                 product={ product }
-                                cartController={{
-                                    addToCart: async (p, a) => {},
-                                    removeFromCart: async (p, a) => {},
-                                    inCart: (p) => 10
-                                }}
-                                wishlistController={{
-                                    addToWishlist: async (p) => {},
-                                    removeFromWishlist: async (p) => {},
-                                    inWishlist: (p) => true
-                                }}
+                                top={ <></> }
+                                footer={ <></> }
                             />
                         );
                     })

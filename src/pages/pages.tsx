@@ -13,10 +13,7 @@ const Pages = () => {
 
             </Route>
             <Route path={ '/*' } element={ <CommonLayout smallBanner/> }>
-                <Route path={ 'category' }>
-                    <Route path={ ':id' } element={ 'category id' }/>
-                    <Route path={ '*' } element={ 'category list' }/>
-                </Route>
+                <Route path={ 'products' } element={ <HomePage/> }/>
                 <Route path={ 'product/:id' } element={ <ProductPage/> }/>
             </Route>
             <Route path={ '*' } element={ <CommonLayout/> }>
