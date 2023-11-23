@@ -20,31 +20,40 @@ import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
 import WishlistButton
     from '@/components/_product/WishlistButton/WishlistButton.tsx';
 import { getProductPageUrl } from '@/pages/getPage.ts';
-import { useProductSearchParams } from '@/hooks/useProductSearchParams.ts';
+import { useSearch } from '@/hooks/search/useSearch.ts';
 
 
 const ProductListContainer = () => {
-    const [ limit, setLimit ]       = useState<number>(30);
-    const [ products, setProducts ] = useState<Product[]>([]);
-    const [ loading, setLoading ]   = useState<boolean>(true);
-    const services                  = useContext(ServicesContext);
-    const cartController            = useCart();
-    const wishlistController        = useWishlist();
-    const [ query, params ]         = useProductSearchParams();
+    const [ products, setProducts ]        = useState<Product[]>([]);
+    const [ loading, setLoading ]          = useState<boolean>(true);
+    const services                         = useContext(ServicesContext);
+    const cartController                   = useCart();
+    const wishlistController               = useWishlist();
+    const [ { limit, page, sort, items } ] = useSearch();
 
     useEffect(() => {
         services
             .products
             .findMany((product) => {
-                let approved = true;
-                if (query && !product.product_name.match(new RegExp(query, 'gi'))) {
-                    approved = false;
-                }
-                return approved && product.available;
-            }, { limit, ...params })
+                return Object.entries(items).every(([ key, item ]) => {
+                    const productValue = product[key as keyof Product];
+                    if (item.type === 'match') {
+                        return new RegExp(`${ item.value }`, 'gi').test(productValue.toString());
+                    } else if (item.type === 'equal') {
+                        return item.value === productValue;
+                    } else {
+                        const [ min, max ] = item.value.split('-');
+                        if (productValue >= min && productValue < max) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+            }, { limit, offset: (page - 1) * limit, sort })
             .then((response: MultiplyResponse<Product>) => setProducts(response.list))
             .finally(() => setLoading(false));
-    }, [ query, params ]);
+    }, [ limit, page, sort, items ]);
 
     return (
         <ProductList>

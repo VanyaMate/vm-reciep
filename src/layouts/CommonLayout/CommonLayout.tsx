@@ -16,6 +16,7 @@ import AuthFormModalContainer
 import {
     useSearchParamsController,
 } from '@/hooks/useSearchParamsController.ts';
+import { useSearch } from '@/hooks/search/useSearch.ts';
 
 
 export type CommonLayoutProps = {
@@ -23,8 +24,8 @@ export type CommonLayoutProps = {
 }
 
 const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
-    const { smallBanner }  = props;
-    const searchController = useSearchParamsController();
+    const { smallBanner }                  = props;
+    const [ searchData, searchController ] = useSearch();
 
     return (
         <PageContent
@@ -43,6 +44,7 @@ const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
                         background={ 'https://images.unsplash.com/photo-1576562331281-d09e46af9854?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1hcmtldHxlbnwwfHwwfHx8MA%3D%3D' }
                         footer={
                             <HeaderSearch
+                                data={ searchData }
                                 controller={ searchController }
                             />
                         }

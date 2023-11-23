@@ -1,50 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { SearchParam } from '@/hooks/useProductSearchParams.ts';
-import { Product } from '@/modules/api/product/product-service.types.ts';
+import React from 'react';
+import {
+    ISearchController,
+    SortOptions,
+    UrlSearch,
+} from '@/hooks/search/useSearch.ts';
 
 
-export type OnChangeFilterCallback = (type: SearchParam, value: string) => any;
-export type SortOptions = [ keyof Product, 'asc' | 'desc' ] | [];
 export type HeaderSearchFiltersProps = {
-    onChangeFilter: OnChangeFilterCallback;
+    data: UrlSearch;
+    controller: ISearchController;
 }
 
 const HeaderSearchFilters: React.FC<HeaderSearchFiltersProps> = (props) => {
-    const defaultLimit: number  = 30;
-    const { onChangeFilter }    = props;
-    const [ limit, setLimit ]   = useState<number>(defaultLimit);
-    const [ offset, setOffset ] = useState<number>(0);
-    const [ sort, setSort ]     = useState<SortOptions>([]);
-
-    useEffect(() => {
-        if (limit > 0 && limit <= 50) {
-            onChangeFilter(SearchParam.LIMIT, limit.toString());
-        }
-    }, [ limit ]);
-
-    useEffect(() => {
-        onChangeFilter(SearchParam.OFFSET, offset.toString());
-    }, [ offset ]);
-
-    useEffect(() => {
-        onChangeFilter(SearchParam.SORT, sort.join(','));
-    }, [ sort ]);
+    const { data, controller } = props;
 
     return (
         <div>
-            <input placeholder={ 'limit' }
-                   value={ limit || '' }
-                   type={ 'number' }
-                   onChange={ (e) => setLimit(+e.target.value) }/>
-            <input placeholder={ 'offset' }
-                   value={ offset || '' }
-                   type={ 'number' }
-                   onChange={ (e) => setOffset(+e.target.value) }/>
-            <select
-                onChange={ (e) => setSort(e.target.value.split(',') as SortOptions) }>
-                <option defaultChecked value={ '' }>Без сортировки</option>
-                <option value={ 'price,asc' }>Самое дешевое</option>
-                <option value={ 'price,desc' }>Самое дорогое</option>
+            <input
+                value={ data.limit }
+                placeholder={ 'limit' }
+                onChange={ (event) => controller.setLimit(+event.target.value) }
+                type={ 'number' }
+            />
+            <input
+                value={ data.page }
+                placeholder={ 'page' }
+                onChange={ (event) => controller.setPage(+event.target.value) }
+                type={ 'number' }
+            />
+            <select value={ data.sort.join(',') }
+                    onChange={ (event) => controller.setSort(event.target.value.split(',') as SortOptions) }>
+                <option value={ '' }>Не выбрано</option>
+                <option value={ 'price,asc' }>Дешевле</option>
+                <option value={ 'price,desc' }>Дороже</option>
             </select>
         </div>
     );
