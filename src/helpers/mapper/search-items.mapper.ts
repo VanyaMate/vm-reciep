@@ -10,8 +10,7 @@ export class SearchItemsMapper implements IMapper<UrlSearchItems, string> {
 
         for (let i = 0; i < savedItems.length; i++) {
             const [ key, value ]: [ keyof Product, string ] = savedItems[i].split(':') as [ keyof Product, string ];
-            // console.log(key, value);
-            if (new RegExp('\[\d+-\d+\]').test(value)) {
+            if (value.match(new RegExp(/\[\d+\-\d+\]/, 'gi'))) {
                 urlItems[key] = {
                     value: value,
                     type : 'range',

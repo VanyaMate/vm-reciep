@@ -12,9 +12,9 @@ export type UseFetchProducts = {
 }
 
 export const useFetchProducts = function (search: Partial<UrlSearch>): UseFetchProducts {
+    const { limit, page, sort, items } = search;
     const [ products, setProducts ]    = useState<Product[]>([]);
     const [ loading, setLoading ]      = useState<boolean>(true);
-    const { limit, page, sort, items } = search;
     const services                     = useContext(ServicesContext);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export const useFetchProducts = function (search: Partial<UrlSearch>): UseFetchP
                 return items ? Object.entries(items).every(([ key, item ]) => {
                     const productValue = product[key as keyof Product];
                     if (item.type === 'match') {
-                        return new RegExp(`${ item.value }`, 'gi').test(productValue.toString());
+                        return productValue.toString().match(new RegExp(item.value, 'gi'));
                     } else if (item.type === 'equal') {
                         return item.value === productValue;
                     } else {
@@ -46,7 +46,7 @@ export const useFetchProducts = function (search: Partial<UrlSearch>): UseFetchP
                 }) : true;
             }, {
                 limit : limit ?? DEFAULT_LIMIT,
-                offset: (page ?? DEFAULT_PAGE - 1) * (limit ?? DEFAULT_LIMIT),
+                offset: ((page ?? DEFAULT_PAGE) - 1) * (limit ?? DEFAULT_LIMIT),
                 sort,
             })
             .then((response: MultiplyResponse<Product>) => setProducts(response.list))

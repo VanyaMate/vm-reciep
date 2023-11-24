@@ -18,7 +18,20 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
 
     return (
         <Box className={ css.container }>
-            <HeaderSearchInput/>
+            <HeaderSearchInput
+                value={ data.items.product_name?.value ?? '' }
+                onChange={ (value) => {
+                    if (value) {
+                        data.items.product_name = {
+                            value, type: 'match',
+                        };
+                    } else {
+                        delete data.items.product_name;
+                    }
+
+                    controller.setItems(data.items);
+                } }
+            />
             <HeaderSearchFilters data={ data } controller={ controller }/>
         </Box>
     );

@@ -13,7 +13,6 @@ import HeaderUserContainer
     from '@/containers/_header/HeaderUserContainer/HeaderUserContainer.tsx';
 import AuthFormModalContainer
     from '@/containers/AuthFormModal/AuthFormModalContainer.tsx';
-import { useSearch } from '@/hooks/search/useSearch.ts';
 import { SearchContext } from '@/contexts/data/SearchContext.ts';
 
 
