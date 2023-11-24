@@ -54,8 +54,6 @@ export const useSearchUrlParams = function (): [ Partial<UrlSearch>, ISearchUrlC
         }
     }, [ urlParams ]);
 
-    console.log(items);
-
     const setLimit = useCallback((limit: number) => {
         setUrlParams((prev) => {
             if ((limit >= 10) && (limit <= 50)) {

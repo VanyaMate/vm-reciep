@@ -21,7 +21,6 @@ export const useSearchNavigate = function (): ISearchNavigateController {
     const navigate              = useNavigate();
 
     const navigateCallback = useCallback((url: string, options: UrlSearch) => {
-        console.log(options)
         let search: string[] = [];
 
         if (Object.keys(options.items).length) {
