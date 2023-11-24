@@ -43,11 +43,18 @@ const ProductListContainer = () => {
                     } else if (item.type === 'equal') {
                         return item.value === productValue;
                     } else {
-                        const [ min, max ] = item.value.split('-');
-                        if (productValue >= min && productValue < max) {
-                            return true;
+                        const matches: RegExpMatchArray | null = item.value.match(/\d+/gi);
+                        if (matches) {
+                            const [ min, max ] = matches;
+                            // TODO: /10 нужно потому что все цены умножены
+                            //  на 10. Когда нужно будет убрать отсюда
+                            if (+productValue >= (+min / 10) && +productValue < (+max / 10)) {
+                                return true;
+                            } else {
+                                return false;
+                            }
                         } else {
-                            return false;
+                            return true;
                         }
                     }
                 }) : true;

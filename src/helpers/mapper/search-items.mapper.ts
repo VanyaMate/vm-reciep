@@ -5,12 +5,13 @@ import { UrlSearchItems } from '@/hooks/search/useSearch.ts';
 
 export class SearchItemsMapper implements IMapper<UrlSearchItems, string> {
     deserialize (data: string): UrlSearchItems {
-        const savedItems: string[]     = data.split('+');
+        const savedItems: string[]     = data.split(';');
         const urlItems: UrlSearchItems = {};
 
         for (let i = 0; i < savedItems.length; i++) {
             const [ key, value ]: [ keyof Product, string ] = savedItems[i].split(':') as [ keyof Product, string ];
-            if (new RegExp('[\d+-\d+]').test(value)) {
+            // console.log(key, value);
+            if (new RegExp('\[\d+-\d+\]').test(value)) {
                 urlItems[key] = {
                     value: value,
                     type : 'range',
@@ -32,13 +33,13 @@ export class SearchItemsMapper implements IMapper<UrlSearchItems, string> {
     }
 
     serialize (data: UrlSearchItems): string {
-        return Object.entries(data).map(([ key, value ]) => {
-            if ((value.type === 'match') || (value.type === 'range')) {
-                return `${ key }:${ value }`;
+        return Object.entries(data).map(([ key, item ]) => {
+            if ((item.type === 'match') || (item.type === 'range')) {
+                return `${ key }:${ item.value }`;
             } else {
-                return `${ key }:!${ value }`;
+                return `${ key }:!${ item.value }`;
             }
-        }).join('+');
+        }).join(';');
     }
 
 }
