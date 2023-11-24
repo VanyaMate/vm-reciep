@@ -1,0 +1,30 @@
+.container {
+    display: inline-flex;
+    gap: var(--offset-small);
+    position: relative;
+
+    .main {
+        width: 100px;
+    }
+
+    .dropdown {
+        position: absolute;
+        background: var(--background-second);
+        top: calc(100% + var(--offset-small));
+        left: 0;
+        display: none;
+        width: 200px;
+        padding: var(--offset-medium);
+        box-shadow: var(--box-shadow-modal);
+
+        .item {
+            background: var(--ba);
+        }
+
+        &.opened {
+            display: flex;
+            flex-direction: column;
+            gap: var(--offset-small);
+        }
+    }
+}

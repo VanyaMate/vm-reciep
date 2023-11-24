@@ -47,6 +47,16 @@ import {
     CreateCartDto, UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
 import { UserContext, UserContextType } from '@/contexts/data/UserContext.ts';
+import {
+    ICategoriesService,
+} from '@/modules/api/categories/categories-service.interface.ts';
+import { Category } from '@/modules/api/category/category-service.types.ts';
+import {
+    LocalCategoriesService,
+} from '@/modules/api/categories/services/local-categories-service.ts';
+import {
+    CategoriesBackend,
+} from '@/modules/local-backend/categories/categories-backend.ts';
 
 
 export type ServicesProviderProps = {
@@ -72,6 +82,10 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
         return new LocalProductsService(new ProductsBackend());
     }, []);
 
+    const categoriesService: ICategoriesService<Category> = useMemo(() => {
+        return new LocalCategoriesService(new CategoriesBackend());
+    }, []);
+
     const authService: IAuthService<AuthData> = useMemo(() => {
         return new LocalAuthService(
             new UserBackend(),
@@ -85,10 +99,11 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
 
     return (
         <ServicesContext.Provider value={ {
-            wishlist: wishlistService,
-            cart    : cartService,
-            auth    : authService,
-            products: productsService,
+            wishlist  : wishlistService,
+            cart      : cartService,
+            auth      : authService,
+            products  : productsService,
+            categories: categoriesService,
         } }>
             { props.children }
         </ServicesContext.Provider>

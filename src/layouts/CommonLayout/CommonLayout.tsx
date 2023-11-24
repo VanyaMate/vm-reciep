@@ -14,6 +14,8 @@ import HeaderUserContainer
 import AuthFormModalContainer
     from '@/containers/AuthFormModal/AuthFormModalContainer.tsx';
 import { SearchContext } from '@/contexts/data/SearchContext.ts';
+import HeaderSearchContainer
+    from '@/containers/_header/HeaderSearchContainer/HeaderSearchContainer.tsx';
 
 
 export type CommonLayoutProps = {
@@ -21,8 +23,7 @@ export type CommonLayoutProps = {
 }
 
 const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
-    const { smallBanner }                  = props;
-    const [ searchData, searchController ] = useContext(SearchContext);
+    const { smallBanner } = props;
 
     return (
         <PageContent
@@ -40,10 +41,7 @@ const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
                     <HeaderBanner
                         background={ 'https://images.unsplash.com/photo-1576562331281-d09e46af9854?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1hcmtldHxlbnwwfHwwfHx8MA%3D%3D' }
                         footer={
-                            <HeaderSearch
-                                data={ searchData }
-                                controller={ searchController }
-                            />
+                            <HeaderSearchContainer/>
                         }
                         small={ smallBanner }
                     />

@@ -35,6 +35,16 @@ import {
 import {
     LocalWishlistService,
 } from '@/modules/api/wishlist/services/local-wishlist.service.ts';
+import {
+    ICategoriesService,
+} from '@/modules/api/categories/categories-service.interface.ts';
+import { Category } from '@/modules/api/category/category-service.types.ts';
+import {
+    LocalCategoriesService,
+} from '@/modules/api/categories/services/local-categories-service.ts';
+import {
+    CategoriesBackend,
+} from '@/modules/local-backend/categories/categories-backend.ts';
 
 
 export type ServicesContextType = {
@@ -42,10 +52,11 @@ export type ServicesContextType = {
     products: IProductsService<Product>,
     cart: ICartService<Cart>,
     wishlist: IWishlistService<Wishlist>,
+    categories: ICategoriesService<Category>,
 }
 
 export const ServicesContext = createContext<ServicesContextType>({
-    auth    : new LocalAuthService(
+    auth      : new LocalAuthService(
         new UserBackend(),
         new UserBackendMapper(),
         new CartBackend(),
@@ -53,7 +64,8 @@ export const ServicesContext = createContext<ServicesContextType>({
         new StorageService(localStorage, 'auth'),
         new StorageService(sessionStorage, 'auth'),
     ),
-    products: new LocalProductsService(new ProductsBackend()),
-    cart    : new LocalCartService('', new CartBackend()),
-    wishlist: new LocalWishlistService('', new WishlistBackend()),
+    products  : new LocalProductsService(new ProductsBackend()),
+    cart      : new LocalCartService('', new CartBackend()),
+    wishlist  : new LocalWishlistService('', new WishlistBackend()),
+    categories: new LocalCategoriesService(new CategoriesBackend()),
 });

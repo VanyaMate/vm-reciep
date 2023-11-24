@@ -22,6 +22,7 @@ export const useFetchProducts = function (search: Partial<UrlSearch>): UseFetchP
         services
             .products
             .findMany((product) => {
+                // TODO: Думаю лучше это вынести куда нибудь в другуе место
                 return items ? Object.entries(items).every(([ key, item ]) => {
                     const productValue = product[key as keyof Product];
                     if (item.type === 'match') {
@@ -33,7 +34,8 @@ export const useFetchProducts = function (search: Partial<UrlSearch>): UseFetchP
                         if (matches) {
                             const [ min, max ] = matches;
                             // TODO: /10 нужно потому что все цены умножены
-                            //  на 10. Когда нужно будет убрать отсюда
+                            //  на 10. Когда это уберется из view - нужно будет
+                            //  убрать отсюда.
                             if (+productValue >= (+min / 10) && +productValue < (+max / 10)) {
                                 return true;
                             } else {
