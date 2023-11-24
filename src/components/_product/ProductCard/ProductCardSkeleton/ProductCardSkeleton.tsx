@@ -24,7 +24,7 @@ const ProductCardSkeleton = () => {
                 currency={ 'Руб' }
                 skeleton
             />
-            <Button skeleton>Добавить в корзину</Button>
+            <Button skeleton block>Добавить в корзину</Button>
         </Box>
     );
 };

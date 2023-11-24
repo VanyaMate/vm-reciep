@@ -10,7 +10,9 @@ import UserProvider from '@/providers/UserProvider.tsx';
 import CartProvider from '@/providers/CartProvider.tsx';
 import WishlistProvider from '@/providers/WishlistProvider.tsx';
 import AuthProvider from '@/providers/AuthProvider.tsx';
-import AuthFormModalProvider from '@/providers/components/AuthFormModalProvider.tsx';
+import AuthFormModalProvider
+    from '@/providers/components/AuthFormModalProvider.tsx';
+import SearchProvider from '@/providers/SearchProvider.tsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -22,7 +24,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                         <WishlistProvider>
                             <ServicesProvider>
                                 <AuthFormModalProvider>
-                                    <App/>
+                                    <SearchProvider>
+                                        <App/>
+                                    </SearchProvider>
                                 </AuthFormModalProvider>
                             </ServicesProvider>
                         </WishlistProvider>

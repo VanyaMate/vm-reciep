@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import PageContent from '@/components/_common/PageContent/PageContent.tsx';
 import Header
@@ -13,10 +13,8 @@ import HeaderUserContainer
     from '@/containers/_header/HeaderUserContainer/HeaderUserContainer.tsx';
 import AuthFormModalContainer
     from '@/containers/AuthFormModal/AuthFormModalContainer.tsx';
-import {
-    useSearchParamsController,
-} from '@/hooks/useSearchParamsController.ts';
 import { useSearch } from '@/hooks/search/useSearch.ts';
+import { SearchContext } from '@/contexts/data/SearchContext.ts';
 
 
 export type CommonLayoutProps = {
@@ -25,7 +23,7 @@ export type CommonLayoutProps = {
 
 const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
     const { smallBanner }                  = props;
-    const [ searchData, searchController ] = useSearch();
+    const [ searchData, searchController ] = useContext(SearchContext);
 
     return (
         <PageContent
