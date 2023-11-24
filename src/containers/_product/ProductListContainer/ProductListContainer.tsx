@@ -20,7 +20,8 @@ import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
 import WishlistButton
     from '@/components/_product/WishlistButton/WishlistButton.tsx';
 import { getProductPageUrl } from '@/pages/getPage.ts';
-import { useSearch } from '@/hooks/search/useSearch.ts';
+import { useSearchUrlParams } from '@/hooks/search/useSearchUrlParams.ts';
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '@/consts/search.ts';
 
 
 const ProductListContainer = () => {
@@ -29,13 +30,13 @@ const ProductListContainer = () => {
     const services                         = useContext(ServicesContext);
     const cartController                   = useCart();
     const wishlistController               = useWishlist();
-    const [ { limit, page, sort, items } ] = useSearch();
+    const [ { limit, page, sort, items } ] = useSearchUrlParams();
 
     useEffect(() => {
         services
             .products
             .findMany((product) => {
-                return Object.entries(items).every(([ key, item ]) => {
+                return items ? Object.entries(items).every(([ key, item ]) => {
                     const productValue = product[key as keyof Product];
                     if (item.type === 'match') {
                         return new RegExp(`${ item.value }`, 'gi').test(productValue.toString());
@@ -49,8 +50,12 @@ const ProductListContainer = () => {
                             return false;
                         }
                     }
-                });
-            }, { limit, offset: (page - 1) * limit, sort })
+                }) : true;
+            }, {
+                limit : limit ?? DEFAULT_LIMIT,
+                offset: (page ?? DEFAULT_PAGE - 1) * (limit ?? DEFAULT_LIMIT),
+                sort,
+            })
             .then((response: MultiplyResponse<Product>) => setProducts(response.list))
             .finally(() => setLoading(false));
     }, [ limit, page, sort, items ]);

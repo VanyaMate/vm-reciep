@@ -31,16 +31,9 @@ export const useSearchStorageParams = function (): [ UrlSearch, ISearchStorageCo
 
     const mapper: ISearchMapper = useSearchMapper();
 
-    const [ limit, setLimit ] = useState<number>(() => Number(localStorage.getItem(SAVED_LIMIT) ?? DEFAULT_LIMIT));
     const page: number        = useMemo(() => DEFAULT_PAGE, []);
-    const [ sort, setSort ]   = useState(() => {
-        const savedSort: string | null = localStorage.getItem(SAVED_SORT);
-        if (savedSort) {
-            return mapper.sort.deserialize(savedSort);
-        } else {
-            return DEFAULT_SORT;
-        }
-    });
+    const [ limit, setLimit ] = useState<number>(Number(localStorage.getItem(SAVED_LIMIT) ?? DEFAULT_LIMIT));
+    const [ sort, setSort ]   = useState(mapper.sort.deserialize(localStorage.getItem(SAVED_SORT) ?? ''));
     const [ items, setItems ] = useState(() => {
         const savedItemsString: string | null = sessionStorage.getItem(SAVED_ITEMS);
         if (savedItemsString) {
@@ -53,15 +46,15 @@ export const useSearchStorageParams = function (): [ UrlSearch, ISearchStorageCo
     const setLimitCallback = useCallback((value: number) => {
         localStorage.setItem(SAVED_LIMIT, `${ value }`);
         setLimit(value);
-    }, [ setLimit ]);
+    }, [ limit ]);
     const setSortCallback  = useCallback((value: SortOptions) => {
         localStorage.setItem(SAVED_SORT, mapper.sort.serialize(value));
         setSort(value);
-    }, [ setSort ]);
+    }, [ sort ]);
     const setItemsCallback = useCallback((value: UrlSearchItems) => {
         sessionStorage.setItem(SAVED_ITEMS, mapper.items.serialize(value));
         setItems(value);
-    }, [ setItems ]);
+    }, [ items ]);
 
     const data: UrlSearch                      = useMemo(() => ({
         limit, page, sort, items,

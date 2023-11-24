@@ -9,6 +9,7 @@ import {
     UrlSearch,
     UrlSearchItems,
 } from '@/hooks/search/useSearch.ts';
+import { URL_ITEMS, URL_LIMIT, URL_PAGE, URL_SORT } from '@/consts/search.ts';
 
 
 export interface ISearchUrlController {
@@ -22,23 +23,20 @@ export interface ISearchUrlController {
 }
 
 export const useSearchUrlParams = function (): [ Partial<UrlSearch>, ISearchUrlController ] {
-    const URL_LIMIT: string = 'limit';
-    const URL_PAGE: string  = 'page';
-    const URL_SORT: string  = 'sort';
-    const URL_ITEMS: string = 'items';
+    const mapper: ISearchMapper       = useSearchMapper();
+    const [ urlParams, setUrlParams ] = useSearchParams();
 
-    const mapper: ISearchMapper = useSearchMapper();
-
-    const [ urlParams, setUrlParams ]  = useSearchParams();
-    const limit: number | null         = useMemo(() => {
+    const limit: number | null = useMemo(() => {
         const urlLimit: string | null = urlParams.get(URL_LIMIT);
         return Number(urlLimit) || null;
     }, [ urlParams ]);
-    const page: number | null          = useMemo(() => {
+
+    const page: number | null = useMemo(() => {
         const urlPage: string | null = urlParams.get(URL_PAGE);
         return Number(urlPage) || null;
     }, [ urlParams ]);
-    const sort: SortOptions | null     = useMemo(() => {
+
+    const sort: SortOptions | null = useMemo(() => {
         const sort: string | null = urlParams.get(URL_SORT);
         if (sort) {
             return mapper.sort.deserialize(sort);
@@ -46,6 +44,7 @@ export const useSearchUrlParams = function (): [ Partial<UrlSearch>, ISearchUrlC
             return null;
         }
     }, [ urlParams ]);
+
     const items: UrlSearchItems | null = useMemo(() => {
         const items: string | null = urlParams.get(URL_ITEMS);
         if (items) {
@@ -65,7 +64,8 @@ export const useSearchUrlParams = function (): [ Partial<UrlSearch>, ISearchUrlC
             return prev;
         });
     }, [ setUrlParams ]);
-    const setPage  = useCallback((page: number) => {
+
+    const setPage = useCallback((page: number) => {
         setUrlParams((prev) => {
             if (page > 1) {
                 prev.set(URL_PAGE, page.toString());
@@ -75,9 +75,11 @@ export const useSearchUrlParams = function (): [ Partial<UrlSearch>, ISearchUrlC
             return prev;
         });
     }, [ setUrlParams ]);
-    const setSort  = useCallback((sort: SortOptions) => {
+
+    const setSort = useCallback((sort: SortOptions) => {
         urlParams.set(URL_SORT, mapper.sort.serialize(sort));
     }, [ urlParams ]);
+
     const setItems = useCallback((items: UrlSearchItems) => {
         urlParams.set(URL_ITEMS, mapper.items.serialize(items));
     }, [ urlParams ]);

@@ -21,5 +21,4 @@ export class LocalProductsService implements IProductsService<Product> {
     public findOne (id: string): Promise<Product | null> {
         return this._productsService.findOne(id);
     }
-
 }

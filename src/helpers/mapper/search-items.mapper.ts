@@ -1,6 +1,6 @@
 import { IMapper } from '@/helpers/mapper/mapper.interface.ts';
-import { UrlSearchItems } from '@/hooks/search/useUrlSearchGetter.ts';
 import { Product } from '@/modules/api/product/product-service.types.ts';
+import { UrlSearchItems } from '@/hooks/search/useSearch.ts';
 
 
 export class SearchItemsMapper implements IMapper<UrlSearchItems, string> {

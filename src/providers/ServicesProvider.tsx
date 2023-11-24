@@ -47,7 +47,6 @@ import {
     CreateCartDto, UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
 import { UserContext, UserContextType } from '@/contexts/data/UserContext.ts';
-import { Filter, MultiplyResponse, Options } from '@/modules/api.types.ts';
 
 
 export type ServicesProviderProps = {

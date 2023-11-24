@@ -1,7 +1,5 @@
 import { IMapper } from '@/helpers/mapper/mapper.interface.ts';
-import {
-    SortOptions,
-} from '@/components/_common/_header/HeaderSearch/HeaderSearchFilters/HeaderSearchFilters.tsx';
+import { SortOptions } from '@/hooks/search/useSearch.ts';
 
 
 export class SearchSortMapper implements IMapper<SortOptions, string> {
