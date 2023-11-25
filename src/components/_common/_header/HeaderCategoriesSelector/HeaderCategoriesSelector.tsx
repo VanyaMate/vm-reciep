@@ -44,12 +44,15 @@ const HeaderCategoriesSelector: React.FC<HeaderCategoriesSelectorProps> = (props
                 className={ css.main }
                 onClick={ onMainButtonClick }
             >{ selected?.title ?? 'Категории' }</Button>
-            <Button
-                styleType={ selected?.title ? 'main'
-                                            : 'second' }
-                square
-                onClick={ onSecondButtonClick }
-            >X</Button>
+            {
+                selected?.title && <Button
+                    styleType={ 'main' }
+                    square
+                    onClick={ onSecondButtonClick }
+                >
+                    X
+                </Button>
+            }
             <Box className={ cn(css.dropdown, opened && css.opened) }>
                 {
                     categories.map((category) => (

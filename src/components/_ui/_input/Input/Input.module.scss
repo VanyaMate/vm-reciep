@@ -6,9 +6,16 @@
     outline: none;
     transition: var(--transition-fast);
     border-radius: var(--offset-medium);
+    font-size: 14px;
 
     &:active,
-    &:focus {
+    &:focus,
+    &:not(:placeholder-shown) {
         border: 1px solid var(--button-primary-background);
+    }
+
+    &.block {
+        display: flex;
+        width: 100%;
     }
 }

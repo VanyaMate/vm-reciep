@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { SearchContext } from '@/contexts/data/SearchContext.ts';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
 import css from './HeaderSearchContainer.module.scss';
@@ -6,19 +6,20 @@ import HeaderCategoriesSelector
     from '@/components/_common/_header/HeaderCategoriesSelector/HeaderCategoriesSelector.tsx';
 import { Category } from '@/modules/api/category/category-service.types.ts';
 import { useFetchCategories } from '@/hooks/categories/useFetchCategories.ts';
-import { UrlSearchItems } from '@/hooks/search/useSearch.ts';
 import Input from '@/components/_ui/_input/Input/Input.tsx';
 
 
 const HeaderSearchContainer = () => {
     const [ data, controller ]      = useContext(SearchContext);
     const { categories, loading }   = useFetchCategories();
-    const selected: Category | null = useMemo(() => {
+    const [ selected, setSelected ] = useState<Category | null>(null);
+
+    useEffect(() => {
         const selectedCategory: string | undefined = data.items.category?.value;
         if (selectedCategory) {
-            return categories.filter((category) => category.title === selectedCategory)[0] ?? null;
+            const category: Category | null = categories.filter((category) => category.title === selectedCategory)[0] ?? null;
+            setSelected(category);
         }
-        return null;
     }, [ data.items ]);
 
     return (
@@ -27,32 +28,23 @@ const HeaderSearchContainer = () => {
                 selected={ selected }
                 categories={ categories }
                 onCategoryChange={ (category) => {
-                    const items: UrlSearchItems = data.items;
-                    if (category) {
-                        items.category = {
-                            value: category.title,
-                            type : 'equal',
-                        };
-                    } else {
-                        delete items.category;
-                    }
-                    controller.setItems(items);
+                    setSelected(category);
+                    controller.setItem('category', {
+                        value: category?.title ?? '',
+                        type : 'equal',
+                    });
                 } }
             />
             <Input
-                value={ data.items.product_name?.value ?? '' }
+                defaultValue={ data.items.product_name?.value ?? '' }
+                debounce={ 500 }
                 placeholder={ 'Поиск' }
+                block
                 onValueChange={ (productName: string) => {
-                    const items: UrlSearchItems = data.items;
-                    if (productName) {
-                        items.product_name = {
-                            value: productName,
-                            type : 'match',
-                        };
-                    } else {
-                        delete items.category;
-                    }
-                    controller.setItems(items);
+                    controller.setItem('product_name', {
+                        value: productName,
+                        type : 'match',
+                    });
                 } }
             />
         </Box>

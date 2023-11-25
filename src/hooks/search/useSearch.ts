@@ -39,6 +39,8 @@ export interface ISearchController {
     setSort (sort: SortOptions): void;
 
     setItems (items: UrlSearchItems): void;
+
+    setItem (key: keyof Product, item: UrlSearchItem): void;
 }
 
 export const useSearch = function (): [ UrlSearch, ISearchController ] {
@@ -81,12 +83,23 @@ export const useSearch = function (): [ UrlSearch, ISearchController ] {
         navigator.navigate('/products', { ...data, items, page: DEFAULT_PAGE });
     }, [ navigator, data, storageController ]);
 
+    const setItemCallback = useCallback((key: keyof Product, item: UrlSearchItem) => {
+        const items: UrlSearchItems = data.items;
+        if (item.value) {
+            data.items[key] = item;
+        } else {
+            delete data.items[key];
+        }
+        setItemsCallback(items);
+    }, [ navigator, data, setItemsCallback ]);
+
     const controller: ISearchController = useMemo(() => ({
         setLimit: setLimitCallback,
         setPage : setPageCallback,
         setSort : setSortCallback,
         setItems: setItemsCallback,
-    }), [ setLimitCallback, setPageCallback, setSortCallback, setItemsCallback ]);
+        setItem : setItemCallback,
+    }), [ setLimitCallback, setPageCallback, setSortCallback, setItemsCallback, setItemCallback ]);
 
     return useMemo(() => [ data, controller ], [ data, controller ]);
 };
