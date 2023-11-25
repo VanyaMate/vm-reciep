@@ -1,0 +1,14 @@
+.container {
+    height: 40px;
+    padding: var(--offset-medium);
+    background: var(--background-second);
+    border: 1px solid var(--border-gray);
+    outline: none;
+    transition: var(--transition-fast);
+    border-radius: var(--offset-medium);
+
+    &:active,
+    &:focus {
+        border: 1px solid var(--button-primary-background);
+    }
+}

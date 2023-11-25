@@ -2,12 +2,12 @@ import React, { useContext, useMemo, useState } from 'react';
 import { SearchContext } from '@/contexts/data/SearchContext.ts';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
 import css from './HeaderSearchContainer.module.scss';
-import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import HeaderCategoriesSelector
     from '@/components/_common/_header/HeaderCategoriesSelector/HeaderCategoriesSelector.tsx';
 import { Category } from '@/modules/api/category/category-service.types.ts';
 import { useFetchCategories } from '@/hooks/categories/useFetchCategories.ts';
 import { UrlSearchItems } from '@/hooks/search/useSearch.ts';
+import Input from '@/components/_ui/_input/Input/Input.tsx';
 
 
 const HeaderSearchContainer = () => {
@@ -37,8 +37,23 @@ const HeaderSearchContainer = () => {
                         delete items.category;
                     }
                     controller.setItems(items);
-                }
-                }
+                } }
+            />
+            <Input
+                value={ data.items.product_name?.value ?? '' }
+                placeholder={ 'Поиск' }
+                onValueChange={ (productName: string) => {
+                    const items: UrlSearchItems = data.items;
+                    if (productName) {
+                        items.product_name = {
+                            value: productName,
+                            type : 'match',
+                        };
+                    } else {
+                        delete items.category;
+                    }
+                    controller.setItems(items);
+                } }
             />
         </Box>
     );
