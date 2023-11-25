@@ -1,22 +1,23 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Category } from '@/modules/api/category/category-service.types.ts';
-import { Dropdown } from 'antd';
-import type { MenuProps } from 'antd';
 import Button from '@/components/_ui/_button/Button/Button.tsx';
 import css from './HeaderCategoriesSelector.module.scss';
-import Box from '@/components/_ui/_container/Box/Box.tsx';
-import { cn } from '@/helpers/classname.react.ts';
+import DropdownList
+    , {
+    DropdownListItem,
+} from '@/components/_ui/_dropdown/DropdownList/DropdownList.tsx';
 
 
 export type HeaderCategoriesSelectorProps = {
     selected: Category | null;
     categories: Category[];
     onCategoryChange: (category: Category | null) => any;
+    loading?: boolean;
 }
 
 const HeaderCategoriesSelector: React.FC<HeaderCategoriesSelectorProps> = (props) => {
-    const { selected, categories, onCategoryChange } = props;
-    const [ opened, setOpened ]                      = useState<boolean>(false);
+    const { selected, categories, onCategoryChange, loading } = props;
+    const [ opened, setOpened ]                               = useState<boolean>(false);
 
     const onMainButtonClick = useCallback(() => {
         setOpened((prev) => !prev);
@@ -26,8 +27,6 @@ const HeaderCategoriesSelector: React.FC<HeaderCategoriesSelectorProps> = (props
         setOpened(false);
         if (selected?.title) {
             onCategoryChange(null);
-        } else {
-            // open
         }
     }, [ selected ]);
 
@@ -36,16 +35,30 @@ const HeaderCategoriesSelector: React.FC<HeaderCategoriesSelectorProps> = (props
         onCategoryChange(category);
     }, [ onCategoryChange, opened ]);
 
+    const menuItems: DropdownListItem[] = useMemo(() => {
+        return categories.map((category) => ({
+            label  : category.title,
+            onClick: () => onCategoryClick(category),
+        }));
+    }, [ categories, onCategoryClick ]);
+
     return (
         <div className={ css.container }>
-            <Button
-                styleType={ selected?.title ? 'primary'
-                                            : 'second' }
-                className={ css.main }
-                onClick={ onMainButtonClick }
-            >{ selected?.title ?? 'Категории' }</Button>
+            <DropdownList
+                menuItems={ menuItems }
+                dropdownClassName={ css.dropdown }
+            >
+                <Button
+                    styleType={ selected?.title ? 'primary'
+                                                : 'second' }
+                    className={ css.main }
+                    onClick={ onMainButtonClick }
+                    loading={ loading }
+                >{ selected?.title ?? 'Категории' }</Button>
+            </DropdownList>
             {
-                selected?.title && <Button
+                selected?.title &&
+                <Button
                     styleType={ 'main' }
                     square
                     onClick={ onSecondButtonClick }
@@ -53,23 +66,8 @@ const HeaderCategoriesSelector: React.FC<HeaderCategoriesSelectorProps> = (props
                     X
                 </Button>
             }
-            <Box className={ cn(css.dropdown, opened && css.opened) }>
-                {
-                    categories.map((category) => (
-                        <Button
-                            styleType={ 'default' }
-                            key={ category.title }
-                            block
-                            disabled={ selected?.title === category.title }
-                            onClick={ () => onCategoryClick(category) }
-                        >
-                            { category.title }
-                        </Button>
-                    ))
-                }
-            </Box>
         </div>
     );
 };
 
-export default HeaderCategoriesSelector;
+export default React.memo(HeaderCategoriesSelector);

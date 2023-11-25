@@ -17,11 +17,20 @@ export type DropdownListProps = {
     menuItems: DropdownListItem[];
     opened?: boolean;
     full?: boolean;
+    className?: string;
+    dropdownClassName?: string;
 }
 
 const DropdownList: React.FC<DropdownListProps> = (props) => {
-    const { children, menuItems, opened, full } = props;
-    const [ open, setOpen ]                     = useState<boolean>(opened ?? false);
+    const {
+              children,
+              menuItems,
+              opened,
+              full,
+              className,
+              dropdownClassName,
+          }                 = props;
+    const [ open, setOpen ] = useState<boolean>(opened ?? false);
 
     const onClickHandler = useCallback((handler?: () => any) => {
         setOpen(false);
@@ -30,11 +39,11 @@ const DropdownList: React.FC<DropdownListProps> = (props) => {
 
     return (
         <div
-            className={ cn(css.container, open && css.opened, full && css.full) }>
+            className={ cn(css.container, open && css.opened, full && css.full, className) }>
             <div onClick={ () => setOpen((prev) => !prev) }>
                 { children }
             </div>
-            <Box className={ cn(css.dropdown) }>
+            <Box className={ cn(css.dropdown, dropdownClassName) }>
                 {
                     menuItems.map((menuItem, index) => (
                         <Button

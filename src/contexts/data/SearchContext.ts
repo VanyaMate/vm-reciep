@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import {
     ISearchController,
     SortOptions,
-    UrlSearch, UrlSearchItems,
+    UrlSearch, UrlSearchItem, UrlSearchItems,
 } from '@/hooks/search/useSearch.ts';
 import {
     DEFAULT_ITEMS,
@@ -10,6 +10,7 @@ import {
     DEFAULT_PAGE,
     DEFAULT_SORT,
 } from '@/consts/search.ts';
+import { Product } from '@/modules/api/product/product-service.types.ts';
 
 
 export type SearchContextType = [ UrlSearch, ISearchController ];
@@ -28,6 +29,8 @@ export const SearchContext = createContext<SearchContextType>([
         setSort (sort: SortOptions): void {
         },
         setPage (page: number): void {
+        },
+        setItem (key: keyof Product, item: UrlSearchItem): void {
         },
     },
 ]);

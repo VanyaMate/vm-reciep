@@ -57,6 +57,8 @@ export const useSearch = function (): [ UrlSearch, ISearchController ] {
         limit, page, sort, items,
     }), [ limit, page, sort, items ]);
 
+    console.log('DATA is', data.items);
+
     useEffect(() => {
         setLimit(urlParams.limit ?? storageParams.limit);
         setPage(urlParams.page ?? storageParams.page);
@@ -84,11 +86,11 @@ export const useSearch = function (): [ UrlSearch, ISearchController ] {
     }, [ navigator, data, storageController ]);
 
     const setItemCallback = useCallback((key: keyof Product, item: UrlSearchItem) => {
-        const items: UrlSearchItems = data.items;
+        const items: UrlSearchItems = { ...data.items };
         if (item.value) {
-            data.items[key] = item;
+            items[key] = item;
         } else {
-            delete data.items[key];
+            delete items[key];
         }
         setItemsCallback(items);
     }, [ navigator, data, setItemsCallback ]);

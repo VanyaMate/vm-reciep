@@ -53,7 +53,7 @@ export const useFetchProducts = function (search: Partial<UrlSearch>): UseFetchP
             })
             .then((response: MultiplyResponse<Product>) => setProducts(response.list))
             .finally(() => setLoading(false));
-    }, [ limit, page, sort, items ]);
+    }, [ search ]);
 
     return useMemo(() => ({
         products, loading,

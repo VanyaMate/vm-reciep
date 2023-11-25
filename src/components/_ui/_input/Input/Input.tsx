@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import css from './Input.module.scss';
 import { cn } from '@/helpers/classname.react.ts';
-import { useDebounce } from '@/hooks/useDebounce.ts';
 
 
 export type InputProps = {
@@ -15,15 +14,24 @@ export type InputProps = {
 const Input: React.FC<InputProps> = (props) => {
     const { onValueChange, defaultValue, placeholder, debounce, block } = props;
     const [ value, setValue ]                                           = useState<string>(defaultValue ?? '');
-    const debounceCallback                                              = useCallback(() => {
-        onValueChange(value);
-    }, [ onValueChange, value ]);
-
-    useDebounce(debounceCallback, 500);
+    const [ prevValue, setPrevValue ]                                   = useState<string>(defaultValue ?? '');
 
     useEffect(() => {
-        setValue(defaultValue ?? '');
-    }, [ defaultValue ]);
+        if (prevValue === value) {
+            return;
+        }
+
+        if (debounce) {
+            const timeout = setTimeout(() => {
+                onValueChange(value);
+                setPrevValue(value);
+            }, debounce);
+            return () => clearTimeout(timeout);
+        } else {
+            onValueChange(value);
+            setPrevValue(value);
+        }
+    }, [ value, onValueChange ]);
 
     const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);

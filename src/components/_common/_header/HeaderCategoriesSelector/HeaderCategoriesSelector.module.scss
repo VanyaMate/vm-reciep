@@ -1,31 +1,13 @@
+.dropdown {
+    min-width: 200px;
+}
+
 .container {
-    display: inline-flex;
+    display: flex;
     gap: var(--offset-small);
     position: relative;
 
     .main {
         width: 100px;
-    }
-
-    .dropdown {
-        position: absolute;
-        z-index: 100;
-        background: var(--background-second);
-        top: calc(100% + var(--offset-small));
-        left: 0;
-        display: none;
-        width: 200px;
-        padding: var(--offset-medium);
-        box-shadow: var(--box-shadow-modal);
-
-        .item {
-            background: var(--ba);
-        }
-
-        &.opened {
-            display: flex;
-            flex-direction: column;
-            gap: var(--offset-small);
-        }
     }
 }

@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react';
 import { SearchContext } from '@/contexts/data/SearchContext.ts';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
 import css from './HeaderSearchContainer.module.scss';
@@ -7,6 +13,7 @@ import HeaderCategoriesSelector
 import { Category } from '@/modules/api/category/category-service.types.ts';
 import { useFetchCategories } from '@/hooks/categories/useFetchCategories.ts';
 import Input from '@/components/_ui/_input/Input/Input.tsx';
+import { useCart } from '@/hooks/useCart.ts';
 
 
 const HeaderSearchContainer = () => {
@@ -20,35 +27,40 @@ const HeaderSearchContainer = () => {
             const category: Category | null = categories.filter((category) => category.title === selectedCategory)[0] ?? null;
             setSelected(category);
         }
-    }, [ data.items ]);
+    }, [ data.items, categories ]);
+
+    const onInput = useCallback((productName: string) => {
+        controller.setItem('product_name', {
+            value: productName,
+            type : 'match',
+        });
+    }, [ controller ]);
+
+    const onCategoryChange = useCallback((category: Category | null) => {
+        setSelected(category);
+        controller.setItem('category', {
+            value: category?.title ?? '',
+            type : 'equal',
+        });
+    }, [ selected, controller ]);
 
     return (
         <Box className={ css.container }>
             <HeaderCategoriesSelector
                 selected={ selected }
                 categories={ categories }
-                onCategoryChange={ (category) => {
-                    setSelected(category);
-                    controller.setItem('category', {
-                        value: category?.title ?? '',
-                        type : 'equal',
-                    });
-                } }
+                loading={ loading }
+                onCategoryChange={ onCategoryChange }
             />
             <Input
                 defaultValue={ data.items.product_name?.value ?? '' }
                 debounce={ 500 }
                 placeholder={ 'Поиск' }
                 block
-                onValueChange={ (productName: string) => {
-                    controller.setItem('product_name', {
-                        value: productName,
-                        type : 'match',
-                    });
-                } }
+                onValueChange={ onInput }
             />
         </Box>
     );
 };
 
-export default HeaderSearchContainer;
+export default React.memo(HeaderSearchContainer);
