@@ -21,14 +21,14 @@ const HeaderCategoriesSelector: React.FC<HeaderCategoriesSelectorProps> = (props
 
     const onMainButtonClick = useCallback(() => {
         setOpened((prev) => !prev);
-    }, []);
+    }, [ opened ]);
 
     const onSecondButtonClick = useCallback(() => {
         setOpened(false);
         if (selected?.title) {
             onCategoryChange(null);
         }
-    }, [ selected ]);
+    }, [ selected, onCategoryChange ]);
 
     const onCategoryClick = useCallback((category: Category) => {
         setOpened(false);
