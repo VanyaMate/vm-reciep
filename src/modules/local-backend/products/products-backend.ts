@@ -20,7 +20,7 @@ export class ProductsBackend extends MultiplyService<Product> {
                     localStorage,
                     'products',
                 ),
-                [ ...products_1, ...products_2 ],
+                [ ...(products_1 as Product[]), ...(products_2 as Product[]) ],
             ),
             {
                 options: {

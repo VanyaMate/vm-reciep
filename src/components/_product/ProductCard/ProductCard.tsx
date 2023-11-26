@@ -22,7 +22,8 @@ export type ProductCardProps = {
     product: Product;
     url: string;
     skeleton?: boolean;
-    top?: React.ReactNode;
+    topLeft?: React.ReactNode;
+    topRight?: React.ReactNode;
     footer?: React.ReactNode;
 }
 
@@ -31,7 +32,8 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
               product,
               url,
               skeleton,
-              top,
+              topLeft,
+              topRight,
               footer,
           } = props;
 
@@ -46,7 +48,8 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
         <Box className={ css.container }>
             <ProductCardHeader
                 images={ [ product.image_url ] }
-                top={ top }
+                topLeft={ topLeft }
+                topRight={ topRight }
             />
             <div className={ cn(css.bottom, skeleton && css.skeleton) }>
                 <Link to={ url }

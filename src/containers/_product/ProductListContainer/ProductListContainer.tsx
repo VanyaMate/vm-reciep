@@ -41,7 +41,7 @@ const ProductListContainer = () => {
                                 product={ product }
                                 key={ product.barcode }
                                 url={ getProductPageUrl(product.barcode.toString()) }
-                                top={
+                                topLeft={
                                     <>
                                         <Tag
                                             backgroundColor={ '#fff' }
@@ -49,12 +49,22 @@ const ProductListContainer = () => {
                                         >
                                             { product.brand_name }
                                         </Tag>
-                                        <WishlistButton
-                                            productId={ product.barcode.toString() }
-                                            wishlistController={ wishlistController }
-                                        />
+                                        {
+                                            product.discount ?
+                                            <Tag
+                                                backgroundColor={ '#f55' }
+                                                textColor={ '#fff' }
+                                            >
+                                                - { product.discount } { product.discountType === 'fixed'
+                                                                         ? '₽' : '%' }
+                                            </Tag> : ''
+                                        }
                                     </>
                                 }
+                                topRight={ <WishlistButton
+                                    productId={ product.barcode.toString() }
+                                    wishlistController={ wishlistController }
+                                /> }
                                 footer={
                                     <AddToCartButton
                                         productId={ product.barcode.toString() }

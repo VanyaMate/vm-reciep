@@ -44,6 +44,8 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
         vitamin_a        : 0,
         vitamin_c        : 0,
         weight           : 0,
+        discount         : 0,
+        discountType     : 'fixed',
     };
 
     public allergens (): Product['allergens'] {
@@ -147,6 +149,8 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
             vitamin_a        : this.vitamin_a(),
             vitamin_c        : this.vitamin_c(),
             weight           : this.weight(),
+            discountType     : this.discountType(),
+            discount         : this.discount(),
             ...(data ?? {}),
         };
     }
@@ -221,6 +225,14 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
 
     public weight (): Product['weight'] {
         return getRandomInt(20, 3200);
+    }
+
+    public discount (): Product['discount'] {
+        return getRandomInt(0, 2) * getRandomInt(0, 2) * getRandomInt(0, 2) * getRandomInt(0, 100);
+    }
+
+    public discountType (): Product['discountType'] {
+        return getRandomInt(0, 2) ? 'fixed' : 'percent';
     }
 
 }

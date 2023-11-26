@@ -9,18 +9,24 @@ import WishlistButton
 
 export type ProductCardHeaderProps = {
     images: string[];
-    top: React.ReactNode;
+    topLeft: React.ReactNode;
+    topRight: React.ReactNode;
 }
 
 const ProductCardHeader: React.FC<ProductCardHeaderProps> = (props) => {
-    const { images, top } = props;
+    const { images, topLeft, topRight } = props;
 
     return (
         <Box
             style={ { backgroundImage: `url("${ images[0] }")` } }
             className={ css.container }
         >
-            { top }
+            <div className={ css.side }>
+                { topLeft }
+            </div>
+            <div className={ css.side }>
+                { topRight }
+            </div>
         </Box>
     );
 };
