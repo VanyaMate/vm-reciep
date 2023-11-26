@@ -14,13 +14,15 @@ import {
 
 export interface ISearchNavigateController {
     navigate (url: string, options: UrlSearch): void;
+
+    url (url: string, options: UrlSearch): string;
 }
 
 export const useSearchNavigate = function (): ISearchNavigateController {
     const mapper: ISearchMapper = useSearchMapper();
     const navigate              = useNavigate();
 
-    const navigateCallback = useCallback((url: string, options: UrlSearch) => {
+    const getUrl = useCallback((url: string, options: UrlSearch) => {
         let search: string[] = [];
 
         if (Object.keys(options.items).length) {
@@ -43,8 +45,15 @@ export const useSearchNavigate = function (): ISearchNavigateController {
                                            ? '?' + search.join('&')
                                            : '');
 
-        navigate(navigateUrl);
-    }, [ navigate ]);
+        return navigateUrl;
+    }, []);
 
-    return useMemo(() => ({ navigate: navigateCallback }), [ navigateCallback ]);
+    const navigateCallback = useCallback((url: string, options: UrlSearch) => {
+        navigate(getUrl(url, options));
+    }, [ navigate, getUrl ]);
+
+    return useMemo(() => ({
+        navigate: navigateCallback,
+        url     : getUrl,
+    }), [ navigateCallback, getUrl ]);
 };

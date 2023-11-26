@@ -37,8 +37,8 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
 
     const priceData: ProductPriceData = useProductPriceCalculator({
         price       : product.price,
-        discount    : 0,
-        discountType: 'percent',
+        discount    : product.discount,
+        discountType: product.discountType,
         currency    : '₽',
     });
 

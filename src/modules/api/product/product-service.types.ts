@@ -1,7 +1,11 @@
+export type ProductDiscountType = 'fixed' | 'percent';
+
 export type Product = {
     images: any[]
     available: boolean
     product_name: string
+    discount: number;
+    discountType: ProductDiscountType;
     brand_name: string
     brand: string
     category: string

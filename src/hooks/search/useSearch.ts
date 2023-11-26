@@ -4,10 +4,10 @@ import {
 } from '@/hooks/search/useSearchStorageParams.ts';
 import { useSearchUrlParams } from '@/hooks/search/useSearchUrlParams.ts';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSearchNavigate } from '@/hooks/search/useSearchNavigate.ts';
 import { DEFAULT_PAGE } from '@/consts/search.ts';
 import * as url from 'url';
+import { PageType } from '@/pages/getPage.ts';
 
 
 export type UrlSearchItemType =
@@ -31,6 +31,8 @@ export type UrlSearch = {
     items: UrlSearchItems;
 }
 
+export type SearchGetUrl = (url: string, options?: Partial<UrlSearch>) => string;
+
 export interface ISearchController {
     setLimit (limit: number): void;
 
@@ -41,6 +43,10 @@ export interface ISearchController {
     setItems (items: UrlSearchItems): void;
 
     setItem (key: keyof Product, item: UrlSearchItem): void;
+
+    getUrl: SearchGetUrl;
+
+    getClearUrl: SearchGetUrl;
 }
 
 export const useSearch = function (): [ UrlSearch, ISearchController ] {
@@ -66,21 +72,33 @@ export const useSearch = function (): [ UrlSearch, ISearchController ] {
 
     const setLimitCallback = useCallback((limit: number) => {
         storageController.setLimit(limit);
-        navigator.navigate('/products', { ...data, limit, page: DEFAULT_PAGE });
+        navigator.navigate(`/${ PageType.PRODUCTS }`, {
+            ...data,
+            limit,
+            page: DEFAULT_PAGE,
+        });
     }, [ navigator, data, storageController ]);
 
     const setPageCallback = useCallback((page: number) => {
-        navigator.navigate('/products', { ...data, page });
+        navigator.navigate(`/${ PageType.PRODUCTS }`, { ...data, page });
     }, [ navigator, data ]);
 
     const setSortCallback = useCallback((sort: SortOptions) => {
         storageController.setSort(sort);
-        navigator.navigate('/products', { ...data, sort, page: DEFAULT_PAGE });
+        navigator.navigate(`/${ PageType.PRODUCTS }`, {
+            ...data,
+            sort,
+            page: DEFAULT_PAGE,
+        });
     }, [ navigator, data, storageController ]);
 
     const setItemsCallback = useCallback((items: UrlSearchItems) => {
         storageController.setItems(items);
-        navigator.navigate('/products', { ...data, items, page: DEFAULT_PAGE });
+        navigator.navigate(`/${ PageType.PRODUCTS }`, {
+            ...data,
+            items,
+            page: DEFAULT_PAGE,
+        });
     }, [ navigator, data, storageController ]);
 
     const setItemCallback = useCallback((key: keyof Product, item: UrlSearchItem) => {
@@ -93,13 +111,27 @@ export const useSearch = function (): [ UrlSearch, ISearchController ] {
         setItemsCallback(items);
     }, [ navigator, data, setItemsCallback ]);
 
+    const getUrl = useCallback((url: string, options?: Partial<UrlSearch>) => navigator.url(url, {
+            items: { ...data.items, ...(options?.items ?? {}) },
+            limit: options?.limit ?? data.limit,
+            sort : options?.sort ?? data.sort,
+            page : options?.page ?? data.page,
+        },
+    ), [ navigator, data ]);
+
+    const getClearUrl = useCallback((url: string, options?: Partial<UrlSearch>) => navigator.url(url, {
+        ...data, ...(options ?? {}),
+    }), [ navigator, data ]);
+
     const controller: ISearchController = useMemo(() => ({
         setLimit: setLimitCallback,
-        setPage : setPageCallback,
-        setSort : setSortCallback,
+        setPage: setPageCallback,
+        setSort: setSortCallback,
         setItems: setItemsCallback,
-        setItem : setItemCallback,
-    }), [ setLimitCallback, setPageCallback, setSortCallback, setItemsCallback, setItemCallback ]);
+        setItem: setItemCallback,
+        getUrl: getUrl,
+        getClearUrl: getClearUrl,
+    }), [ setLimitCallback, setPageCallback, setSortCallback, setItemsCallback, setItemCallback, getUrl, getClearUrl ]);
 
     return useMemo(() => [ data, controller ], [ data, controller ]);
 };

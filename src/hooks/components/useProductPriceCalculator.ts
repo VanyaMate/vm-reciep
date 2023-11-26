@@ -21,7 +21,7 @@ export type UseProductPriceCalculatorProps = {
 
 export const useProductPriceCalculator = function (props: UseProductPriceCalculatorProps): ProductPriceData {
     const { price, discount, discountType, currency } = props;
-    const newPrice: number                            = useMemo(() => Math.floor(price) * 10, [ price ]);
+    const newPrice: number                            = useMemo(() => Math.floor(price), [ price ]);
     const [ discountPercent, setDiscountPercent ]     = useState<number>(0);
     const [ discountFixed, setDiscountFixed ]         = useState<number>(0);
     const priceWithDiscount: number                   = useMemo(() => {

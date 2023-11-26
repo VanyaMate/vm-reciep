@@ -16,7 +16,7 @@ const ProductBrand: React.FC<ProductBrandProps> = (props) => {
     const { icon, url, title, original } = props;
 
     return (
-        <Link to={ url } className={ css.container }>
+        <Link to={ url } target={ '_blank' } className={ css.container }>
             <AnimatedImageBox
                 w={ 40 }
                 h={ 40 }

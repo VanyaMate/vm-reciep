@@ -4,6 +4,7 @@ import AdminLayout from '@/layouts/AdminLayout/AdminLayout.tsx';
 import CommonLayout from '@/layouts/CommonLayout/CommonLayout.tsx';
 import HomePage from '@/pages/client/HomePage.tsx';
 import ProductPage from '@/pages/client/ProductPage.tsx';
+import { PageType } from '@/pages/getPage.ts';
 
 
 const Pages = () => {
@@ -13,8 +14,9 @@ const Pages = () => {
 
             </Route>
             <Route path={ '/*' } element={ <CommonLayout smallBanner/> }>
-                <Route path={ 'products' } element={ <HomePage/> }/>
-                <Route path={ 'product/:id' } element={ <ProductPage/> }/>
+                <Route path={ PageType.PRODUCTS } element={ <HomePage/> }/>
+                <Route path={ `${ PageType.PRODUCT }/:id` }
+                       element={ <ProductPage/> }/>
             </Route>
             <Route path={ '*' } element={ <CommonLayout/> }>
                 <Route path={ '/*' } element={ <HomePage/> }/>

@@ -6,7 +6,9 @@ import ProductSlider
 import { Divider, Typography } from 'antd';
 import type { DescriptionsProps } from 'antd';
 import ProductBreadcrumbs
-    from '@/components/_product/ProductView/ProductBreadcrumbs/ProductBreadcrumbs.tsx';
+    , {
+    BreadcrumbItem,
+} from '@/components/_product/ProductView/ProductBreadcrumbs/ProductBreadcrumbs.tsx';
 import ProductTitle
     from '@/components/_product/ProductView/ProductTitle/ProductTitle.tsx';
 import ProductHeaderNavigation
@@ -30,21 +32,32 @@ import ProductPurchaseBlock
 import {
     ProductPriceData, useProductPriceCalculator,
 } from '@/hooks/components/useProductPriceCalculator.ts';
-import { getCategoryPageUrl, getHomePageUrl } from '@/pages/getPage.ts';
+import {
+    getCategoryPageUrl,
+    getHomePageUrl,
+    PageType,
+} from '@/pages/getPage.ts';
+import { ISearchController } from '@/hooks/search/useSearch.ts';
 
 
 export type ProductViewProps = {
-    product: Product,
-    wishlistController: IWishlistController,
-    cartController: ICartController,
+    product: Product;
+    searchController: ISearchController;
+    wishlistController: IWishlistController;
+    cartController: ICartController;
 }
 
 const ProductView: React.FC<ProductViewProps> = (props) => {
-    const { product, wishlistController, cartController }   = props;
+    const {
+              product,
+              searchController,
+              wishlistController,
+              cartController,
+          }                                                 = props;
     const priceData: ProductPriceData                       = useProductPriceCalculator({
         price       : product.price,
-        discount    : 0,
-        discountType: 'fixed',
+        discount    : product.discount,
+        discountType: product.discountType,
         currency    : '₽',
     });
     const shortDescriptionItems: DescriptionsProps['items'] = useMemo(() => {
@@ -197,18 +210,33 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
         },
     ], [ product ]);
 
+    const breadcrumbs: BreadcrumbItem[] = useMemo(() => {
+        const list: BreadcrumbItem[] = [
+            {
+                url  : searchController.getUrl(`/${ PageType.PRODUCTS }`),
+                label: 'Главная',
+            },
+        ];
+
+        if (product?.category) {
+            list.push({
+                url  : searchController.getUrl(`/${ PageType.PRODUCTS }`, {
+                    items: {
+                        category: {
+                            value: product.category,
+                            type : 'equal',
+                        },
+                    },
+                }),
+                label: product.category,
+            });
+        }
+        return list;
+    }, [ product, searchController ]);
+
     return (
         <Box className={ css.container }>
-            <ProductBreadcrumbs items={ [
-                {
-                    url  : getHomePageUrl(),
-                    label: 'Главная',
-                },
-                {
-                    url  : getCategoryPageUrl(product.category),
-                    label: product.category,
-                },
-            ] }/>
+            <ProductBreadcrumbs items={ breadcrumbs }/>
             <ProductTitle>{ product.product_name }</ProductTitle>
             <ProductHeaderNavigation
                 left={ <>
@@ -255,7 +283,14 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                     <div className={ css.right }>
                         <div className={ css.product }>
                             <ProductBrand
-                                url={ '' }
+                                url={ searchController.getClearUrl(`/${ PageType.PRODUCTS }`, {
+                                    items: {
+                                        brand_name: {
+                                            value: product.brand_name,
+                                            type : 'equal',
+                                        },
+                                    },
+                                }) }
                                 icon={ product.brand }
                                 title={ product.brand_name }
                                 original

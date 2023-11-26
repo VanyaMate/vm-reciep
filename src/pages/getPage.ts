@@ -8,7 +8,8 @@ export type PageSearchOptions = Options<Product> & {
 
 export enum PageType {
     HOME     = '/',
-    CATEGORY = '/category',
+    PRODUCTS = 'products',
+    PRODUCT  = 'product',
 }
 
 export const getProductPageUrl = function (id: string): string {

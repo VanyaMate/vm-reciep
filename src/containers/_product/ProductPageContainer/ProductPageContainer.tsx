@@ -21,6 +21,10 @@ import {
     useFetchProductRecommendations,
 } from '@/hooks/products/useFetchProductRecommendations.ts';
 import { getProductPageUrl } from '@/pages/getPage.ts';
+import {
+    BreadcrumbItem,
+} from '@/components/_product/ProductView/ProductBreadcrumbs/ProductBreadcrumbs.tsx';
+import { useSearch } from '@/hooks/search/useSearch.ts';
 
 
 export type ProductPageContainerProps = {
@@ -28,15 +32,15 @@ export type ProductPageContainerProps = {
 }
 
 const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
-    const { productId }        = props;
-    const cartController       = useCart();
-    const wishlistController   = useWishlist();
+    const { productId }           = props;
+    const cartController          = useCart();
+    const wishlistController      = useWishlist();
+    const [ _, searchController ] = useSearch();
     const {
               loading: recoLoading,
               products,
-          }                    = useFetchProductRecommendations(productId);
-    const { loading, product } = useFetchProduct(productId);
-
+          }                       = useFetchProductRecommendations(productId);
+    const { loading, product }    = useFetchProduct(productId);
 
     if (loading) {
         return <ProductViewSkeleton/>;
@@ -50,6 +54,7 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
         <>
             <ProductView
                 product={ product }
+                searchController={ searchController }
                 cartController={ cartController }
                 wishlistController={ wishlistController }
             />

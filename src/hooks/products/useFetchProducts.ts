@@ -18,41 +18,43 @@ export const useFetchProducts = function (search: Partial<UrlSearch>): UseFetchP
     const services                     = useContext(ServicesContext);
 
     useEffect(() => {
-        setLoading(true);
-        services
-            .products
-            .findMany((product) => {
-                // TODO: Думаю лучше это вынести куда нибудь в другуе место
-                return items ? Object.entries(items).every(([ key, item ]) => {
-                    const productValue = product[key as keyof Product];
-                    if (item.type === 'match') {
-                        return productValue.toString().match(new RegExp(item.value, 'gi'));
-                    } else if (item.type === 'equal') {
-                        return item.value === productValue;
-                    } else {
-                        const matches: RegExpMatchArray | null = item.value.match(/\d+/gi);
-                        if (matches) {
-                            const [ min, max ] = matches;
-                            // TODO: /10 нужно потому что все цены умножены
-                            //  на 10. Когда это уберется из view - нужно будет
-                            //  убрать отсюда.
-                            if (+productValue >= (+min / 10) && +productValue < (+max / 10)) {
-                                return true;
+        const timeout = setTimeout(() => {
+            setLoading(true);
+            services
+                .products
+                .findMany((product) => {
+                    // TODO: Думаю лучше это вынести куда нибудь в другое место
+                    return items
+                           ? Object.entries(items).every(([ key, item ]) => {
+                            const productValue = product[key as keyof Product];
+                            if (item.type === 'match') {
+                                return productValue.toString().match(new RegExp(item.value, 'gi'));
+                            } else if (item.type === 'equal') {
+                                return item.value === productValue;
                             } else {
-                                return false;
+                                const matches: RegExpMatchArray | null = item.value.match(/\d+/gi);
+                                if (matches) {
+                                    const [ min, max ] = matches;
+                                    if (+productValue >= (+min) && +productValue < (+max)) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                } else {
+                                    return true;
+                                }
                             }
-                        } else {
-                            return true;
-                        }
-                    }
-                }) : true;
-            }, {
-                limit : limit ?? DEFAULT_LIMIT,
-                offset: ((page ?? DEFAULT_PAGE) - 1) * (limit ?? DEFAULT_LIMIT),
-                sort,
-            })
-            .then((response: MultiplyResponse<Product>) => setProducts(response.list))
-            .finally(() => setLoading(false));
+                        }) : true;
+                }, {
+                    limit : limit ?? DEFAULT_LIMIT,
+                    offset: ((page ?? DEFAULT_PAGE) - 1) * (limit ?? DEFAULT_LIMIT),
+                    sort,
+                })
+                .then((response: MultiplyResponse<Product>) => setProducts(response.list))
+                .finally(() => setLoading(false));
+        }, 100);
+
+        return () => clearTimeout(timeout);
     }, [ search ]);
 
     return useMemo(() => ({

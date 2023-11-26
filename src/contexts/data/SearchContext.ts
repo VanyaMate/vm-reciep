@@ -32,5 +32,11 @@ export const SearchContext = createContext<SearchContextType>([
         },
         setItem (key: keyof Product, item: UrlSearchItem): void {
         },
+        getUrl (url: string, options?: Partial<UrlSearch>): string {
+            return '';
+        },
+        getClearUrl (url: string, options?: Partial<UrlSearch>): string {
+            return '';
+        },
     },
 ]);
