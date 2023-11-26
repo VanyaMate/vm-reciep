@@ -57,6 +57,12 @@ import {
 import {
     CategoriesBackend,
 } from '@/modules/local-backend/categories/categories-backend.ts';
+import {
+    RandomProductsService,
+} from '@/modules/api/products/services/random-products-service.ts';
+import {
+    ProductBackendDataGenerator,
+} from '@/modules/local-backend/product/product-backend.data-generator.ts';
 
 
 export type ServicesProviderProps = {
@@ -79,7 +85,8 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
     }, [ user ]);
 
     const productsService: IProductsService<Product> = useMemo(() => {
-        return new LocalProductsService(new ProductsBackend());
+        // return new LocalProductsService(new ProductsBackend());
+        return new RandomProductsService(new ProductBackendDataGenerator());
     }, []);
 
     const categoriesService: ICategoriesService<Category> = useMemo(() => {

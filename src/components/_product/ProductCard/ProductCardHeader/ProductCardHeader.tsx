@@ -5,6 +5,7 @@ import css from './ProductCardHeader.module.scss';
 import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
 import WishlistButton
     from '@/components/_product/WishlistButton/WishlistButton.tsx';
+import { cn } from '@/helpers/classname.react.ts';
 
 
 export type ProductCardHeaderProps = {
@@ -21,10 +22,10 @@ const ProductCardHeader: React.FC<ProductCardHeaderProps> = (props) => {
             style={ { backgroundImage: `url("${ images[0] }")` } }
             className={ css.container }
         >
-            <div className={ css.side }>
+            <div className={ cn(css.side, css.left) }>
                 { topLeft }
             </div>
-            <div className={ css.side }>
+            <div className={ cn(css.side, css.right) }>
                 { topRight }
             </div>
         </Box>

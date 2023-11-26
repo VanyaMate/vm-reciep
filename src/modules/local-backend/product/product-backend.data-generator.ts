@@ -228,7 +228,7 @@ export class ProductBackendDataGenerator implements IDataGenerator<Product, Crea
     }
 
     public discount (): Product['discount'] {
-        return getRandomInt(0, 2) * getRandomInt(0, 2) * getRandomInt(0, 2) * getRandomInt(0, 100);
+        return getRandomInt(0, 2) * getRandomInt(0, 2) * getRandomInt(0, 100);
     }
 
     public discountType (): Product['discountType'] {
