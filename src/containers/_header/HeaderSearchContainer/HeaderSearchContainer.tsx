@@ -85,7 +85,7 @@ const HeaderSearchContainer = () => {
                 ] }
             >
                 <Button
-                    styleType={ 'second' }
+                    styleType={ 'default' }
                     className={ css.limitButton }
                 >
                     <span>Сортировка: <DropdownListLabel/></span><DownOutlined/>
@@ -118,7 +118,7 @@ const HeaderSearchContainer = () => {
                 ] }
             >
                 <Button
-                    styleType={ 'second' }
+                    styleType={ 'default' }
                     className={ css.limitButton }
                 >
                     <span>Показывать: <DropdownListLabel/></span><DownOutlined/>

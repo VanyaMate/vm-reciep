@@ -35,11 +35,11 @@ const DropdownList: React.FC<DropdownListProps> = (props) => {
               className,
               dropdownClassName,
               defaultValue,
-          }                   = props;
-    const [ open, setOpen ]   = useState<boolean>(opened ?? false);
+          }                 = props;
+    const [ open, setOpen ] = useState<boolean>(opened ?? false);
     const [ label, setLabel ] = useState<string>(
-        defaultValue
-        ? menuItems.find((item) => item.value === defaultValue || item.label === defaultValue)?.label ?? ''
+        defaultValue !== undefined
+        ? menuItems.find((item) => (item.value === defaultValue) || (item.label === defaultValue))?.label ?? ''
         : '',
     );
 
