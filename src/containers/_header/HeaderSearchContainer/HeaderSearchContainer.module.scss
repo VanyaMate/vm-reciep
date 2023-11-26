@@ -3,4 +3,15 @@
     background: var(--background-second);
     padding: var(--offset-medium);
     gap: var(--offset-medium);
+
+    .limitDropdown {
+        left: auto;
+        right: 0;
+    }
+
+    .limitButton {
+        white-space: nowrap;
+        display: flex;
+        gap: var(--offset-medium);
+    }
 }

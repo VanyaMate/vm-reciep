@@ -57,8 +57,6 @@ export const useSearch = function (): [ UrlSearch, ISearchController ] {
         limit, page, sort, items,
     }), [ limit, page, sort, items ]);
 
-    console.log('DATA is', data.items);
-
     useEffect(() => {
         setLimit(urlParams.limit ?? storageParams.limit);
         setPage(urlParams.page ?? storageParams.page);

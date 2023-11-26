@@ -1,9 +1,14 @@
 .container {
     position: relative;
-    z-index: 1;
+
+    .children {
+        position: relative;
+        z-index: 1;
+    }
 
     .dropdown {
         position: absolute;
+        z-index: 55;
         width: auto;
         display: flex;
         flex-direction: column;
