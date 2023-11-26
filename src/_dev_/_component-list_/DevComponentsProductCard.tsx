@@ -42,7 +42,8 @@ const DevComponentsProductCard = () => {
                                 url={ getProductPageUrl(product.barcode.toString()) }
                                 key={ product.barcode }
                                 product={ product }
-                                top={ <></> }
+                                topLeft={ <></> }
+                                topRight={ <></> }
                                 footer={ <></> }
                             />
                         );

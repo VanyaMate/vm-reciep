@@ -85,8 +85,8 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
     }, [ user ]);
 
     const productsService: IProductsService<Product> = useMemo(() => {
-        // return new LocalProductsService(new ProductsBackend());
-        return new RandomProductsService(new ProductBackendDataGenerator());
+        return new LocalProductsService(new ProductsBackend());
+        // return new RandomProductsService(new ProductBackendDataGenerator());
     }, []);
 
     const categoriesService: ICategoriesService<Category> = useMemo(() => {
