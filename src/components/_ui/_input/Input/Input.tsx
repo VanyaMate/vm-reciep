@@ -9,12 +9,22 @@ export type InputProps = {
     placeholder?: string;
     debounce?: number;
     block?: boolean;
-}
+    loading?: boolean;
+} & React.HTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = (props) => {
-    const { onValueChange, defaultValue, placeholder, debounce, block } = props;
-    const [ value, setValue ]                                           = useState<string>(defaultValue ?? '');
-    const [ prevValue, setPrevValue ]                                   = useState<string>(defaultValue ?? '');
+    const {
+              onValueChange,
+              defaultValue,
+              placeholder,
+              debounce,
+              block,
+              className,
+              loading,
+              ...other
+          }                           = props;
+    const [ value, setValue ]         = useState<string>(defaultValue ?? '');
+    const [ prevValue, setPrevValue ] = useState<string>(defaultValue ?? '');
 
     useEffect(() => {
         if (prevValue === value) {
@@ -39,10 +49,12 @@ const Input: React.FC<InputProps> = (props) => {
 
     return (
         <input
+            { ...other }
             placeholder={ placeholder }
             onChange={ onChange }
             value={ value }
-            className={ cn(css.container, block && css.block) }
+            className={ cn(css.container, block && css.block, className, loading && css.loading) }
+            type={ 'number' }
         />
     );
 };

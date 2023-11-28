@@ -7,11 +7,17 @@ import DevComponentsButton
 import DevComponentsDropdown
     from '@/_dev_/_component-list_/DevComponentsDropdown.tsx';
 import DevComponentsForm from '@/_dev_/_component-list_/DevComponentsForm.tsx';
+import DevComponentsCartItems
+    from '@/_dev_/_component-list_/DevComponentsCartItems.tsx';
+import DevComponentsCartList
+    from '@/_dev_/_component-list_/DevComponentsCartList.tsx';
 
 
 const DevComponentsBrowser = () => {
     return (
         <DevComponentsList>
+            <DevComponentsCartList/>
+            <DevComponentsCartItems/>
             <DevComponentsForm/>
             <DevComponentsDropdown/>
             <DevComponentsButton/>

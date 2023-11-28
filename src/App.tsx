@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Pages from '@/pages/pages.tsx';
 import { useAuth } from '@/hooks/useAuth.ts';
 import { useLocation } from 'react-router-dom';
+import DevComponentsBrowser from '@/_dev_/DevComponentsBrowser.tsx';
 
 
 let refreshData: boolean = false;
@@ -17,10 +18,10 @@ const App                = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [ pathname ]);
-    /*
-     return (
-     <DevComponentsBrowser/>
-     );*/
+
+    return (
+        <DevComponentsBrowser/>
+    );
 
     return (
         <Pages/>

@@ -3,11 +3,11 @@ import { Descriptions, DescriptionsProps } from 'antd';
 import css from './ProductShortInfo.module.scss';
 
 
-export type ProductShortInfoProps = {
+export type ListWithValuesProps = {
     items: DescriptionsProps['items'];
 }
 
-const ProductShortDescriptionList: React.FC<ProductShortInfoProps> = (props) => {
+const ListWithValues: React.FC<ListWithValuesProps> = (props) => {
     const { items } = props;
 
     return (
@@ -20,4 +20,4 @@ const ProductShortDescriptionList: React.FC<ProductShortInfoProps> = (props) => 
     );
 };
 
-export default React.memo(ProductShortDescriptionList);
+export default React.memo(ListWithValues);

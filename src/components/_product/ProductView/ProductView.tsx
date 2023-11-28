@@ -22,7 +22,7 @@ import { Product } from '@/modules/api/product/product-service.types.ts';
 import { ICartController } from '@/hooks/useCart.ts';
 import ProductBrand
     from '@/components/_product/ProductView/ProductBrand/ProductBrand.tsx';
-import ProductShortInfo
+import ListWithValues
     from '@/components/_product/ProductView/ProductShortInfo/ProductShortInfo.tsx';
 import Tag from '@/components/_ui/_container/Tag/Tag.tsx';
 import ProductFullDescriptionList
@@ -58,7 +58,6 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
         price       : product.price,
         discount    : product.discount,
         discountType: product.discountType,
-        currency    : '₽',
     });
     const shortDescriptionItems: DescriptionsProps['items'] = useMemo(() => {
         return [
@@ -298,7 +297,7 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                                 title={ product.brand_name }
                                 original
                             />
-                            <ProductShortInfo
+                            <ListWithValues
                                 items={ shortDescriptionItems }
                             />
                             <Typography.Paragraph
