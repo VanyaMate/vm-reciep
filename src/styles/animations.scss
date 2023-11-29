@@ -25,11 +25,24 @@
     }
 }
 
+@keyframes loading-simple {
+    0% {
+        opacity: .8;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: .8;
+    }
+}
+
 :root body.standard-animation {
     --gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     --gradient-size: 400%;
     --gradient-animation: gradient 4s ease-in-out infinite;
     --loading-animtion: loading .5s ease-in-out infinite;
+    --loading-animation-simple: loading-simple .5s ease-in-out infinite;
 
     .gradient {
         background: var(--gradient);

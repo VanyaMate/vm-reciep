@@ -10,7 +10,7 @@ export type InputProps = {
     debounce?: number;
     block?: boolean;
     loading?: boolean;
-} & React.HTMLAttributes<HTMLInputElement>;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = (props) => {
     const {
@@ -59,7 +59,6 @@ const Input: React.FC<InputProps> = (props) => {
             onChange={ onChange }
             value={ value }
             className={ cn(css.container, block && css.block, className, loading && css.loading) }
-            type={ 'number' }
         />
     );
 };

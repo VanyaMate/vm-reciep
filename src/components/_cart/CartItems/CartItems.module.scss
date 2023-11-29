@@ -44,7 +44,7 @@
     &.loading {
         .list,
         .box {
-            animation: var(--loading-animtion);
+            animation: var(--loading-animation-simple);
             pointer-events: none;
         }
     }

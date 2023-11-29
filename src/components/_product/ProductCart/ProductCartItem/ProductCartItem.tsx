@@ -86,9 +86,12 @@ const ProductCartItem: React.FC<ProductCartItemProps> = (props) => {
                         className={ cn(css.item, css.input) }
                         defaultValue={ amount.toString() }
                         onValueChange={ (value) => {
-                            onChange(parseInt(value));
+                            const int: number = parseInt(value);
+                            onChange(isNaN(int) ? 1 : int);
                         } }
                         loading={ loading }
+                        type={ 'number' }
+                        debounce={ 500 }
                     />
                     <Button
                         className={ css.item }

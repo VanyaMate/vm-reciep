@@ -41,15 +41,13 @@ const CartPage: React.FC<CartPageProps> = (props) => {
                     };
                 }))
                 .then((cartPreOrderBoxItems) => setCartProducts(cartPreOrderBoxItems))
-                .then(() => setLoading(false));
+                .finally(() => setLoading(false));
         }
     }, [ cart ]);
 
     const onAmountChange = useCallback((productId: string, amount: number) => {
         return cartController.changeCartItem(productId, amount);
     }, [ cartController ]);
-
-    console.log(cartProducts);
 
     return (
         <div>
