@@ -260,7 +260,7 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                                 { product.brand_name }
                             </Tag>
                             {
-                                priceData.discount ?
+                                priceData.discountPercent ?
                                 <Tag backgroundColor={ '#f55' }
                                      textColor={ '#fff' }>
                                     - { priceData.discountPercent } %

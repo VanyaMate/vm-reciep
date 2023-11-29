@@ -41,7 +41,6 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
         price       : product.price,
         discount    : product.discount,
         discountType: product.discountType,
-        currency    : '₽',
     });
 
     return (
