@@ -1,6 +1,9 @@
 import { ICartService } from '@/modules/api/cart/cart-service.interface.ts';
 import { Cart, CartItem } from '@/modules/api/cart/cart-service.types.ts';
-import { CreateCartDto, UpdateCartDto } from '@/modules/local-backend/cart/cart-backend.types.ts';
+import {
+    CreateCartDto,
+    UpdateCartDto,
+} from '@/modules/local-backend/cart/cart-backend.types.ts';
 import { ISingleService } from '@vanyamate/market-place-service';
 
 
@@ -37,6 +40,35 @@ export class LocalCartService implements ICartService<Cart> {
                 if (item.productId === productId) {
                     item.amount += amount;
                     updated = true;
+                    break;
+                }
+            }
+
+            if (!updated) {
+                cart.items.push({ productId, amount });
+            }
+
+            return this._cartService.update(this._userId, cart);
+        }
+
+        throw 'Такой корзины не существует';
+    }
+
+    public async changeCartItem (productId: string, amount: number): Promise<Cart> {
+        const cart: Cart | null = await this._cartService.read(this._userId);
+        if (cart) {
+
+            if (amount <= 0) {
+                cart.items = cart.items.filter((item) => item.productId !== productId);
+                return this._cartService.update(this._userId, cart);
+            }
+
+            let updated: boolean = false;
+            for (let i = 0; i < cart.items.length; i++) {
+                const item: CartItem = cart.items[i];
+                if (item.productId === productId) {
+                    item.amount = amount;
+                    updated     = true;
                     break;
                 }
             }

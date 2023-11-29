@@ -1,37 +1,23 @@
 import React, { useMemo } from 'react';
 import {
-    DiscountType,
-    useProductPriceCalculator,
+    ProductPriceData,
 } from '@/hooks/components/useProductPriceCalculator.ts';
-import css from './ProductPrice.module.scss';
+import css from './ProductPriceByData.module.scss';
 import { cn } from '@/helpers/classname.react.ts';
 
 
-export type ProductPriceProps = {
-    price: number;
-    discount: number;
-    discountType: DiscountType;
+export type ProductPriceByDataProps = {
+    priceData: ProductPriceData;
     amount?: number;
     small?: boolean;
     skeleton?: boolean;
     postfix?: boolean;
 }
 
-const ProductPrice: React.FC<ProductPriceProps> = (props) => {
-    const {
-              price,
-              discountType,
-              discount,
-              small,
-              amount,
-              skeleton,
-              postfix,
-          }           = props;
-    const priceData   = useProductPriceCalculator({
-        price, discountType, discount,
-    });
-    const saveAmount  = useMemo(() => amount ?? 1, [ amount ]);
-    const savePostfix = useMemo(() => postfix ?? true, [ postfix ]);
+const ProductPriceByData: React.FC<ProductPriceByDataProps> = (props) => {
+    const { priceData, small, amount, skeleton, postfix } = props;
+    const saveAmount                                      = useMemo(() => amount ?? 1, [ amount ]);
+    const savePostfix                                     = useMemo(() => postfix ?? true, [ postfix ]);
 
     if (priceData.discountFixed !== 0) {
         return (
@@ -75,4 +61,4 @@ const ProductPrice: React.FC<ProductPriceProps> = (props) => {
     );
 };
 
-export default React.memo(ProductPrice);
+export default React.memo(ProductPriceByData);

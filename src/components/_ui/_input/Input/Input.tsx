@@ -27,6 +27,11 @@ const Input: React.FC<InputProps> = (props) => {
     const [ prevValue, setPrevValue ] = useState<string>(defaultValue ?? '');
 
     useEffect(() => {
+        setPrevValue(defaultValue ?? value);
+        setValue(defaultValue ?? value);
+    }, [ defaultValue ]);
+
+    useEffect(() => {
         if (prevValue === value) {
             return;
         }

@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { cn } from '@/helpers/classname.react.ts';
 import { getProductPageUrl } from '@/pages/getPage.ts';
 import ProductPrice
-    from '@/components/_product/ProductView/ProductPrice/ProductPrice.tsx';
+    from '@/components/_product/ProductView/ProductPriceByData/ProductPriceByData.tsx';
 import {
     ProductPriceData,
     useProductPriceCalculator,

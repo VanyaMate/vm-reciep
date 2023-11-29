@@ -5,6 +5,7 @@ import CommonLayout from '@/layouts/CommonLayout/CommonLayout.tsx';
 import HomePage from '@/pages/client/HomePage.tsx';
 import ProductPage from '@/pages/client/ProductPage.tsx';
 import { PageType } from '@/pages/getPage.ts';
+import CartPage from '@/pages/client/CartPage.tsx';
 
 
 const Pages = () => {
@@ -17,6 +18,7 @@ const Pages = () => {
                 <Route path={ PageType.PRODUCTS } element={ <HomePage/> }/>
                 <Route path={ `${ PageType.PRODUCT }/:id` }
                        element={ <ProductPage/> }/>
+                <Route path={ `${ PageType.CART }` } element={ <CartPage/> }/>
             </Route>
             <Route path={ '*' } element={ <CommonLayout/> }>
                 <Route path={ '/*' } element={ <HomePage/> }/>

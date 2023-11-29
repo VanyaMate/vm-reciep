@@ -9,11 +9,16 @@ import {
     useCartPriceCalculator,
 } from '@/hooks/components/useCartPriceCalculator.ts';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
-import ListWithValues
-    from '@/components/_product/ProductView/ProductShortInfo/ProductShortInfo.tsx';
 import Button from '@/components/_ui/_button/Button/Button.tsx';
+import List from '@/components/_ui/_container/List/List.tsx';
+import ListRow from '@/components/_ui/_container/List/ListRow/ListRow.tsx';
+import ProductPriceByData
+    from '@/components/_product/ProductView/ProductPriceByData/ProductPriceByData.tsx';
 import ProductPrice
     from '@/components/_product/ProductView/ProductPrice/ProductPrice.tsx';
+import ListPriceItem
+    from '@/components/_ui/_container/List/items/ListPriceItem/ListPriceItem.tsx';
+import { cn } from '@/helpers/classname.react.ts';
 
 
 export type CartPreOrderBoxItem = {
@@ -24,16 +29,17 @@ export type CartPreOrderBoxItem = {
 export type CartPreOrderBoxProps = {
     products: CartPreOrderBoxItem[];
     onAmountChange: CartItemAmountChangeHandler;
+    loading?: boolean;
 }
 
 const CartPreOrderBox: React.FC<CartPreOrderBoxProps> = (props) => {
-    const { products, onAmountChange } = props;
-    const cartPriceData                = useCartPriceCalculator({
+    const { products, onAmountChange, loading } = props;
+    const cartPriceData                         = useCartPriceCalculator({
         products: products,
     });
 
     return (
-        <div className={ css.container }>
+        <div className={ cn(css.container, loading && css.loading) }>
             <h2>
                 Корзина
                 ( { products.reduce((acc, item) => acc += item.amount, 0) } )
@@ -56,33 +62,32 @@ const CartPreOrderBox: React.FC<CartPreOrderBoxProps> = (props) => {
                     <Button
                         className={ css.button }
                         block
-                        styleType={ 'primary' }
+                        styleType={ loading ? 'second' : 'primary' }
+                        disabled={ loading }
                     >Оформить заказ</Button>
                     <Box className={ css.box }>
-                        <ListWithValues
-                            items={ products.map((item) => {
-                                return {
-                                    label   : <div key={ item.product.barcode }>
-                                        <div>{ item.product.product_name }</div>
-                                        <br/>
-                                        <div>{ item.product.price } Р</div>
-                                    </div>,
-                                    children: item.amount,
-                                    key     : item.product.barcode,
-                                };
-                            }) }
-                        />
-                        <ProductPrice
+                        <List>
+                            {
+                                products.map((item) => (
+                                    <ListRow
+                                        key={ item.product.barcode }
+                                        left={ item.product.product_name }
+                                        right={
+                                            <ListPriceItem
+                                                price={ item.product.price }
+                                                discount={ item.product.discount }
+                                                discountType={ item.product.discountType }
+                                                amount={ item.amount }
+                                            />
+                                        }
+                                    />
+                                ))
+                            }
+                        </List>
+                        <ProductPriceByData
                             priceData={ cartPriceData }
                             postfix={ false }
                         />
-                        <div>[price]: { cartPriceData.price }</div>
-                        <div>[price-w
-                            discount]: { cartPriceData.priceWithDiscount }</div>
-                        <div>[discount
-                            fixed]: { cartPriceData.discountFixed }</div>
-                        <div>[discount
-                            percent]: { cartPriceData.discountPercent }</div>
                     </Box>
                 </div>
             </div>

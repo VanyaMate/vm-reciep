@@ -19,9 +19,9 @@ const App                = () => {
         window.scrollTo(0, 0);
     }, [ pathname ]);
 
-    return (
-        <DevComponentsBrowser/>
-    );
+    /*    return (
+     <DevComponentsBrowser/>
+     );*/
 
     return (
         <Pages/>

@@ -8,7 +8,7 @@ import {
 import AddToCartButton
     from '@/components/_product/AddToCartButton/AddToCartButton.tsx';
 import ProductPrice
-    from '@/components/_product/ProductView/ProductPrice/ProductPrice.tsx';
+    from '@/components/_product/ProductView/ProductPriceByData/ProductPriceByData.tsx';
 import { cn } from '@/helpers/classname.react.ts';
 
 

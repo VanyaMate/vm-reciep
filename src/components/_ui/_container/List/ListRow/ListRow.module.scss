@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: var(--offset-medium);
+    border-bottom: 1px dotted var(--border-gray);
+
+    .item {
+        &.left {
+            width: 60%;
+        }
+
+        &.right {
+            width: 40%;
+        }
+    }
+}

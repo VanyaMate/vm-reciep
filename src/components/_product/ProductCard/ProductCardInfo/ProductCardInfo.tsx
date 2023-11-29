@@ -3,7 +3,7 @@ import css from './ProductCardInfo.module.scss';
 import { cn } from '@/helpers/classname.react.ts';
 import { Link } from 'react-router-dom';
 import ProductPrice
-    from '@/components/_product/ProductView/ProductPrice/ProductPrice.tsx';
+    from '@/components/_product/ProductView/ProductPriceByData/ProductPriceByData.tsx';
 import {
     ProductPriceData, useProductPriceCalculator,
 } from '@/hooks/components/useProductPriceCalculator.ts';

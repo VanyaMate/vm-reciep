@@ -13,6 +13,7 @@ export type InCartCallback = (productId: string) => number;
 export interface ICartController {
     addToCart: CartCallback;
     removeFromCart: CartCallback;
+    changeCartItem: CartCallback;
     inCart: InCartCallback;
 }
 
@@ -36,13 +37,20 @@ export const useCart = function (): ICartController {
             .removeFromCart(productId, amount)
             .then((cart) => cartContext.setCart(cart));
     }, [ cartContext, cartService ]);
-    const inCartCallback: InCartCallback       = useCallback((productId) => {
+    const changeCartItemCallback: CartCallback = useCallback(async (productId, amount) => {
+        return cartService
+            .changeCartItem(productId, amount)
+            .then((cart) => cartContext.setCart(cart));
+    }, [ cartContext, cartService ]);
+
+    const inCartCallback: InCartCallback = useCallback((productId) => {
         return cartContext.cart?.items.find((item) => item.productId === productId)?.amount ?? 0;
     }, [ cartContext, cartService ]);
 
     return useMemo(() => ({
         addToCart     : addToCartCallback,
         removeFromCart: removeFromCartCallback,
+        changeCartItem: changeCartItemCallback,
         inCart        : inCartCallback,
-    }), [ addToCartCallback, removeFromCartCallback, inCartCallback ]);
+    }), [ addToCartCallback, removeFromCartCallback, inCartCallback, changeCartItemCallback ]);
 };

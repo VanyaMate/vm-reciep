@@ -10,6 +10,7 @@ export enum PageType {
     HOME     = '/',
     PRODUCTS = 'products',
     PRODUCT  = 'product',
+    CART     = 'cart',
 }
 
 export const getProductPageUrl = function (id: string): string {

@@ -8,14 +8,14 @@ import Input from '@/components/_ui/_input/Input/Input.tsx';
 import { cn } from '@/helpers/classname.react.ts';
 import { DeleteOutlined } from '@ant-design/icons';
 import ProductPrice
-    from '@/components/_product/ProductView/ProductPrice/ProductPrice.tsx';
+    from '@/components/_product/ProductView/ProductPriceByData/ProductPriceByData.tsx';
 import {
     useProductPriceCalculator,
 } from '@/hooks/components/useProductPriceCalculator.ts';
 
 
 export type CartItemProductType = Pick<Product, 'product_name' | 'image_url' | 'quantity' | 'price' | 'discount' | 'discountType' | 'barcode'>;
-export type CartItemAmountChangeHandler = (amount: number) => Promise<any>;
+export type CartItemAmountChangeHandler = (productId: string, amount: number) => Promise<any>;
 
 export type ProductCartItemProps = {
     product: CartItemProductType;
@@ -35,8 +35,8 @@ const ProductCartItem: React.FC<ProductCartItemProps> = (props) => {
 
     const onChange = useCallback((value: number) => {
         setLoading(true);
-        onAmountChange(value).finally(() => setLoading(false));
-    }, [ onAmountChange ]);
+        onAmountChange(product.barcode.toString(), value).finally(() => setLoading(false));
+    }, [ product, onAmountChange ]);
 
     const increment = useCallback(() => {
         onChange(amount + 1);

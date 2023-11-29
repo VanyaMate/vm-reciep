@@ -3,5 +3,7 @@ export interface ICartService<CartType> {
 
     removeFromCart (productId: string, amount: number): Promise<CartType>;
 
+    changeCartItem (productId: string, amount: number): Promise<CartType>;
+
     getMyCart (): Promise<CartType>;
 }
