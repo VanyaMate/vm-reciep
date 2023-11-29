@@ -21,8 +21,8 @@ import {
     AuthFormModalContext,
 } from '@/contexts/components/AuthFormModalContext.tsx';
 import { useRegistrationForm } from '@/hooks/components/useRegistrationForm.ts';
-import AuthFormModalContainer
-    from '@/containers/AuthFormModal/AuthFormModalContainer.tsx';
+import { useNavigate } from 'react-router-dom';
+import { PageType } from '@/pages/getPage.ts';
 
 
 const HeaderUserContainer = () => {
@@ -36,6 +36,7 @@ const HeaderUserContainer = () => {
         authService: auth,
         onFinish   : modalContext.close,
     });
+    const navigate               = useNavigate();
 
     const menuItems: DropdownListItem[] = useMemo(() => {
         return [
@@ -78,7 +79,9 @@ const HeaderUserContainer = () => {
 
     return (
         <div className={ css.container }>
-            { cart && <HeaderUserCart cart={ cart }/> }
+            { cart &&
+                <HeaderUserCart cart={ cart }
+                                onClick={ () => navigate(`/${ PageType.CART }`) }/> }
             { wishlist &&
                 <HeaderUserWishlist wishlist={ wishlist }/> }
             { user &&

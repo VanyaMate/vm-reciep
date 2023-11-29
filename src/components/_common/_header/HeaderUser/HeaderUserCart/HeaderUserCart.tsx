@@ -6,15 +6,17 @@ import Button from '@/components/_ui/_button/Button/Button.tsx';
 
 export type HeaderUserCartProps = {
     cart: Cart;
+    onClick: () => any;
 }
 
 const HeaderUserCart: React.FC<HeaderUserCartProps> = (props) => {
-    const { cart } = props;
+    const { cart, onClick } = props;
 
     return (
         <Button
             amount={ cart.items.length }
             styleType={ cart.items.length ? 'primary' : 'default' }
+            onClick={ onClick }
             square
         >
             <ShoppingCartOutlined/>
@@ -22,4 +24,4 @@ const HeaderUserCart: React.FC<HeaderUserCartProps> = (props) => {
     );
 };
 
-export default HeaderUserCart;
+export default React.memo(HeaderUserCart);
