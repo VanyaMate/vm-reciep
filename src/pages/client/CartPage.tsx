@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import CartItems, {
     CartPreOrderBoxItem,
-} from '@/components/_cart/CartItems/CartItems.tsx';
+} from '@/components/_cart/CartPreOrderBox/CartPreOrderBox.tsx';
 import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import { CartItem } from '@/modules/api/cart/cart-service.types.ts';
 import {
@@ -9,6 +9,8 @@ import {
 } from '@/components/_product/ProductCart/ProductCartItem/ProductCartItem.tsx';
 import { CartContext } from '@/contexts/data/CartContext.ts';
 import { useCart } from '@/hooks/useCart.ts';
+import CartPreOrderBoxSkeleton
+    from '@/components/_cart/CartPreOrderBox/CartPreOrderBox.skeleton.tsx';
 
 
 export type CartPageProps = {}
@@ -51,11 +53,17 @@ const CartPage: React.FC<CartPageProps> = (props) => {
 
     return (
         <div>
-            <CartItems
-                products={ cartProducts }
-                onAmountChange={ onAmountChange }
-                loading={ loading }
-            />
+            {
+                cartProducts.length
+                ? <CartItems
+                    products={ cartProducts }
+                    onAmountChange={ onAmountChange }
+                    loading={ loading }
+                />
+                : <CartPreOrderBoxSkeleton
+                    amount={ cart?.items.length ?? 0 }
+                />
+            }
         </div>
     );
 };

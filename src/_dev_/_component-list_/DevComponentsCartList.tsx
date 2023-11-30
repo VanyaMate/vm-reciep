@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import DevComponentsItem from '@/_dev_/DevComponentsItem/DevComponentsItem.tsx';
-import CartItems from '@/components/_cart/CartItems/CartItems.tsx';
+import CartItems from '@/components/_cart/CartPreOrderBox/CartPreOrderBox.tsx';
 import { IDataGenerator } from '@vanyamate/market-place-service';
 import { Product } from '@/modules/api/product/product-service.types.ts';
 import {

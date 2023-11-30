@@ -2,9 +2,19 @@
     display: flex;
     flex-direction: column;
     gap: var(--offset-large);
+    box-shadow: var(--box-shadow-none);
 
     .title {
         font-size: 24px;
+        display: flex;
+        align-items: start;
+        color: var(--text-color-main);
+        gap: var(--offset-small);
+
+        .amount {
+            font-size: 14px;
+            color: var(--text-color-invisible);
+        }
     }
 
     .cart {

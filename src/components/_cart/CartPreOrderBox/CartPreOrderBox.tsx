@@ -4,7 +4,7 @@ import ProductCartItem, {
     CartItemProductType,
 } from '@/components/_product/ProductCart/ProductCartItem/ProductCartItem.tsx';
 import { getProductPageUrl } from '@/pages/getPage.ts';
-import css from './CartItems.module.scss';
+import css from './CartPreOrderBox.module.scss';
 import {
     useCartPriceCalculator,
 } from '@/hooks/components/useCartPriceCalculator.ts';
@@ -39,10 +39,12 @@ const CartPreOrderBox: React.FC<CartPreOrderBoxProps> = (props) => {
     });
 
     return (
-        <div className={ cn(css.container, loading && css.loading) }>
-            <h2>
+        <Box className={ cn(css.container, loading && css.loading) }>
+            <h2 className={ css.title }>
                 Корзина
-                ( { products.reduce((acc, item) => acc += item.amount, 0) } )
+                <span className={ css.amount }>
+                { products.reduce((acc, item) => acc += item.amount, 0) }
+                </span>
             </h2>
             <div className={ css.cart }>
                 <div className={ css.list }>
@@ -91,7 +93,7 @@ const CartPreOrderBox: React.FC<CartPreOrderBoxProps> = (props) => {
                     </Box>
                 </div>
             </div>
-        </div>
+        </Box>
     );
 };
 
