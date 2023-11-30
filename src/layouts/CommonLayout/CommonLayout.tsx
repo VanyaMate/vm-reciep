@@ -39,7 +39,7 @@ const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
                         }
                     />
                     <HeaderBanner
-                        background={ 'https://images.unsplash.com/photo-1576562331281-d09e46af9854?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1hcmtldHxlbnwwfHwwfHx8MA%3D%3D' }
+                        background={ 'https://sun9-33.userapi.com/impg/Qlb57eUd9aiK2SZf0ZI8oxBhWDJr8-VDYAv1Iw/zknRT2jtc4s.jpg?size=1024x320&quality=96&sign=254c130e8bc1f2697601714f784db6d1&type=albumalbum' }
                         footer={
                             <HeaderSearchContainer/>
                         }

@@ -6,6 +6,7 @@ import HomePage from '@/pages/client/HomePage.tsx';
 import ProductPage from '@/pages/client/ProductPage.tsx';
 import { PageType } from '@/pages/getPage.ts';
 import CartPage from '@/pages/client/CartPage.tsx';
+import ProductsPage from '@/pages/client/ProductsPage.tsx';
 
 
 const Pages = () => {
@@ -15,7 +16,7 @@ const Pages = () => {
 
             </Route>
             <Route path={ '/*' } element={ <CommonLayout smallBanner/> }>
-                <Route path={ PageType.PRODUCTS } element={ <HomePage/> }/>
+                <Route path={ PageType.PRODUCTS } element={ <ProductsPage/> }/>
                 <Route path={ `${ PageType.PRODUCT }/:id` }
                        element={ <ProductPage/> }/>
                 <Route path={ `${ PageType.CART }` } element={ <CartPage/> }/>

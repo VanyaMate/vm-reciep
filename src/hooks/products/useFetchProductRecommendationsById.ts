@@ -8,7 +8,7 @@ export type UseFetchProductRecommendations = {
     loading: boolean;
 }
 
-export const useFetchProductRecommendations = function (productId: string): UseFetchProductRecommendations {
+export const useFetchProductRecommendationsById = function (productId: string, wait?: boolean): UseFetchProductRecommendations {
     const { products: productsService } = useContext(ServicesContext);
     const [ products, setProducts ]     = useState<Product[]>([]);
     const [ loading, setLoading ]       = useState<boolean>(true);
@@ -16,12 +16,15 @@ export const useFetchProductRecommendations = function (productId: string): UseF
 
     useEffect(() => {
         setLoading(true);
+        if (wait) {
+            return;
+        }
 
         productsService
             .findMany((product) => product.barcode.toString()[1] === productId[1], { limit: 10 })
             .then((response) => setProducts(response.list))
             .finally(() => setLoading(false));
-    }, [ productId ]);
+    }, [ productId, wait ]);
 
     return {
         products, loading,

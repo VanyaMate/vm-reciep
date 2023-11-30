@@ -3,13 +3,14 @@ import {
     ISearchMapper,
     useSearchMapper,
 } from '@/hooks/search/useSearchMapper.ts';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useCallback, useMemo } from 'react';
 import {
     DEFAULT_LIMIT,
     DEFAULT_PAGE,
     DEFAULT_SORT, URL_ITEMS, URL_LIMIT, URL_PAGE, URL_SORT,
 } from '@/consts/search.ts';
+import { useCart } from '@/hooks/useCart.ts';
 
 
 export interface ISearchNavigateController {
@@ -19,8 +20,13 @@ export interface ISearchNavigateController {
 }
 
 export const useSearchNavigate = function (): ISearchNavigateController {
-    const mapper: ISearchMapper = useSearchMapper();
-    const navigate              = useNavigate();
+    const mapper: ISearchMapper      = useSearchMapper();
+    const navigate                   = useNavigate();
+    const { pathname, search, hash } = useLocation();
+
+    const currentUrl = useMemo(() => {
+        return `${ pathname }${ search }${ hash }`;
+    }, [ pathname, search, hash ]);
 
     const getUrl = useCallback((url: string, options: UrlSearch) => {
         let search: string[] = [];
@@ -49,8 +55,11 @@ export const useSearchNavigate = function (): ISearchNavigateController {
     }, []);
 
     const navigateCallback = useCallback((url: string, options: UrlSearch) => {
-        navigate(getUrl(url, options));
-    }, [ navigate, getUrl ]);
+        const newUrl: string = getUrl(url, options);
+        if (newUrl !== currentUrl) {
+            navigate(getUrl(url, options));
+        }
+    }, [ navigate, getUrl, currentUrl ]);
 
     return useMemo(() => ({
         navigate: navigateCallback,

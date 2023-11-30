@@ -9,8 +9,8 @@ import ProductsCarousel
     from '@/components/_product/ProductsCarousel/ProductsCarousel.tsx';
 import { useFetchProduct } from '@/hooks/products/useFetchProduct.ts';
 import {
-    useFetchProductRecommendations,
-} from '@/hooks/products/useFetchProductRecommendations.ts';
+    useFetchProductRecommendationsById,
+} from '@/hooks/products/useFetchProductRecommendationsById.ts';
 import { getProductPageUrl } from '@/pages/getPage.ts';
 import { useSearch } from '@/hooks/search/useSearch.ts';
 
@@ -27,7 +27,7 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     const {
               loading: recoLoading,
               products,
-          }                       = useFetchProductRecommendations(productId);
+          }                       = useFetchProductRecommendationsById(productId);
     const { loading, product }    = useFetchProduct(productId);
 
     if (loading) {
