@@ -1,15 +1,6 @@
-import React, {
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from 'react';
-import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
-import { Product } from '@/modules/api/product/product-service.types.ts';
+import React, {} from 'react';
 import ProductView
     from '@/components/_product/ProductView/ProductView.tsx';
-import { CartContext } from '@/contexts/data/CartContext.ts';
 import { useCart } from '@/hooks/useCart.ts';
 import { useWishlist } from '@/hooks/useWishlist.ts';
 import ProductViewSkeleton
@@ -21,9 +12,6 @@ import {
     useFetchProductRecommendations,
 } from '@/hooks/products/useFetchProductRecommendations.ts';
 import { getProductPageUrl } from '@/pages/getPage.ts';
-import {
-    BreadcrumbItem,
-} from '@/components/_product/ProductView/ProductBreadcrumbs/ProductBreadcrumbs.tsx';
 import { useSearch } from '@/hooks/search/useSearch.ts';
 
 

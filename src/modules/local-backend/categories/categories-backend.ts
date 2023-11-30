@@ -19,6 +19,7 @@ export class CategoriesBackend extends MultiplyService<Category> {
                     maxOperationsPerStep: 100,
                     findOneFilter       : (item, id) => item.title === id,
                     items               : categories,
+                    timeout             : 120,
                 },
             },
         );

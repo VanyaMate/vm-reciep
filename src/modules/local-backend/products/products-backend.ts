@@ -24,8 +24,8 @@ export class ProductsBackend extends MultiplyService<Product> {
             ),
             {
                 options: {
-                    maxOperationsPerStep: 10,
-                    timeout             : 120,
+                    maxOperationsPerStep: 20,
+                    timeout             : 100,
                     findOneFilter       : (product: Product, id: string) => product.barcode.toString() === id,
                 },
             },
