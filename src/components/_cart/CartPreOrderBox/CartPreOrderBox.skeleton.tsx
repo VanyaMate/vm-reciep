@@ -39,7 +39,7 @@ const CartPreOrderBoxSkeleton: React.FC<CartPreOrderBoxSkeletonProps> = (props) 
                 <div className={ css.list }>
                     {
                         items.map((item, index) => (
-                            <ProductCartItemSkeleton/>
+                            <ProductCartItemSkeleton key={ index }/>
                         ))
                     }
                 </div>

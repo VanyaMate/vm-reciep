@@ -6,14 +6,11 @@ import Header
 import Footer from '@/components/_common/_footer/Footer/Footer.tsx';
 import HeaderBanner
     from '@/components/_common/_header/HeaderBanner/HeaderBanner.tsx';
-import HeaderSearch
-    from '@/components/_common/_header/HeaderSearch/HeaderSearch.tsx';
 import HeaderLogo from '@/components/_common/_header/HeaderLogo/HeaderLogo.tsx';
 import HeaderUserContainer
     from '@/containers/_header/HeaderUserContainer/HeaderUserContainer.tsx';
 import AuthFormModalContainer
     from '@/containers/AuthFormModal/AuthFormModalContainer.tsx';
-import { SearchContext } from '@/contexts/data/SearchContext.ts';
 import HeaderSearchContainer
     from '@/containers/_header/HeaderSearchContainer/HeaderSearchContainer.tsx';
 

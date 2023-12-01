@@ -27,7 +27,7 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
     const {
               loading: recoLoading,
               products,
-          }                       = useFetchProductRecommendationsById(productId);
+          }                       = useFetchProductRecommendationsById({ limit: 4 }, productId);
     const { loading, product }    = useFetchProduct(productId);
 
     if (loading) {

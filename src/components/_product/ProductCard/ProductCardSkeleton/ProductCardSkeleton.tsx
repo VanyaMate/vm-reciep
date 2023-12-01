@@ -8,7 +8,13 @@ import ProductCardInfo
 import Button from '@/components/_ui/_button/Button/Button.tsx';
 
 
-const ProductCardSkeleton = () => {
+export type ProductCardSkeletonProps = {
+    addToCartButton?: boolean;
+}
+
+const ProductCardSkeleton: React.FC<ProductCardSkeletonProps> = (props) => {
+    const { addToCartButton } = props;
+
     return (
         <Box className={ css.container }>
             <ProductCardHeader
@@ -25,7 +31,10 @@ const ProductCardSkeleton = () => {
                 currency={ 'Руб' }
                 skeleton
             />
-            <Button skeleton block>Добавить в корзину</Button>
+            {
+                addToCartButton &&
+                <Button skeleton block>Добавить в корзину</Button>
+            }
         </Box>
     );
 };

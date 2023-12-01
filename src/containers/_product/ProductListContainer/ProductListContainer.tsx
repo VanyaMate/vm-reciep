@@ -35,7 +35,7 @@ const ProductListContainer = () => {
         <ProductList>
             {
                 loading ? new Array(DEFAULT_LIMIT).fill(0).map((_, index) =>
-                            <ProductCardSkeleton key={ index }/>)
+                            <ProductCardSkeleton key={ index } addToCartButton/>)
                         : products.map((product) => (
                             <ProductCard
                                 product={ product }
@@ -79,4 +79,4 @@ const ProductListContainer = () => {
     );
 };
 
-export default ProductListContainer;
+export default React.memo(ProductListContainer);
