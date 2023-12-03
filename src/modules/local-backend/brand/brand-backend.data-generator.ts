@@ -9,11 +9,11 @@ import {
 
 export class BrandBackendDataGenerator implements IDataGenerator<Brand, CreateBrandDto> {
     private readonly _clearData: Brand = {
-        id         : '',
         title      : '',
         description: '',
         avatar     : 'https://customers.seomanager.com/knowledgegraph/logo/loogguitars_myshopify_com_logo.jpg',
         admins     : [ 'root' ],
+        company    : '',
     };
 
     admins (): Brand['admins'] {
@@ -41,17 +41,17 @@ export class BrandBackendDataGenerator implements IDataGenerator<Brand, CreateBr
 
     filled (data: CreateBrandDto | undefined): Brand {
         return {
-            id         : this.id(),
             title      : this.title(),
             description: this.description(),
             avatar     : this.avatar(),
             admins     : this.admins(),
+            company    : this.company(),
             ...data,
         };
     }
 
-    id (): Brand['id'] {
-        return getRandomInt(0, 1000000).toString();
+    company (): Brand['company'] {
+        return getRandomWords(productWordsLib, 1);
     }
 
     title (): Brand['title'] {
