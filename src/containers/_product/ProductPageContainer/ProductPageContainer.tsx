@@ -13,6 +13,7 @@ import {
 } from '@/hooks/products/useFetchProductRecommendationsById.ts';
 import { getProductPageUrl } from '@/pages/getPage.ts';
 import { useSearch } from '@/hooks/search/useSearch.ts';
+import { useFetchBrand } from '@/hooks/brands/useFetchBrand.ts';
 
 
 export type ProductPageContainerProps = {
@@ -29,6 +30,8 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
               products,
           }                       = useFetchProductRecommendationsById({ limit: 4 }, productId);
     const { loading, product }    = useFetchProduct(productId);
+    const [ brandLoading, brand ] = useFetchBrand(product?.brand_name ?? '');
+    console.log(brandLoading, brand, product?.brand_name);
 
     if (loading) {
         return <ProductViewSkeleton/>;
@@ -42,6 +45,8 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
         <>
             <ProductView
                 product={ product }
+                brand={ brand }
+                brandLoading={ brandLoading }
                 searchController={ searchController }
                 cartController={ cartController }
                 wishlistController={ wishlistController }

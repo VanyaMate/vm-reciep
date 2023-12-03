@@ -38,10 +38,13 @@ import {
     PageType,
 } from '@/pages/getPage.ts';
 import { ISearchController } from '@/hooks/search/useSearch.ts';
+import { Brand } from '@/modules/api/brand/brand-service.types.ts';
 
 
 export type ProductViewProps = {
     product: Product;
+    brand: Brand | null;
+    brandLoading: boolean;
     searchController: ISearchController;
     wishlistController: IWishlistController;
     cartController: ICartController;
@@ -50,6 +53,8 @@ export type ProductViewProps = {
 const ProductView: React.FC<ProductViewProps> = (props) => {
     const {
               product,
+              brand,
+              brandLoading,
               searchController,
               wishlistController,
               cartController,
@@ -255,10 +260,13 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                 <div className={ css.top }>
                     <div className={ css.left }>
                         <div className={ css.tags }>
-                            <Tag backgroundColor={ '#fff' }
-                                 textColor={ '#111' }>
-                                { product.brand_name }
-                            </Tag>
+                            {
+                                product.brand_name &&
+                                <Tag backgroundColor={ '#fff' }
+                                     textColor={ '#111' }>
+                                    { product.brand_name }
+                                </Tag>
+                            }
                             {
                                 priceData.discountPercent ?
                                 <Tag backgroundColor={ '#f55' }
@@ -284,19 +292,22 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                     </div>
                     <div className={ css.right }>
                         <div className={ css.product }>
-                            <ProductBrand
-                                url={ searchController.getClearUrl(`/${ PageType.PRODUCTS }`, {
-                                    items: {
-                                        brand_name: {
-                                            value: product.brand_name,
-                                            type : 'equal',
+                            {
+                                brand &&
+                                <ProductBrand
+                                    url={ searchController.getClearUrl(`/${ PageType.PRODUCTS }`, {
+                                        items: {
+                                            brand_name: {
+                                                value: brand.title,
+                                                type : 'equal',
+                                            },
                                         },
-                                    },
-                                }) }
-                                icon={ product.brand }
-                                title={ product.brand_name }
-                                original
-                            />
+                                    }) }
+                                    icon={ brand.avatar }
+                                    title={ brand.title }
+                                    original
+                                />
+                            }
                             <ListWithValues
                                 items={ shortDescriptionItems }
                             />

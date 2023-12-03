@@ -2,8 +2,9 @@ import {
     MultiplyService,
     StorageService,
 } from '@vanyamate/market-place-service';
-import { Brand } from '@/modules/local-backend/brand/brand-backend.types.ts';
 import { LBSN_BRAND } from '@/modules/local-backend/storages.ts';
+import { Brand } from '@/modules/api/brand/brand-service.types.ts';
+import brands from '@vanyamate/market-place-service/data/brands/brands_1.json';
 
 
 export class BrandsBackend extends MultiplyService<Brand> {
@@ -16,8 +17,8 @@ export class BrandsBackend extends MultiplyService<Brand> {
             {
                 options: {
                     timeout      : 100,
-                    items        : [],
-                    findOneFilter: (brand, id) => brand.id === id,
+                    items        : brands,
+                    findOneFilter: (brand, id) => brand.title === id,
                 },
             },
         );
