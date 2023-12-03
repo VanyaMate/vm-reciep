@@ -47,7 +47,7 @@ const HomePage = () => {
     const { process }           = useContext(AuthContext);
     const { loading, products } = useFetchProductRecommendationsById(
         { limit: 4 },
-        cart?.items[0].productId ?? '',
+        cart?.items[0]?.productId ?? '',
         process,
     );
 

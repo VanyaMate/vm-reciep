@@ -26,7 +26,7 @@ const ProductRecommendationByCartContainer: React.FC<ProductRecommendationByCart
     const { cart }                  = useContext(CartContext);
     const { process }               = useContext(AuthContext);
     const productId                 = useMemo(() => {
-        return cart?.items[getRandomInt(0, cart?.items.length)].productId ?? '';
+        return cart?.items[getRandomInt(0, cart?.items.length)]?.productId ?? '';
     }, [ cart ]);
     const { loading, products, by } = useFetchProductRecommendationsById(
         { limit: 12 },
