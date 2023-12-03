@@ -1,0 +1,1 @@
+export const STORAGE_NAME_AUTH = '__vmstore__auth';

@@ -8,6 +8,7 @@ import {
 
 
 import { SingleService, StorageService } from '@vanyamate/market-place-service';
+import { LBSN_USER } from '@/modules/local-backend/storages.ts';
 
 
 export class UserBackend extends SingleService<PrivateUser, CreateUserDto, UpdateUserDto> {
@@ -15,7 +16,7 @@ export class UserBackend extends SingleService<PrivateUser, CreateUserDto, Updat
         super(
             new StorageService(
                 localStorage,
-                'users',
+                LBSN_USER,
             ),
             new UserBackendDataGenerator(),
             {

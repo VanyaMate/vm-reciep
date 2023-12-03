@@ -63,6 +63,17 @@ import {
 import {
     ProductBackendDataGenerator,
 } from '@/modules/local-backend/product/product-backend.data-generator.ts';
+import { STORAGE_NAME_AUTH } from '@/consts/storage-names.ts';
+import {
+    IBrandsService,
+} from '@/modules/api/brands/brands-service.interface.ts';
+import { Brand } from '@/modules/api/brand/brand-service.types.ts';
+import {
+    LocalBrandsService,
+} from '@/modules/api/brands/services/local-brands-service.ts';
+import {
+    BrandsBackend,
+} from '@/modules/local-backend/brands/brands-backend.ts';
 
 
 export type ServicesProviderProps = {
@@ -93,14 +104,18 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
         return new LocalCategoriesService(new CategoriesBackend());
     }, []);
 
+    const brandsService: IBrandsService<Brand> = useMemo(() => {
+        return new LocalBrandsService(new BrandsBackend());
+    }, []);
+
     const authService: IAuthService<AuthData> = useMemo(() => {
         return new LocalAuthService(
             new UserBackend(),
             new UserBackendMapper(),
             cartBackend,
             wishlistBackend,
-            new StorageService(localStorage, 'auth'),
-            new StorageService(sessionStorage, 'auth'),
+            new StorageService(localStorage, STORAGE_NAME_AUTH),
+            new StorageService(sessionStorage, STORAGE_NAME_AUTH),
         );
     }, []);
 
@@ -111,6 +126,7 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
             auth      : authService,
             products  : productsService,
             categories: categoriesService,
+            brand     : brandsService,
         } }>
             { props.children }
         </ServicesContext.Provider>

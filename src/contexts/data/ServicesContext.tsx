@@ -45,6 +45,17 @@ import {
 import {
     CategoriesBackend,
 } from '@/modules/local-backend/categories/categories-backend.ts';
+import {
+    IBrandsService,
+} from '@/modules/api/brands/brands-service.interface.ts';
+import { Brand } from '@/modules/api/brand/brand-service.types.ts';
+import {
+    LocalBrandsService,
+} from '@/modules/api/brands/services/local-brands-service.ts';
+import {
+    BrandsBackend,
+} from '@/modules/local-backend/brands/brands-backend.ts';
+import { STORAGE_NAME_AUTH } from '@/consts/storage-names.ts';
 
 
 export type ServicesContextType = {
@@ -53,6 +64,7 @@ export type ServicesContextType = {
     cart: ICartService<Cart>,
     wishlist: IWishlistService<Wishlist>,
     categories: ICategoriesService<Category>,
+    brand: IBrandsService<Brand>,
 }
 
 export const ServicesContext = createContext<ServicesContextType>({
@@ -61,11 +73,12 @@ export const ServicesContext = createContext<ServicesContextType>({
         new UserBackendMapper(),
         new CartBackend(),
         new WishlistBackend(),
-        new StorageService(localStorage, 'auth'),
-        new StorageService(sessionStorage, 'auth'),
+        new StorageService(localStorage, STORAGE_NAME_AUTH),
+        new StorageService(sessionStorage, STORAGE_NAME_AUTH),
     ),
     products  : new LocalProductsService(new ProductsBackend()),
     cart      : new LocalCartService('', new CartBackend()),
     wishlist  : new LocalWishlistService('', new WishlistBackend()),
     categories: new LocalCategoriesService(new CategoriesBackend()),
+    brand     : new LocalBrandsService(new BrandsBackend()),
 });

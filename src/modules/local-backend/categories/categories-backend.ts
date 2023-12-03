@@ -5,6 +5,7 @@ import {
 import { Category } from '@/modules/api/category/category-service.types.ts';
 import categories
     from '@vanyamate/market-place-service/data/categories/categories.json';
+import { LBSN_CATEGORY } from '@/modules/local-backend/storages.ts';
 
 
 export class CategoriesBackend extends MultiplyService<Category> {
@@ -12,7 +13,7 @@ export class CategoriesBackend extends MultiplyService<Category> {
         super(
             new StorageService(
                 localStorage,
-                'category',
+                LBSN_CATEGORY,
             ),
             {
                 options: {
