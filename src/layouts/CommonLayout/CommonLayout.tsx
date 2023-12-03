@@ -15,12 +15,14 @@ import HeaderSearchContainer
     from '@/containers/_header/HeaderSearchContainer/HeaderSearchContainer.tsx';
 
 
+export type CommonLayoutBannerType = 'default' | 'small' | 'hide';
+
 export type CommonLayoutProps = {
-    smallBanner?: boolean;
+    banner?: CommonLayoutBannerType;
 }
 
 const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
-    const { smallBanner } = props;
+    const { banner } = props;
 
     return (
         <PageContent
@@ -35,13 +37,17 @@ const CommonLayout: React.FC<CommonLayoutProps> = (props) => {
                             </>
                         }
                     />
-                    <HeaderBanner
-                        background={ 'https://sun9-33.userapi.com/impg/Qlb57eUd9aiK2SZf0ZI8oxBhWDJr8-VDYAv1Iw/zknRT2jtc4s.jpg?size=1024x320&quality=96&sign=254c130e8bc1f2697601714f784db6d1&type=albumalbum' }
-                        footer={
-                            <HeaderSearchContainer/>
-                        }
-                        small={ smallBanner }
-                    />
+                    {
+                        banner !== 'hide' &&
+                        <HeaderBanner
+                            background={ 'https://sun9-33.userapi.com/impg/Qlb57eUd9aiK2SZf0ZI8oxBhWDJr8-VDYAv1Iw/zknRT2jtc4s.jpg?size=1024x320&quality=96&sign=254c130e8bc1f2697601714f784db6d1&type=albumalbum' }
+                            footer={
+                                <HeaderSearchContainer/>
+                            }
+                            small={ banner === 'small' }
+                        />
+
+                    }
                     <Outlet/>
                 </>
             }

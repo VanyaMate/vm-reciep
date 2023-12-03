@@ -7,6 +7,7 @@ import ProductPage from '@/pages/client/ProductPage.tsx';
 import { PageType } from '@/pages/getPage.ts';
 import CartPage from '@/pages/client/CartPage.tsx';
 import ProductsPage from '@/pages/client/ProductsPage.tsx';
+import BrandPage from '@/pages/client/BrandPage.tsx';
 
 
 const Pages = () => {
@@ -15,7 +16,13 @@ const Pages = () => {
             <Route path={ 'admin' } element={ <AdminLayout/> }>
 
             </Route>
-            <Route path={ '/*' } element={ <CommonLayout smallBanner/> }>
+            <Route path={ '/brand/*' }
+                   element={ <CommonLayout banner={ 'hide' }/> }>
+                <Route path={ ':id' } element={ <BrandPage/> }/>
+                <Route path={ '*' } element={ '404' }/>
+            </Route>
+            <Route path={ '/*' }
+                   element={ <CommonLayout banner={ 'small' }/> }>
                 <Route path={ PageType.PRODUCTS } element={ <ProductsPage/> }/>
                 <Route path={ `${ PageType.PRODUCT }/:id` }
                        element={ <ProductPage/> }/>
@@ -24,7 +31,7 @@ const Pages = () => {
             <Route path={ '*' } element={ <CommonLayout/> }>
                 <Route path={ '/*' } element={ <HomePage/> }/>
                 <Route path={ '*' } element={ '404' }/>
-            </Route>
+            </Route>d
         </Routes>
     );
 };

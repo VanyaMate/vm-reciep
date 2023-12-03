@@ -39,11 +39,16 @@ import {
 } from '@/pages/getPage.ts';
 import { ISearchController } from '@/hooks/search/useSearch.ts';
 import { Brand } from '@/modules/api/brand/brand-service.types.ts';
+import ProductShortInfo
+    from '@/components/_product/ProductView/ProductShortInfo/ProductShortInfo.tsx';
+import ProductInfo
+    from '@/components/_product/ProductView/ProductInfo/ProductInfo.tsx';
 
 
 export type ProductViewProps = {
     product: Product;
     brand: Brand | null;
+    brandUrl: string;
     brandLoading: boolean;
     searchController: ISearchController;
     wishlistController: IWishlistController;
@@ -54,193 +59,24 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
     const {
               product,
               brand,
+              brandUrl,
               brandLoading,
               searchController,
               wishlistController,
               cartController,
-          }                                                 = props;
-    const priceData: ProductPriceData                       = useProductPriceCalculator({
+          }                           = props;
+    const priceData: ProductPriceData = useProductPriceCalculator({
         price       : product.price,
         discount    : product.discount,
         discountType: product.discountType,
     });
-    const shortDescriptionItems: DescriptionsProps['items'] = useMemo(() => {
-        return [
-            {
-                key     : '1',
-                label   : 'Калории',
-                children: product.calories,
-            },
-            {
-                key     : '10',
-                label   : 'Аллергены',
-                children: product.allergens,
-            },
-            {
-                key     : '2',
-                label   : 'Жиры',
-                children: product.fat,
-            },
-            {
-                key     : '3',
-                label   : 'Витамин "А"',
-                children: product.vitamin_a,
-            },
-            {
-                key     : '4',
-                label   : 'Витамин "С"',
-                children: product.vitamin_c,
-            },
-            {
-                key     : '5',
-                label   : 'Кальций',
-                children: product.calcium,
-            },
-            {
-                key     : '6',
-                label   : 'Железо',
-                children: product.iron,
-            },
-        ];
-    }, [ product ]);
-    const descriptionItems: DescriptionsProps['items']      = useMemo(() => [
-        {
-            key     : '3',
-            label   : 'Пищевая ценность',
-            children: product.nutritional_facts,
-            span    : 4,
-        },
-        {
-            key     : '5',
-            label   : 'Ингридиенты',
-            children: product.ingredients,
-            span    : 4,
-        },
-        {
-            key     : '10',
-            label   : 'Страна',
-            children: product.manufacturer,
-            span    : 2,
-        },
-        {
-            key     : '2',
-            label   : 'Производитель',
-            children: product.manufacturer,
-            span    : 2,
-        },
-        {
-            key     : '16',
-            label   : 'Витамин "А"',
-            children: product.vitamin_a,
-            span    : 2,
-        },
-        {
-            key     : '17',
-            label   : 'Витамин "С"',
-            children: product.vitamin_c,
-            span    : 2,
-        },
-        {
-            key     : '6',
-            label   : 'Калории',
-            children: product.calories,
-            span    : 1,
-        },
-        {
-            key     : '7',
-            label   : 'Жиры',
-            children: product.fat,
-            span    : 1,
-        },
-        {
-            key     : '8',
-            label   : 'Углеводы',
-            children: product.carbohydrates,
-            span    : 1,
-        },
-        {
-            key     : '18',
-            label   : 'Кальций',
-            children: product.calcium,
-            span    : 1,
-        },
-        {
-            key     : '1',
-            label   : 'Вес',
-            children: product.weight,
-            span    : 1,
-        },
-        {
-            key     : '9',
-            label   : 'Вес нетто',
-            children: product.net_weight,
-            span    : 1,
-        },
-        {
-            key     : '11',
-            label   : 'Размер порции',
-            children: product.serving_size,
-            span    : 1,
-        },
-
-        {
-            key     : '4',
-            label   : 'Аллергены',
-            children: product.allergens,
-            span    : 1,
-        },
-        {
-            key     : '13',
-            label   : 'Протеин',
-            children: product.protein,
-            span    : 1,
-        },
-        {
-            key     : '14',
-            label   : 'Сахар',
-            children: product.sugar,
-            span    : 1,
-        },
-        {
-            key     : '15',
-            label   : 'Волокно',
-            children: product.fiber,
-            span    : 1,
-        }, {
-            key     : '19',
-            label   : 'Железо',
-            children: product.iron,
-            span    : 1,
-        },
-    ], [ product ]);
-
-    const breadcrumbs: BreadcrumbItem[] = useMemo(() => {
-        const list: BreadcrumbItem[] = [
-            {
-                url  : searchController.getUrl(`/${ PageType.PRODUCTS }`),
-                label: 'Главная',
-            },
-        ];
-
-        if (product?.category) {
-            list.push({
-                url  : searchController.getUrl(`/${ PageType.PRODUCTS }`, {
-                    items: {
-                        category: {
-                            value: product.category,
-                            type : 'equal',
-                        },
-                    },
-                }),
-                label: product.category,
-            });
-        }
-        return list;
-    }, [ product, searchController ]);
 
     return (
         <Box className={ css.container }>
-            <ProductBreadcrumbs items={ breadcrumbs }/>
+            <ProductBreadcrumbs
+                product={ product }
+                searchController={ searchController }
+            />
             <ProductTitle>{ product.product_name }</ProductTitle>
             <ProductHeaderNavigation
                 left={ <>
@@ -277,16 +113,16 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                         </div>
                         <ProductSlider
                             images={ [
-                                product.image_url,
-                                product.image_url,
-                                product.image_url,
-                                product.image_url,
-                                product.image_url,
-                                product.image_url,
-                                product.image_url,
-                                product.image_url,
-                                product.image_url,
                                 ...product.images,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
+                                product.image_url,
                             ] }
                         />
                     </div>
@@ -295,22 +131,13 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                             {
                                 brand &&
                                 <ProductBrand
-                                    url={ searchController.getClearUrl(`/${ PageType.PRODUCTS }`, {
-                                        items: {
-                                            brand_name: {
-                                                value: brand.title,
-                                                type : 'equal',
-                                            },
-                                        },
-                                    }) }
+                                    url={ brandUrl }
                                     icon={ brand.avatar }
                                     title={ brand.title }
                                     original
                                 />
                             }
-                            <ListWithValues
-                                items={ shortDescriptionItems }
-                            />
+                            <ProductShortInfo product={ product }/>
                             <Typography.Paragraph
                                 ellipsis={ {
                                     rows      : 3,
@@ -329,9 +156,7 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                     </div>
                 </div>
                 <div>
-                    <ProductFullDescriptionList
-                        items={ descriptionItems }
-                    />
+                    <ProductInfo product={ product }/>
                 </div>
             </div>
         </Box>

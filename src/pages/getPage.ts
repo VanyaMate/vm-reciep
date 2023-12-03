@@ -11,10 +11,11 @@ export enum PageType {
     PRODUCTS = 'products',
     PRODUCT  = 'product',
     CART     = 'cart',
+    BRAND    = 'brand',
 }
 
 export const getProductPageUrl = function (id: string): string {
-    return '/product/' + id;
+    return `/${ PageType.PRODUCT }/` + id;
 };
 
 export const getHomePageUrl = function (search?: PageSearchOptions): string {
@@ -27,6 +28,10 @@ export const getCategoryPageUrl = function (id: string, search?: PageSearchOptio
 
 export const getCategoriesPageUrl = function (): string {
     return '/category';
+};
+
+export const getBrandPageUrl = function (id: string): string {
+    return `/${ PageType.BRAND }/${ id }`;
 };
 
 export const getPageSearchParamsUrl = function (search?: PageSearchOptions): string {

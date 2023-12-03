@@ -2,6 +2,9 @@ import React, { useMemo } from 'react';
 import css from './ProductBreadcrumbs.module.scss';
 import { Link } from 'react-router-dom';
 import { Divider } from 'antd';
+import { Product } from '@/modules/api/product/product-service.types.ts';
+import { ISearchController } from '@/hooks/search/useSearch.ts';
+import { PageType } from '@/pages/getPage.ts';
 
 
 export type BreadcrumbItem = {
@@ -10,12 +13,37 @@ export type BreadcrumbItem = {
 }
 
 export type ProductBreadcrumbsProps = {
-    items: BreadcrumbItem[];
+    product: Product;
+    searchController: ISearchController;
 }
 
 const ProductBreadcrumbs: React.FC<ProductBreadcrumbsProps> = (props) => {
-    const { items }                      = props;
-    const breadcrumbs: React.ReactNode[] = useMemo(() => {
+    const { product, searchController } = props;
+    const items: BreadcrumbItem[] = useMemo(() => {
+        const list: BreadcrumbItem[] = [
+            {
+                url  : searchController.getUrl(`/${ PageType.PRODUCTS }`),
+                label: 'Главная',
+            },
+        ];
+
+        if (product?.category) {
+            list.push({
+                url  : searchController.getUrl(`/${ PageType.PRODUCTS }`, {
+                    items: {
+                        category: {
+                            value: product.category,
+                            type : 'equal',
+                        },
+                    },
+                }),
+                label: product.category,
+            });
+        }
+        return list;
+    }, [ product, searchController ]);
+
+    const breadcrumbsItems: React.ReactNode[] = useMemo(() => {
         const breadcrumbs: React.ReactNode[] = [];
 
         for (let i = 0; i < items.length; i++) {
@@ -37,7 +65,7 @@ const ProductBreadcrumbs: React.FC<ProductBreadcrumbsProps> = (props) => {
 
     return (
         <div className={ css.container }>
-            { breadcrumbs }
+            { breadcrumbsItems }
         </div>
     );
 };
