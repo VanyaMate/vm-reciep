@@ -56,6 +56,16 @@ import {
     BrandsBackend,
 } from '@/modules/local-backend/brands/brands-backend.ts';
 import { STORAGE_NAME_AUTH } from '@/consts/storage-names.ts';
+import {
+    ICompaniesService,
+} from '@/modules/api/companies/companies-service.interface.ts';
+import { Company } from '@/modules/api/company/company-service.types.ts';
+import {
+    LocalCompaniesService,
+} from '@/modules/api/companies/services/local-companies-service.ts';
+import {
+    CompaniesBackend,
+} from '@/modules/local-backend/companies/companies-backend.ts';
 
 
 export type ServicesContextType = {
@@ -65,6 +75,7 @@ export type ServicesContextType = {
     wishlist: IWishlistService<Wishlist>,
     categories: ICategoriesService<Category>,
     brand: IBrandsService<Brand>,
+    company: ICompaniesService<Company>,
 }
 
 export const ServicesContext = createContext<ServicesContextType>({
@@ -81,4 +92,5 @@ export const ServicesContext = createContext<ServicesContextType>({
     wishlist  : new LocalWishlistService('', new WishlistBackend()),
     categories: new LocalCategoriesService(new CategoriesBackend()),
     brand     : new LocalBrandsService(new BrandsBackend()),
+    company   : new LocalCompaniesService(new CompaniesBackend()),
 });

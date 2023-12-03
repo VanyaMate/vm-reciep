@@ -4,11 +4,17 @@ import { useFetchBrand } from '@/hooks/brands/useFetchBrand.ts';
 import ProductsTile from '@/components/_product/ProductsTile/ProductsTile.tsx';
 import { useFetchProducts } from '@/hooks/products/useFetchProducts.ts';
 import ProductCard from '@/components/_product/ProductCard/ProductCard.tsx';
-import { getProductPageUrl, PageType } from '@/pages/getPage.ts';
+import {
+    getCompanyPageUrl,
+    getProductPageUrl,
+    PageType,
+} from '@/pages/getPage.ts';
 import { useSearch } from '@/hooks/search/useSearch.ts';
 import TitledBlock
     from '@/components/_common/_content/TitledBlock/TitledBlock.tsx';
 import Blocks from '@/components/_ui/_container/Blocks/Blocks.tsx';
+import { useFetchCompany } from '@/hooks/companies/useFetchCompany.ts';
+import CompanyCard from '@/components/_company/CompanyCard/CompanyCard.tsx';
 
 
 export type BrandPageProps = {}
@@ -17,6 +23,7 @@ const BrandPage: React.FC<BrandPageProps> = (props) => {
     const {}                                     = props;
     const params                                 = useParams<{ id: string }>();
     const [ loading, brand ]                     = useFetchBrand(params.id ?? '');
+    const [ loadingCompany, company ]            = useFetchCompany(brand?.company ?? '');
     const { loading: loadingProducts, products } = useFetchProducts({
         limit: 4,
         sort : [ 'reviews', 'desc' ],
@@ -39,7 +46,18 @@ const BrandPage: React.FC<BrandPageProps> = (props) => {
                          height      : 200,
                          borderRadius: '50%',
                      } }/>
-                <div>
+                <div style={ {
+                    display      : 'flex',
+                    gap          : 10,
+                    flexDirection: 'column',
+                } }>
+                    {
+                        company &&
+                        <CompanyCard
+                            company={ company }
+                            url={ getCompanyPageUrl(company.title) }
+                        />
+                    }
                     <h1>{ brand?.title }</h1>
                     <p>{ brand?.description }</p>
                 </div>

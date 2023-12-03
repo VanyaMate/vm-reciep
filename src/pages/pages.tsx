@@ -8,6 +8,7 @@ import { PageType } from '@/pages/getPage.ts';
 import CartPage from '@/pages/client/CartPage.tsx';
 import ProductsPage from '@/pages/client/ProductsPage.tsx';
 import BrandPage from '@/pages/client/BrandPage.tsx';
+import CompanyPage from '@/pages/client/CompanyPage.tsx';
 
 
 const Pages = () => {
@@ -15,6 +16,11 @@ const Pages = () => {
         <Routes>
             <Route path={ 'admin' } element={ <AdminLayout/> }>
 
+            </Route>
+            <Route path={ '/company/*' }
+                   element={ <CommonLayout banner={ 'hide' }/> }>
+                <Route path={ ':id' } element={ <CompanyPage/> }/>
+                <Route path={ '*' } element={ '404' }/>
             </Route>
             <Route path={ '/brand/*' }
                    element={ <CommonLayout banner={ 'hide' }/> }>

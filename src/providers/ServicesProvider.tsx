@@ -74,6 +74,16 @@ import {
 import {
     BrandsBackend,
 } from '@/modules/local-backend/brands/brands-backend.ts';
+import {
+    ICompaniesService,
+} from '@/modules/api/companies/companies-service.interface.ts';
+import { Company } from '@/modules/api/company/company-service.types.ts';
+import {
+    LocalCompaniesService,
+} from '@/modules/api/companies/services/local-companies-service.ts';
+import {
+    CompaniesBackend,
+} from '@/modules/local-backend/companies/companies-backend.ts';
 
 
 export type ServicesProviderProps = {
@@ -108,6 +118,10 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
         return new LocalBrandsService(new BrandsBackend());
     }, []);
 
+    const companiesService: ICompaniesService<Company> = useMemo(() => {
+        return new LocalCompaniesService(new CompaniesBackend());
+    }, []);
+
     const authService: IAuthService<AuthData> = useMemo(() => {
         return new LocalAuthService(
             new UserBackend(),
@@ -127,6 +141,7 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
             products  : productsService,
             categories: categoriesService,
             brand     : brandsService,
+            company   : companiesService,
         } }>
             { props.children }
         </ServicesContext.Provider>
