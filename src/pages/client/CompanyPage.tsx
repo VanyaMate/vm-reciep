@@ -6,43 +6,47 @@ import {
     useFetchBrandsByCompany,
 } from '@/hooks/brands/useFetchBrandsByCompany.ts';
 import Blocks from '@/components/_ui/_container/Blocks/Blocks.tsx';
+import CompanyView from '@/components/_company/CompanyView/CompanyView.tsx';
+import TitledBlock from '@/components/_ui/_container/TitledBlock/TitledBlock.tsx';
+import ProductBrandSkeleton
+    from '@/components/_product/ProductView/ProductBrand/ProductBrandSkeleton.tsx';
+import ProductBrand from '@/components/_product/ProductView/ProductBrand/ProductBrand.tsx';
+import { getBrandPageUrl } from '@/pages/getPage.ts';
 
 
 export type CompanyPageProps = {}
 
 const CompanyPage: React.FC<CompanyPageProps> = (props) => {
-    const {}                          = props;
-    const params                      = useParams<{ id: string }>();
+    const {}                        = props;
+    const params                    = useParams<{ id: string }>();
     const {
               brand  : brandService,
               company: companyService,
-          }                           = useContext(ServicesContext);
-    const [ loadingCompany, company ] = useFetchCompany(params?.id ?? '');
-    const [ loadingBrands, brands ]   = useFetchBrandsByCompany(params?.id ?? '');
-
-    if (loadingCompany) {
-        return 'loading..';
-    }
-
-    if (!company) {
-        return 'not found';
-    }
+          }                         = useContext(ServicesContext);
+    const companyController         = useFetchCompany(params?.id ?? '');
+    const [ loadingBrands, brands ] = useFetchBrandsByCompany(params?.id ?? '');
 
     return (
-        <Blocks>
-            <h1>COMPANY: { company.title }</h1>
-            <p>DESC: { company.description }</p>
-            <div>
-                {
-                    brands.map((brand) => (
-                        <div>
-                            <h3>{ brand.title }</h3>
-                            <p>{ brand.description }</p>
-                        </div>
-                    ))
-                }
-            </div>
-        </Blocks>
+        <CompanyView
+            company={ companyController }
+            footer={
+                <TitledBlock
+                    title={ 'Бренды' }
+                >
+                    {
+                        loadingBrands
+                        ? <ProductBrandSkeleton/>
+                        : brands.map((brand) => (
+                            <ProductBrand
+                                title={ brand.title }
+                                icon={ brand.avatar }
+                                url={ getBrandPageUrl(brand.title) }
+                            />
+                        ))
+                    }
+                </TitledBlock>
+            }
+        />
     );
 };
 

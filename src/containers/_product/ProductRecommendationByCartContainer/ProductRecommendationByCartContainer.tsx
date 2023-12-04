@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import TitledBlock
-    from '@/components/_common/_content/TitledBlock/TitledBlock.tsx';
+    from '@/components/_ui/_container/TitledBlock/TitledBlock.tsx';
 import {
     useFetchProductRecommendationsById,
 } from '@/hooks/products/useFetchProductRecommendationsById.ts';

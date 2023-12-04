@@ -16,7 +16,7 @@ export class BrandsBackend extends MultiplyService<Brand> {
             ),
             {
                 options: {
-                    timeout      : 100,
+                    timeout      : 300,
                     items        : brands,
                     findOneFilter: (brand, id) => brand.title === id,
                 },

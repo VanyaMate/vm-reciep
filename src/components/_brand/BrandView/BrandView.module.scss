@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--offset-large);
+
+    .hidden {
+        display: none;
+        visibility: hidden;
+    }
+
+    .header {
+        display: flex;
+        gap: var(--offset-medium);
+        justify-content: space-between;
+        align-items: start;
+
+        .brand {
+            display: flex;
+            gap: var(--offset-medium);
+
+            .avatar {
+                width: 200px;
+                height: 200px;
+                border-radius: var(--offset-large) !important;
+            }
+
+            .info {
+                display: flex;
+                flex-direction: column;
+                gap: var(--offset-small);
+                justify-content: center;
+
+                .title {
+                    font-size: 24px;
+                    color: var(--text-color-main);
+                }
+
+                .description {
+                    font-size: 14px;
+                    color: var(--text-color-second);
+                }
+            }
+        }
+
+        .company {
+            max-width: 300px;
+        }
+    }
+}

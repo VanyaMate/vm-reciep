@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useFetchBrand } from '@/hooks/brands/useFetchBrand.ts';
 import ProductsTile from '@/components/_product/ProductsTile/ProductsTile.tsx';
@@ -9,94 +9,105 @@ import {
     getProductPageUrl,
     PageType,
 } from '@/pages/getPage.ts';
-import { useSearch } from '@/hooks/search/useSearch.ts';
+import { UrlSearch, useSearch } from '@/hooks/search/useSearch.ts';
 import TitledBlock
-    from '@/components/_common/_content/TitledBlock/TitledBlock.tsx';
+    from '@/components/_ui/_container/TitledBlock/TitledBlock.tsx';
 import Blocks from '@/components/_ui/_container/Blocks/Blocks.tsx';
 import { useFetchCompany } from '@/hooks/companies/useFetchCompany.ts';
 import CompanyCard from '@/components/_company/CompanyCard/CompanyCard.tsx';
+import TitleWithLink from '@/components/_ui/_container/TitledBlock/TitleWithLink/TitleWithLink.tsx';
+import BrandView from '@/components/_brand/BrandView/BrandView.tsx';
+import List from '@/components/_ui/_container/List/List.tsx';
+import ProductCardSkeleton
+    from '@/components/_product/ProductCard/ProductCardSkeleton/ProductCardSkeleton.tsx';
 
 
 export type BrandPageProps = {}
 
 const BrandPage: React.FC<BrandPageProps> = (props) => {
-    const {}                                     = props;
-    const params                                 = useParams<{ id: string }>();
-    const [ loading, brand ]                     = useFetchBrand(params.id ?? '');
-    const [ loadingCompany, company ]            = useFetchCompany(brand?.company ?? '');
-    const { loading: loadingProducts, products } = useFetchProducts({
-        limit: 4,
-        sort : [ 'reviews', 'desc' ],
-    });
-    const [ _, searchController ]                = useSearch();
+    const {}                         = props;
+    const params                     = useParams<{ id: string }>();
+    const brandController            = useFetchBrand(params.id ?? '');
+    const companyController          = useFetchCompany(brandController[1]?.company ?? '');
+    const search: Partial<UrlSearch> = useMemo(() => {
+        return {
+            limit: 4,
+            sort : [ 'reviews', 'desc' ],
+        };
+    }, []);
+    const productsController         = useFetchProducts(search);
+    const [ _, searchController ]    = useSearch();
+
 
     return (
-        <Blocks>
-            {
-                loading ? 'loading...' : ''
+        <BrandView
+            brand={ brandController }
+            header={
+                <List>
+                    <CompanyCard
+                        company={ companyController }
+                        url={ getCompanyPageUrl(brandController[1]?.company ?? '') }
+                    />
+                    <CompanyCard
+                        company={ companyController }
+                        url={ getCompanyPageUrl(brandController[1]?.company ?? '') }
+                    />
+                    <CompanyCard
+                        company={ companyController }
+                        url={ getCompanyPageUrl(brandController[1]?.company ?? '') }
+                    />
+                    <CompanyCard
+                        company={ companyController }
+                        url={ getCompanyPageUrl(brandController[1]?.company ?? '') }
+                    />
+                    <CompanyCard
+                        company={ companyController }
+                        url={ getCompanyPageUrl(brandController[1]?.company ?? '') }
+                    />
+                    <CompanyCard
+                        company={ companyController }
+                        url={ getCompanyPageUrl(brandController[1]?.company ?? '') }
+                    />
+                    <CompanyCard
+                        company={ companyController }
+                        url={ getCompanyPageUrl(brandController[1]?.company ?? '') }
+                    />
+                </List>
             }
-            <div style={ {
-                display   : 'flex',
-                gap       : 20,
-                alignItems: 'center',
-            } }>
-                <img src={ brand?.avatar }
-                     style={ {
-                         width       : 200,
-                         height      : 200,
-                         borderRadius: '50%',
-                     } }/>
-                <div style={ {
-                    display      : 'flex',
-                    gap          : 10,
-                    flexDirection: 'column',
-                } }>
-                    {
-                        company &&
-                        <CompanyCard
-                            company={ company }
-                            url={ getCompanyPageUrl(company.title) }
-                        />
-                    }
-                    <h1>{ brand?.title }</h1>
-                    <p>{ brand?.description }</p>
-                </div>
-            </div>
-            {
-                !!products.length &&
-                <TitledBlock title={
-                    <div style={ {
-                        display       : 'flex',
-                        gap           : 10,
-                        alignItems    : 'center',
-                        justifyContent: 'space-between',
-                    } }>
-                        <span>Популярные продукты бренда</span>
-                        <Link
-                            to={ searchController.getClearUrl(`/${ PageType.PRODUCTS }`, {
+            footer={
+                <TitledBlock
+                    title={
+                        <TitleWithLink
+                            title={ 'Популярные товары бренда' }
+                            linkText={ 'Больше' }
+                            url={ searchController.getClearUrl(`/${ PageType.PRODUCTS }`, {
                                 items: {
                                     brand_name: {
-                                        value: params.id!,
+                                        value: brandController[1]?.title ?? '',
                                         type : 'equal',
                                     },
                                 },
-                            }) }>Больше</Link>
-                    </div>
-                }>
+                            }) }
+                        />
+                    }
+                >
                     <ProductsTile>
                         {
-                            products.map((product) => (
+                            productsController.loading
+                            ? new Array(4).fill(null).map((_, index) => <ProductCardSkeleton
+                                key={ index }/>)
+                            : productsController.products.map((product) => (
                                 <ProductCard
                                     product={ product }
-                                    key={ product.barcode }
                                     url={ getProductPageUrl(product.barcode.toString()) }
+                                    key={ product.barcode }
                                 />
                             ))
                         }
                     </ProductsTile>
                 </TitledBlock>
             }
-        </Blocks>
+        />
     );
 };
 

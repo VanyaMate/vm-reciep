@@ -7,18 +7,27 @@ import SkeletonImage
     from '@/components/_ui/_container/Skeleton/Image/SkeletonImage.tsx';
 
 
-const ProductBrandSkeleton = () => {
+export type ProductBrandSkeletonProps = {
+    original?: boolean;
+}
+
+const ProductBrandSkeleton: React.FC<ProductBrandSkeletonProps> = (props) => {
+    const { original } = props;
+
     return (
         <div className={ cn(css.container, css.skeleton) }>
             <SkeletonImage className={ css.icon }/>
             <div className={ css.info }>
                 <SkeletonText className={ css.title }>Бренд</SkeletonText>
-                <SkeletonText className={ css.notice }>Оригинальный
-                    товар
-                </SkeletonText>
+                {
+                    original &&
+                    <SkeletonText className={ css.notice }>Оригинальный
+                        товар
+                    </SkeletonText>
+                }
             </div>
         </div>
     );
 };
 
-export default ProductBrandSkeleton;
+export default React.memo(ProductBrandSkeleton);

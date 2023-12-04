@@ -23,7 +23,7 @@ import ProductTile
 import ProductList from '@/components/_product/ProductList/ProductList.tsx';
 import ProductCard from '@/components/_product/ProductCard/ProductCard.tsx';
 import TitledBlock
-    from '@/components/_common/_content/TitledBlock/TitledBlock.tsx';
+    from '@/components/_ui/_container/TitledBlock/TitledBlock.tsx';
 import ProductRecommendationByCartContainer
     from '@/containers/_product/ProductRecommendationByCartContainer/ProductRecommendationByCartContainer.tsx';
 import Blocks from '@/components/_ui/_container/Blocks/Blocks.tsx';

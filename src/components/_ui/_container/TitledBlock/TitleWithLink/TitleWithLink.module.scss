@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+        font-size: 18px;
+        color: var(--text-color-main);
+    }
+
+    .link {
+        font-size: 14px;
+        color: var(--text-color-second);
+
+        &:hover {
+            color: var(--text-color-link);
+        }
+    }
+}
