@@ -14,6 +14,10 @@ import {
 import { getBrandPageUrl, getProductPageUrl } from '@/pages/getPage.ts';
 import { useSearch } from '@/hooks/search/useSearch.ts';
 import { useFetchBrand } from '@/hooks/brands/useFetchBrand.ts';
+import Reviews from '@/components/_review/Reviews/Reviews.tsx';
+import {
+    ReviewBackendDataGenerator,
+} from '@/modules/local-backend/review/review-backend.data-generator.ts';
 
 
 export type ProductPageContainerProps = {
@@ -31,6 +35,8 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
           }                       = useFetchProductRecommendationsById({ limit: 4 }, productId);
     const { loading, product }    = useFetchProduct(productId);
     const [ brandLoading, brand ] = useFetchBrand(product?.brand_name ?? '');
+    // TODO: Temp
+    const reviewGenerator         = new ReviewBackendDataGenerator();
 
     if (loading) {
         return <ProductViewSkeleton/>;
@@ -55,6 +61,27 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
                 products={ products }
                 loading={ recoLoading }
                 urlGenerator={ getProductPageUrl }
+            />
+            <Reviews
+                loading={ false }
+                stats={ {
+                    reviews: 10,
+                    rating : [
+                        { label: '5 звезд', count: 10 },
+                        { label: '4 звезды', count: 14 },
+                        { label: '3 звезды', count: 3 },
+                        { label: '2 звезды', count: 1 },
+                        { label: '1 звезда', count: 0 },
+                    ],
+                } }
+                reviews={ [
+                    reviewGenerator.filled(undefined),
+                    reviewGenerator.filled(undefined),
+                    reviewGenerator.filled(undefined),
+                    reviewGenerator.filled(undefined),
+                    reviewGenerator.filled(undefined),
+                    reviewGenerator.filled(undefined),
+                ] }
             />
         </>
     );

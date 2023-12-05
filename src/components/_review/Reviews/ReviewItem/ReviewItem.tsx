@@ -1,14 +1,19 @@
 import React from 'react';
+import { Review } from '@/modules/api/review/review-service.types.ts';
 
 
-export type ReviewItemProps = {}
+export type ReviewItemProps = {
+    review: Review;
+}
 
 const ReviewItem: React.FC<ReviewItemProps> = (props) => {
-    const {} = props;
+    const { review } = props;
 
     return (
         <div>
-            ReviewItem component
+            <h2>{ review.title }</h2>
+            <p>{ review.body }</p>
+            <div style={{color: '#555'}}>{ review.author }</div>
         </div>
     );
 };
