@@ -1,7 +1,10 @@
-export const LBSN_BRAND    = '__lsbn__brand';
-export const LBSN_CART     = '__lsbn__cart';
-export const LBSN_CATEGORY = '__lsbn__category';
-export const LBSN_COMPANY  = '__lsbn__company';
-export const LBSN_PRODUCT  = '__lsbn__product';
-export const LBSN_USER     = '__lsbn__user';
-export const LBSN_WISHLIST = '__lsbn__wishlist';
+export const LS_NAME__BRAND           = '__ls-name__brand';
+export const LS_NAME__CART            = '__ls-name__cart';
+export const LS_NAME__CATEGORY        = '__ls-name__category';
+export const LS_NAME__COMPANY         = '__ls-name__company';
+export const LS_NAME__PRODUCT         = '__ls-name__product';
+export const LS_NAME__USER            = '__ls-name__user';
+export const LS_NAME__WISHLIST        = '__ls-name__wishlist';
+export const LS_NAME__REVIEWS_PRODUCT = '__ls-name__reviews-product';
+export const LS_NAME__REVIEWS_BRAND   = '__ls-name__reviews-brand';
+export const LS_NAME__REVIEWS_COMPANY = '__ls-name__reviews-company';
