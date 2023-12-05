@@ -10,7 +10,7 @@ import products_1
     from '@vanyamate/market-place-service/data/products/products_1.json';
 import products_2
     from '@vanyamate/market-place-service/data/products/products_2.json';
-import { LBSN_PRODUCT } from '@/modules/local-backend/storages.ts';
+import { LS_NAME__PRODUCT } from '@/modules/local-backend/storages.ts';
 
 
 export class ProductsBackend extends MultiplyService<Product> {
@@ -19,7 +19,7 @@ export class ProductsBackend extends MultiplyService<Product> {
             new ProductStorageService(
                 new StorageService(
                     localStorage,
-                    LBSN_PRODUCT,
+                    LS_NAME__PRODUCT,
                 ),
                 [ ...(products_1 as Product[]), ...(products_2 as Product[]) ],
             ),

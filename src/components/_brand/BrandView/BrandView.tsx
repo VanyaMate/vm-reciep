@@ -38,7 +38,7 @@ const BrandView: React.FC<BrandViewProps> = (props) => {
                           <div className={ css.info }>
                               <h6 itemProp={ 'name' }
                                   className={ css.title }>{ brandValue.title }</h6>
-                              <p itemProp={ 'review' }
+                              <p itemProp={ '_review' }
                                  className={ css.description }>{ brandValue.description }</p>
                           </div>
                       </div>

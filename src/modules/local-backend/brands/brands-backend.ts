@@ -2,9 +2,9 @@ import {
     MultiplyService,
     StorageService,
 } from '@vanyamate/market-place-service';
-import { LBSN_BRAND } from '@/modules/local-backend/storages.ts';
 import { Brand } from '@/modules/api/brand/brand-service.types.ts';
 import brands from '@vanyamate/market-place-service/data/brands/brands_1.json';
+import { LS_NAME__BRAND } from '@/modules/local-backend/storages.ts';
 
 
 export class BrandsBackend extends MultiplyService<Brand> {
@@ -12,7 +12,7 @@ export class BrandsBackend extends MultiplyService<Brand> {
         super(
             new StorageService(
                 localStorage,
-                LBSN_BRAND,
+                LS_NAME__BRAND,
             ),
             {
                 options: {

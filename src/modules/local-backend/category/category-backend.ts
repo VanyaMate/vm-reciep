@@ -7,7 +7,7 @@ import {
 import {
     CategoryBackendDataGenerator,
 } from '@/modules/local-backend/category/category-backend.data-generator.ts';
-import { LBSN_CATEGORY } from '@/modules/local-backend/storages.ts';
+import { LS_NAME__CATEGORY } from '@/modules/local-backend/storages.ts';
 
 
 export class CategoryBackend extends SingleService<Category, CreateCategoryDto, UpdateCategoryDto> {
@@ -15,7 +15,7 @@ export class CategoryBackend extends SingleService<Category, CreateCategoryDto, 
         super(
             new StorageService(
                 localStorage,
-                LBSN_CATEGORY,
+                LS_NAME__CATEGORY,
             ),
             new CategoryBackendDataGenerator(),
             {

@@ -7,7 +7,7 @@ import {
     UpdateProductDto,
 } from '@/modules/local-backend/product/product-backend.types.ts';
 import { SingleService, StorageService } from '@vanyamate/market-place-service';
-import { LBSN_PRODUCT } from '@/modules/local-backend/storages.ts';
+import { LS_NAME__PRODUCT } from '@/modules/local-backend/storages.ts';
 
 
 export class ProductBackend extends SingleService<Product, CreateProductDto, UpdateProductDto> {
@@ -15,7 +15,7 @@ export class ProductBackend extends SingleService<Product, CreateProductDto, Upd
         super(
             new StorageService(
                 localStorage,
-                LBSN_PRODUCT,
+                LS_NAME__PRODUCT,
             ),
             new ProductBackendDataGenerator(),
             {

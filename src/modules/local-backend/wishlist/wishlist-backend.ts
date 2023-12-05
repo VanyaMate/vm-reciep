@@ -7,7 +7,7 @@ import {
     WishlistBackendDataGenerator,
 } from '@/modules/local-backend/wishlist/wishlist-backend.data-generator.ts';
 import { SingleService, StorageService } from '@vanyamate/market-place-service';
-import { LBSN_WISHLIST } from '@/modules/local-backend/storages.ts';
+import { LS_NAME__WISHLIST } from '@/modules/local-backend/storages.ts';
 
 
 export class WishlistBackend extends SingleService<Wishlist, CreateWishlistDto, UpdateWishlistDto> {
@@ -15,7 +15,7 @@ export class WishlistBackend extends SingleService<Wishlist, CreateWishlistDto, 
         super(
             new StorageService(
                 localStorage,
-                LBSN_WISHLIST,
+                LS_NAME__WISHLIST,
             ),
             new WishlistBackendDataGenerator(),
             {

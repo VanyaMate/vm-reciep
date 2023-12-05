@@ -7,7 +7,7 @@ import {
     UpdateCartDto,
 } from '@/modules/local-backend/cart/cart-backend.types.ts';
 import { SingleService, StorageService } from '@vanyamate/market-place-service';
-import { LBSN_CART } from '@/modules/local-backend/storages.ts';
+import { LS_NAME__CART } from '@/modules/local-backend/storages.ts';
 
 
 export class CartBackend extends SingleService<Cart, CreateCartDto, UpdateCartDto> {
@@ -15,7 +15,7 @@ export class CartBackend extends SingleService<Cart, CreateCartDto, UpdateCartDt
         super(
             new StorageService(
                 localStorage,
-                LBSN_CART,
+                LS_NAME__CART,
             ),
             new CartBackendDataGenerator(),
             {

@@ -17,6 +17,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
+import ProductsTile from '@/components/_product/ProductsTile/ProductsTile.tsx';
 
 
 export type ProductCarouselProps = {
@@ -27,10 +28,6 @@ export type ProductCarouselProps = {
 
 const ProductsCarousel: React.FC<ProductCarouselProps> = (props) => {
     const { loading, products, urlGenerator } = props;
-
-    if (!loading && !products.length) {
-        return '';
-    }
 
     return (
         <Box className={ css.container }>
@@ -66,7 +63,7 @@ const ProductsCarousel: React.FC<ProductCarouselProps> = (props) => {
                 modules={ [ Pagination, Navigation, HashNavigation, Autoplay, Thumbs ] }
             >
                 {
-                    loading ? new Array(10).fill(null).map((_, index) =>
+                    loading ? new Array(4).fill(null).map((_, index) =>
                         <SwiperSlide className={ css.slide } key={ index }>
                             <ProductCardSkeleton/>
                         </SwiperSlide>,
@@ -85,4 +82,4 @@ const ProductsCarousel: React.FC<ProductCarouselProps> = (props) => {
     );
 };
 
-export default ProductsCarousel;
+export default React.memo(ProductsCarousel);
