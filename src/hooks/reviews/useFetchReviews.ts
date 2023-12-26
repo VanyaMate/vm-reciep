@@ -39,6 +39,7 @@ export const useFetchReviews = function (type: ReviewType, id: string): UseFetch
             return;
         }
 
+        // TODO: Тут надо изменить после создания сервиса пользоватей. Чтобы искать по пользователям
         setReviewsView(reviews.map((review) => ({
             review: review, user: userGenerator.filled(undefined),
         })));
