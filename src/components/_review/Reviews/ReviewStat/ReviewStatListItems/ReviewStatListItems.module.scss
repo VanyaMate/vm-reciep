@@ -1,0 +1,39 @@
+$lineHeight : 4px;
+$rowHeight  : 30px;
+
+.container {
+    display : flex;
+    gap     : var(--offset-medium);
+
+    .labels {
+        .label {
+            font-size   : 14px;
+            color       : var(--text-color-second);
+            white-space : nowrap;
+        }
+    }
+
+    .lines {
+        width : 100%;
+
+        .line {
+            position   : relative;
+            width      : 100%;
+            height     : $lineHeight;
+            background : var(--background-item);
+
+            .filled {
+                position : absolute;
+                top      : 0;
+                left     : 0;
+                height   : $lineHeight;
+            }
+        }
+    }
+
+    .row {
+        display     : flex;
+        align-items : center;
+        height      : $rowHeight;
+    }
+}

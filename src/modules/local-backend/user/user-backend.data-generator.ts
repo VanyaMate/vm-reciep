@@ -1,5 +1,7 @@
 import { CreateUserDto, PrivateUser } from '@/modules/local-backend/user/user-backend.types.ts';
 import { IDataGenerator } from '@vanyamate/market-place-service';
+import { getRandomWords } from '@/helpers/random.ts';
+import { productWordsLib } from '@/helpers/libs/product-words.lib.ts';
 
 
 export class UserBackendDataGenerator implements IDataGenerator<PrivateUser, CreateUserDto> {
@@ -34,7 +36,7 @@ export class UserBackendDataGenerator implements IDataGenerator<PrivateUser, Cre
     }
 
     public login (): PrivateUser['login'] {
-        return '';
+        return getRandomWords(productWordsLib, 2);
     }
 
     public password (): PrivateUser['password'] {

@@ -1,32 +1,40 @@
 import React from 'react';
 import { Review } from '@/modules/api/review/review-service.types.ts';
 import ReviewStat, {
-    ReviewStatProps,
-    ReviewStatType,
+    ReviewStatRatingItem,
 } from '@/components/_review/Reviews/ReviewStat/ReviewStat.tsx';
 import ReviewForm from '@/components/_review/Reviews/ReviewForm/ReviewForm.tsx';
-import ReviewItem from '@/components/_review/Reviews/ReviewItem/ReviewItem.tsx';
+import { User } from '@/modules/api/user/user-service.types.ts';
+import ReviewsList
+    from '@/components/_review/Reviews/ReviewsList/ReviewsList.tsx';
+import Box from '@/components/_ui/_container/Box/Box.tsx';
+import css from './Reviews.module.scss';
 
+
+export type ReviewView = {
+    review: Review;
+    user: User;
+}
 
 export type ReviewsProps = {
     loading?: boolean;
-    reviews: Review[];
-    stats: ReviewStatType;
+    reviews: ReviewView[];
+    stats: ReviewStatRatingItem[];
 }
 
 const Reviews: React.FC<ReviewsProps> = (props) => {
     const { loading, reviews, stats } = props;
 
     return (
-        <div>
-            <ReviewForm/>
-            <ReviewStat stats={ stats }/>
-            {
-                reviews.map((review) => (
-                    <ReviewItem key={ review.id } review={ review }/>
-                ))
-            }
-        </div>
+        <Box className={ css.container }>
+            <div className={ css.left }>
+                <ReviewForm/>
+                <ReviewsList reviews={ reviews }/>
+            </div>
+            <div className={ css.right }>
+                <ReviewStat stats={ stats }/>
+            </div>
+        </Box>
     );
 };
 

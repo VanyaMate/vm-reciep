@@ -1,0 +1,15 @@
+.container {
+    display    : flex;
+    gap        : var(--offset-large);
+    box-shadow : var(--box-shadow-none);
+
+    .left {
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-medium);
+    }
+
+    .right {
+        min-width : 300px;
+    }
+}
