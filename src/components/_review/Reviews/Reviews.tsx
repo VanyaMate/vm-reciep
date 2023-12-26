@@ -9,6 +9,7 @@ import ReviewsList
     from '@/components/_review/Reviews/ReviewsList/ReviewsList.tsx';
 import Box from '@/components/_ui/_container/Box/Box.tsx';
 import css from './Reviews.module.scss';
+import { SendReviewMethod } from '@/hooks/reviews/useFetchSendReview.ts';
 
 
 export type ReviewView = {
@@ -17,18 +18,20 @@ export type ReviewView = {
 }
 
 export type ReviewsProps = {
+    id: string;
     loading?: boolean;
     reviews: ReviewView[];
     stats: ReviewStatRatingItem[];
+    onReview: SendReviewMethod;
 }
 
 const Reviews: React.FC<ReviewsProps> = (props) => {
-    const { loading, reviews, stats } = props;
+    const { loading, reviews, stats, onReview, id } = props;
 
     return (
         <Box className={ css.container }>
             <div className={ css.left }>
-                <ReviewForm/>
+                <ReviewForm onSend={ onReview } id={ id }/>
                 <ReviewsList reviews={ reviews }/>
             </div>
             <div className={ css.right }>

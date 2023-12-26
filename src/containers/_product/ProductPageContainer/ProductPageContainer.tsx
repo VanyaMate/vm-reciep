@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import ProductView
     from '@/components/_product/ProductView/ProductView.tsx';
 import { useCart } from '@/hooks/useCart.ts';
@@ -21,6 +21,10 @@ import {
 import {
     UserBackendDataGenerator,
 } from '@/modules/local-backend/user/user-backend.data-generator.ts';
+import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
+import { SendReviewMethod } from '@/hooks/reviews/useFetchSendReview.ts';
+import { ReviewData } from '@/modules/api/review/review-service.interface.ts';
+import { useFetchReviews } from '@/hooks/reviews/useFetchReviews.ts';
 
 
 export type ProductPageContainerProps = {
@@ -28,45 +32,26 @@ export type ProductPageContainerProps = {
 }
 
 const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
-    const { productId }           = props;
-    const cartController          = useCart();
-    const wishlistController      = useWishlist();
-    const [ _, searchController ] = useSearch();
+    const { productId }                      = props;
+    const { review }                         = useContext(ServicesContext);
+    const cartController                     = useCart();
+    const wishlistController                 = useWishlist();
+    const [ _, searchController ]            = useSearch();
     const {
               loading: recoLoading,
               products,
-          }                       = useFetchProductRecommendationsById({ limit: 4 }, productId);
-    const { loading, product }    = useFetchProduct(productId);
-    const [ brandLoading, brand ] = useFetchBrand(product?.brand_name ?? '');
+          }                                  = useFetchProductRecommendationsById({ limit: 4 }, productId);
+    const { loading, product }               = useFetchProduct(productId);
+    const [ brandLoading, brand ]            = useFetchBrand(product?.brand_name ?? '');
     // TODO: Temp
-    const reviewGenerator         = new ReviewBackendDataGenerator();
-    const userGenerator           = new UserBackendDataGenerator();
-    const reviews                 = useMemo(() => [
-        {
-            review: reviewGenerator.filled(undefined),
-            user  : userGenerator.filled(undefined),
-        },
-        {
-            review: reviewGenerator.filled(undefined),
-            user  : userGenerator.filled(undefined),
-        },
-        {
-            review: reviewGenerator.filled(undefined),
-            user  : userGenerator.filled(undefined),
-        },
-        {
-            review: reviewGenerator.filled(undefined),
-            user  : userGenerator.filled(undefined),
-        },
-        {
-            review: reviewGenerator.filled(undefined),
-            user  : userGenerator.filled(undefined),
-        },
-        {
-            review: reviewGenerator.filled(undefined),
-            user  : userGenerator.filled(undefined),
-        },
-    ], []);
+    const reviewGenerator                    = new ReviewBackendDataGenerator();
+    const userGenerator                      = new UserBackendDataGenerator();
+    const {
+              loading: reviewsLoading, reviews,
+          }                                  = useFetchReviews('product', productId);
+    const sendReviewMethod: SendReviewMethod = useCallback((data: ReviewData) => {
+        return review.send('product', data);
+    }, [ review ]);
 
     if (loading) {
         return <ProductViewSkeleton/>;
@@ -93,7 +78,8 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
                 urlGenerator={ getProductPageUrl }
             />
             <Reviews
-                loading={ false }
+                id={ productId }
+                loading={ reviewsLoading }
                 stats={ [
                     { label: '5 звезд', rating: 5, count: 162 },
                     { label: '4 звезды', rating: 4, count: 54 },
@@ -102,6 +88,7 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
                     { label: '1 звезда', rating: 1, count: 5 },
                 ] }
                 reviews={ reviews }
+                onReview={ sendReviewMethod }
             />
         </>
     );

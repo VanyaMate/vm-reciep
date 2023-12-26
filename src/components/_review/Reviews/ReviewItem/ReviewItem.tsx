@@ -33,7 +33,10 @@ const ReviewItem: React.FC<ReviewItemProps> = (props) => {
                     { date }
                 </div>
             </div>
-            <p className={ css.review }>{ review.body }</p>
+            <div className={ css.review }>
+                <h3 className={ css.title }>{ review.title }</h3>
+                <p className={ css.body }>{ review.body }</p>
+            </div>
         </div>
     );
 };

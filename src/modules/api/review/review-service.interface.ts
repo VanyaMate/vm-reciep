@@ -1,9 +1,19 @@
-export interface IReviewService<Review, CreateReviewDto, UpdateReviewDto> {
-    create (data: CreateReviewDto): Promise<Review>;
+export type ReviewType =
+    'product'
+    | 'brand'
+    | 'company';
 
-    update (id: string, data: UpdateReviewDto): Promise<Review>;
+export type ReviewData = {
+    targetId: string;
+    title: string;
+    body: string;
+    rating: number;
+}
 
-    delete (id: string): Promise<boolean>;
+export interface IReviewService<Review> {
+    send (type: ReviewType, data: ReviewData): Promise<Review>;
 
-    read (id: string): Promise<Review | null>;
+    update (type: ReviewType, reviewId: string, data: ReviewData): Promise<Review>;
+
+    delete (type: ReviewType, reviewId: string): Promise<boolean>;
 }

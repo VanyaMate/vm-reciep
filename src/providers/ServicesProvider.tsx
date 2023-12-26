@@ -84,6 +84,44 @@ import {
 import {
     CompaniesBackend,
 } from '@/modules/local-backend/companies/companies-backend.ts';
+import {
+    ISingleReviewsService,
+} from '@/modules/api/reviews/single-reviews-service.interface.ts';
+import { Review } from '@/modules/api/review/review-service.types.ts';
+import {
+    LocalSingleReviewsService,
+} from '@/modules/api/reviews/services/local-single-reviews-service.ts';
+import {
+    ReviewsProductBackend,
+} from '@/modules/local-backend/reviews/reviews-product/reviews-product-backend.ts';
+import {
+    ReviewsBrandBackend,
+} from '@/modules/local-backend/reviews/reviews-brand/reviews-brand-backend.ts';
+import {
+    ReviewsCompanyBackend,
+} from '@/modules/local-backend/reviews/reviews-company/reviews-company-backend.ts';
+import {
+    LocalReviewsService,
+} from '@/modules/api/reviews/services/local-reviews-service.ts';
+import {
+    LocalReviewService,
+} from '@/modules/api/review/services/local-review-service.ts';
+import {
+    ReviewProductBackend,
+} from '@/modules/local-backend/review/review-product/review-product-backend.ts';
+import {
+    ReviewBrandBackend,
+} from '@/modules/local-backend/review/review-brand/review-brand-backend.ts';
+import {
+    ReviewCompanyBackend,
+} from '@/modules/local-backend/review/review-company/review-company-backend.ts';
+import {
+    IReviewsService,
+} from '@/modules/api/reviews/reviews-service.interface.ts';
+import ReviewItem from '@/components/_review/Reviews/ReviewItem/ReviewItem.tsx';
+import {
+    IReviewService,
+} from '@/modules/api/review/review-service.interface.ts';
 
 
 export type ServicesProviderProps = {
@@ -122,6 +160,20 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
         return new LocalCompaniesService(new CompaniesBackend());
     }, []);
 
+    const reviewsService: IReviewsService<Review> = useMemo(() => new LocalReviewsService(
+        new ReviewsProductBackend(),
+        new ReviewsBrandBackend(),
+        new ReviewsCompanyBackend(),
+    ), []);
+
+    const reviewService: IReviewService<Review> = useMemo(() => new LocalReviewService(
+        user?.login ?? '',
+        new ReviewProductBackend(),
+        new ReviewBrandBackend(),
+        new ReviewCompanyBackend(),
+    ), [ user ]);
+
+
     const authService: IAuthService<AuthData> = useMemo(() => {
         return new LocalAuthService(
             new UserBackend(),
@@ -142,6 +194,8 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
             categories: categoriesService,
             brand     : brandsService,
             company   : companiesService,
+            review    : reviewService,
+            reviews   : reviewsService,
         } }>
             { props.children }
         </ServicesContext.Provider>

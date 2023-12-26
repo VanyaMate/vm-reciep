@@ -9,5 +9,5 @@ export type Review = {
     date: string;
 }
 
-export type CreateReviewDto = Pick<Review, 'id' | 'target' | 'title' | 'body' | 'author' | 'date'>;
+export type CreateReviewDto = Pick<Review, 'id' | 'target' | 'title' | 'body' | 'author' | 'date' | 'rating'>;
 export type UpdateReviewDto = Partial<Omit<Review, 'id' | 'date' | 'redacted' | 'author'>>;
