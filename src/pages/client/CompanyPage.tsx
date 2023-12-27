@@ -7,10 +7,12 @@ import {
 } from '@/hooks/brands/useFetchBrandsByCompany.ts';
 import Blocks from '@/components/_ui/_container/Blocks/Blocks.tsx';
 import CompanyView from '@/components/_company/CompanyView/CompanyView.tsx';
-import TitledBlock from '@/components/_ui/_container/TitledBlock/TitledBlock.tsx';
+import TitledBlock
+    from '@/components/_ui/_container/TitledBlock/TitledBlock.tsx';
 import ProductBrandSkeleton
     from '@/components/_product/ProductView/ProductBrand/ProductBrandSkeleton.tsx';
-import ProductBrand from '@/components/_product/ProductView/ProductBrand/ProductBrand.tsx';
+import ProductBrand
+    from '@/components/_product/ProductView/ProductBrand/ProductBrand.tsx';
 import { getBrandPageUrl } from '@/pages/getPage.ts';
 
 
@@ -38,6 +40,7 @@ const CompanyPage: React.FC<CompanyPageProps> = (props) => {
                         ? <ProductBrandSkeleton/>
                         : brands.map((brand) => (
                             <ProductBrand
+                                key={ brand.title }
                                 title={ brand.title }
                                 icon={ brand.avatar }
                                 url={ getBrandPageUrl(brand.title) }

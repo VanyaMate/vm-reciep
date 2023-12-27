@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import ProductView
     from '@/components/_product/ProductView/ProductView.tsx';
 import { useCart } from '@/hooks/useCart.ts';
@@ -14,7 +14,7 @@ import {
 import { getBrandPageUrl, getProductPageUrl } from '@/pages/getPage.ts';
 import { useSearch } from '@/hooks/search/useSearch.ts';
 import { useFetchBrand } from '@/hooks/brands/useFetchBrand.ts';
-import Reviews from '@/components/_review/Reviews/Reviews.tsx';
+import Reviews, { ReviewView } from '@/components/_review/Reviews/Reviews.tsx';
 import {
     ReviewBackendDataGenerator,
 } from '@/modules/local-backend/review/review-backend.data-generator.ts';
@@ -25,6 +25,8 @@ import { ServicesContext } from '@/contexts/data/ServicesContext.tsx';
 import { SendReviewMethod } from '@/hooks/reviews/useFetchSendReview.ts';
 import { ReviewData } from '@/modules/api/review/review-service.interface.ts';
 import { useFetchReviews } from '@/hooks/reviews/useFetchReviews.ts';
+import { useAuth } from '@/hooks/useAuth.ts';
+import { UserContext } from '@/contexts/data/UserContext.ts';
 
 
 export type ProductPageContainerProps = {
@@ -32,26 +34,36 @@ export type ProductPageContainerProps = {
 }
 
 const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
-    const { productId }                      = props;
-    const { review }                         = useContext(ServicesContext);
-    const cartController                     = useCart();
-    const wishlistController                 = useWishlist();
-    const [ _, searchController ]            = useSearch();
+    const { productId }                               = props;
+    const { review }                                  = useContext(ServicesContext);
+    const user                                        = useContext(UserContext);
+    const cartController                              = useCart();
+    const wishlistController                          = useWishlist();
+    const [ _, searchController ]                     = useSearch();
     const {
               loading: recoLoading,
               products,
-          }                                  = useFetchProductRecommendationsById({ limit: 4 }, productId);
-    const { loading, product }               = useFetchProduct(productId);
-    const [ brandLoading, brand ]            = useFetchBrand(product?.brand_name ?? '');
-    // TODO: Temp
-    const reviewGenerator                    = new ReviewBackendDataGenerator();
-    const userGenerator                      = new UserBackendDataGenerator();
+          }                                           = useFetchProductRecommendationsById({ limit: 4 }, productId);
     const {
-              loading: reviewsLoading, reviews,
-          }                                  = useFetchReviews('product', productId);
-    const sendReviewMethod: SendReviewMethod = useCallback((data: ReviewData) => {
-        return review.send('product', data);
-    }, [ review ]);
+              loading, product,
+          }                                           = useFetchProduct(productId);
+    const [ brandLoading, brand ]                     = useFetchBrand(product?.brand_name ?? '');
+    const {
+              loading: reviewsLoading, reviews, count, stats,
+          }                                           = useFetchReviews('product', productId);
+    const [ additionalReviews, setAdditionalReviews ] = useState<ReviewView[]>([]);
+    const sendReviewMethod: SendReviewMethod          = useCallback(async (data: ReviewData) => {
+        return review
+            .send('product', data)
+            .then((review) => {
+                setAdditionalReviews([
+                    {
+                        review, user: user.user!,
+                    }, ...additionalReviews,
+                ]);
+                return review;
+            });
+    }, [ review, user, additionalReviews ]);
 
     if (loading) {
         return <ProductViewSkeleton/>;
@@ -80,14 +92,10 @@ const ProductPageContainer: React.FC<ProductPageContainerProps> = (props) => {
             <Reviews
                 id={ productId }
                 loading={ reviewsLoading }
-                stats={ [
-                    { label: '5 звезд', rating: 5, count: 162 },
-                    { label: '4 звезды', rating: 4, count: 54 },
-                    { label: '3 звезды', rating: 3, count: 14 },
-                    { label: '2 звезды', rating: 2, count: 12 },
-                    { label: '1 звезда', rating: 1, count: 5 },
-                ] }
+                stats={ stats }
+                authorized={ !!user.user }
                 reviews={ reviews }
+                additional={ additionalReviews }
                 onReview={ sendReviewMethod }
             />
         </>

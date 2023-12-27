@@ -5,11 +5,12 @@ import css from './ReviewItem.module.scss';
 import ProductRatingWidget
     from '@/components/_product/ProductView/ProductHeaderNavigation/ProductRatingWidget/ProductRatingWidget.tsx';
 import { useDeltaDate } from '@/hooks/date/useDeltaDate.ts';
+import Box from '@/components/_ui/_container/Box/Box.tsx';
 
 
 export type ReviewItemProps = {
     review: Review;
-    user: User;
+    user: User | null;
 }
 
 const ReviewItem: React.FC<ReviewItemProps> = (props) => {
@@ -17,13 +18,17 @@ const ReviewItem: React.FC<ReviewItemProps> = (props) => {
     const date             = useDeltaDate(review.date);
 
     return (
-        <div className={ css.container }>
+        <Box className={ css.container }>
             <div className={ css.top }>
                 <div className={ css.user }>
-                    <img className={ css.icon }
-                         src={ user.avatar }
-                         alt={ 'user avatar' }
-                    />
+                    {
+                        user
+                        ? <img className={ css.icon }
+                               src={ user.avatar }
+                               alt={ 'user avatar' }
+                        />
+                        : <div className={ css.icon }/>
+                    }
                     <div className={ css.info }>
                         <div className={ css.name }>{ review.author }</div>
                         <ProductRatingWidget rating={ review.rating }/>
@@ -37,7 +42,7 @@ const ReviewItem: React.FC<ReviewItemProps> = (props) => {
                 <h3 className={ css.title }>{ review.title }</h3>
                 <p className={ css.body }>{ review.body }</p>
             </div>
-        </div>
+        </Box>
     );
 };
 

@@ -17,7 +17,7 @@ export type ReviewListItem = {
 export type UseReviewStatDataOptions = {
     colorStart: ColorRGB;
     colorFinish: ColorRGB;
-    amount: number,
+    amount: number;
 }
 
 export const useReviewStatData = function (data: ReviewStatRatingItem[], options: UseReviewStatDataOptions): ReviewListItem[] {

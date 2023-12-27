@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Review } from '@/modules/api/review/review-service.types.ts';
 import ReviewStat, {
     ReviewStatRatingItem,
@@ -20,19 +20,30 @@ export type ReviewView = {
 export type ReviewsProps = {
     id: string;
     loading?: boolean;
+    authorized?: boolean;
     reviews: ReviewView[];
+    additional: ReviewView[];
     stats: ReviewStatRatingItem[];
     onReview: SendReviewMethod;
 }
 
 const Reviews: React.FC<ReviewsProps> = (props) => {
-    const { loading, reviews, stats, onReview, id } = props;
+    const {
+              loading, reviews, additional, stats, onReview, id, authorized,
+          } = props;
+    const allReviews: ReviewView[] = useMemo(() => {
+        return [ ...additional.reverse(), ...reviews ];
+    }, [ reviews, additional ]);
 
     return (
         <Box className={ css.container }>
             <div className={ css.left }>
-                <ReviewForm onSend={ onReview } id={ id }/>
-                <ReviewsList reviews={ reviews }/>
+                {
+                    authorized
+                    ? <ReviewForm onSend={ onReview } id={ id }/>
+                    : <h2>pls login</h2>
+                }
+                <ReviewsList reviews={ allReviews }/>
             </div>
             <div className={ css.right }>
                 <ReviewStat stats={ stats }/>

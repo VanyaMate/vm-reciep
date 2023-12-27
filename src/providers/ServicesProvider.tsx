@@ -122,6 +122,17 @@ import ReviewItem from '@/components/_review/Reviews/ReviewItem/ReviewItem.tsx';
 import {
     IReviewService,
 } from '@/modules/api/review/review-service.interface.ts';
+import { IUsersService } from '@/modules/api/users/users-service.interface.ts';
+import {
+    LocalUsersService,
+} from '@/modules/api/users/services/local-users-service.ts';
+import { UsersBackend } from '@/modules/local-backend/users/users-backend.ts';
+import {
+    LocalRandomReviewsService,
+} from '@/modules/api/reviews/services/local-random-reviews-service.ts';
+import {
+    ReviewBackendDataGenerator,
+} from '@/modules/local-backend/review/review-backend.data-generator.ts';
 
 
 export type ServicesProviderProps = {
@@ -160,11 +171,16 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
         return new LocalCompaniesService(new CompaniesBackend());
     }, []);
 
-    const reviewsService: IReviewsService<Review> = useMemo(() => new LocalReviewsService(
-        new ReviewsProductBackend(),
-        new ReviewsBrandBackend(),
-        new ReviewsCompanyBackend(),
-    ), []);
+    const reviewsService: IReviewsService<Review> = useMemo(() => {
+        return new LocalRandomReviewsService(new ReviewBackendDataGenerator());
+
+        // TODO: Либо оставить рандомный сервис, либо этот, но добавить сюда рандомных тоже, чтобы не было пусто..
+        return new LocalReviewsService(
+            new ReviewsProductBackend(),
+            new ReviewsBrandBackend(),
+            new ReviewsCompanyBackend(),
+        );
+    }, []);
 
     const reviewService: IReviewService<Review> = useMemo(() => new LocalReviewService(
         user?.login ?? '',
@@ -172,7 +188,6 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
         new ReviewBrandBackend(),
         new ReviewCompanyBackend(),
     ), [ user ]);
-
 
     const authService: IAuthService<AuthData> = useMemo(() => {
         return new LocalAuthService(
@@ -185,9 +200,17 @@ const ServicesProvider: React.FC<ServicesProviderProps> = (props) => {
         );
     }, []);
 
+    const usersService: IUsersService<User> = useMemo(() => {
+        return new LocalUsersService(
+            new UsersBackend(),
+            new UserBackendMapper(),
+        );
+    }, []);
+
     return (
         <ServicesContext.Provider value={ {
             wishlist  : wishlistService,
+            users     : usersService,
             cart      : cartService,
             auth      : authService,
             products  : productsService,

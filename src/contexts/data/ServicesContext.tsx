@@ -112,10 +112,17 @@ import {
 import {
     ReviewCompanyBackend,
 } from '@/modules/local-backend/review/review-company/review-company-backend.ts';
+import { IUsersService } from '@/modules/api/users/users-service.interface.ts';
+import { User } from '@/modules/api/user/user-service.types.ts';
+import {
+    LocalUsersService,
+} from '@/modules/api/users/services/local-users-service.ts';
+import { UsersBackend } from '@/modules/local-backend/users/users-backend.ts';
 
 
 export type ServicesContextType = {
     auth: IAuthService<AuthData>,
+    users: IUsersService<User>,
     products: IProductsService<Product>,
     cart: ICartService<Cart>,
     wishlist: IWishlistService<Wishlist>,
@@ -135,6 +142,7 @@ export const ServicesContext = createContext<ServicesContextType>({
         new StorageService(localStorage, STORAGE_NAME_AUTH),
         new StorageService(sessionStorage, STORAGE_NAME_AUTH),
     ),
+    users     : new LocalUsersService(new UsersBackend(), new UserBackendMapper()),
     products  : new LocalProductsService(new ProductsBackend()),
     cart      : new LocalCartService('', new CartBackend()),
     wishlist  : new LocalWishlistService('', new WishlistBackend()),
